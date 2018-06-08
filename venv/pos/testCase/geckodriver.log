@@ -1,0 +1,35 @@
+1528441617206	geckodriver	INFO	geckodriver 0.20.1
+1528441617217	geckodriver	INFO	Listening on 127.0.0.1:9366
+1528441620228	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.XVloTZJn8YO3"
+1528441622578	Marionette	INFO	Listening on port 9374
+1528441623396	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://welifeassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "underscore", needed by: consume/index, modules/utilities, views/user-password
+http://requirejs.org/docs/errors.html#scripterror
+[Child 14296, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 14296, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+JavaScript error: https://welifeassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "bootstrap"
+http://requirejs.org/docs/errors.html#scripterror
+JavaScript error: https://welifeassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "posprint"
+http://requirejs.org/docs/errors.html#scripterror
+JavaScript error: https://welifeassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "LodopFuncs"
+http://requirejs.org/docs/errors.html#scripterror
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[Parent 15520, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 10048, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 10048, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chro*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+NING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 6924, Chrome_ChildTh[Child 13124, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 13124, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 19744, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 19744, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
