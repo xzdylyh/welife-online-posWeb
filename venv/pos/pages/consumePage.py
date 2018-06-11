@@ -5,6 +5,8 @@ import time
 
 class ConsumePage(basepage.BasePage):
     '''消费功能模块'''
+
+    '''消费方式选择界面'''
     #会员卡号或手机号Tab
     selectCardNo_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/a[1]')
     confirmBtn_loc = (By.XPATH,"//div[@id='ipt_box1']/div[1]/div[1]/button")
@@ -15,12 +17,33 @@ class ConsumePage(basepage.BasePage):
 
     #优惠券码Tab
 
+    '''消费界面'''
+    tcTotalFee_loc = (By.ID,'tcTotalFee')  #消费总金额输入框
+    tcStoredPay_loc = (By.ID,'tcStoredPay') #储值支付输入框
+    tcUseCredit_loc = (By.ID,'tcUseCredit') #使用积分输入框
+    checkbox_activity_loc = (By.XPATH,"//div[@id='userInfo']/form[1]/div[8]/div[1]/div[1]/div[1]") #参加活动复选框
+    note_loc = (By.ID,'note') #备注
+    showSubmit_loc = (By.ID,'showSubmit') #确认按钮,进入确认销费
+    confirm_consume_loc = (By.XPATH,'/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')  #确认消费按钮
+    #使用积分
+    tcUseCredit_loc = (By.ID,'tcUseCredit') #使用积分输入框
+
+    #支付方式
+    pay_loc = (By.XPATH,'/html/body/div[2]/div/div/div[1]/div[2]/form/div[10]/div/div/div/label[2]') #银行卡
+
+    #交易密码
+    pay_pwd = (By.ID,"password")
+    pay_pwd_confirm = (By.XPATH,"/html/body/div[2]/div[2]/div/div/div[2]/form/div[3]/div/button[1]")
+
+    #支付成功
+    pay_success_loc = (By.XPATH,'/html/body/div[2]/div[1]/div/div[5]/div')
+
     #封装操作
     def open(self,ck_dict=''):
         self._open(self.base_url,self.pagetitle)
         if ck_dict!='':
             self.addCookies(ck_dict)
-            time.sleep(3)
+            #time.sleep(3)
             self.driver.refresh()
 
     def selectTab(self,*loc):
@@ -37,43 +60,12 @@ class ConsumePage(basepage.BasePage):
 
     @property
     def assertCustom(self):
-        '''断言操作'''
+        '''断言进入消费页面'''
         return self.isExist(*(self.assertPhone))
 
-
-
-
-'''
-
-from selenium import webdriver
-import time
-driver = webdriver.Firefox()
-
-driver.get('https://pos.acewill.net')
-driver.add_cookie({"name":"pos_entry_number","value":"13522656892"})
-driver.add_cookie({"name":"pos_entry_actualcard","value":"1726002880387638"})
-driver.add_cookie({"name":"pos_bid","value":"2760627865"})
-driver.add_cookie({"name":"pos_mid","value":"1134312064"})
-driver.add_cookie({"name":"pos_sid","value":"3704059614"})
-driver.add_cookie({"name":"pos_sign","value":"2a6ce62800f47551fd2826dab449b6cb"})
-
-time.sleep(3)
-
-driver.refresh()
-
-
-
-
-driver.implicitly_wait(30)
-driver.find_element_by_xpath('/html/body/div[1]/div/div/div/div[2]/div[1]/a[1]').click()
-driver.find_element_by_id('charge_number').send_keys('13466750022')
-driver.find_element_by_xpath('/html/body/div[1]/div[1]/div/div/div[2]/div[2]/div/div/button').click()
-driver.find_element_by_id('associatedIpt').send_keys('1908091660719654')
-driver.find_element_by_name('asso').click()
-driver.find_element_by_xpath('/html/body/div[1]/div[2]/div/div/div[3]/button[1]').click()
-ico = driver.find_element_by_xpath('/html/body/div[2]/div/div/div[1]/div[2]/form/div[1]/div[1]/strong/i')
-assert ico.is_displayed()
-driver.find_element_by_id('tcTotalFee').send_keys('10')
-'''
+    @property
+    def assertPaySuccess(self):
+        '''断言支付成功'''
+        self.isExist(*(self.pay_success_loc))
 
 

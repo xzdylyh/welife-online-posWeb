@@ -41,6 +41,11 @@ class BasePage(object):
         inputElement.clear()
         inputElement.send_keys(content)
 
+    def clearInputText(self,*loc):
+        '''清除文本框内容'''
+        self.find_element(*loc).clear()
+
+
 
     def addCookies(self,ck_dict):
         '''
