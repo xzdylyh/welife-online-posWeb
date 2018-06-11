@@ -7,10 +7,10 @@ from pos.lib import gl,HTMLTESTRunnerCN
 testData = [{"phoneOrCard":"13718651997","desc":'''手机号'''},
             {"phoneOrCard":"1003935039186461","desc":"卡号"}]
 
-consumeData = [{"phoneOrCard":"13718651997","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":000000}]
+consumeData = [{"phoneOrCard":"1003935039186461","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000","desc":u"积分消费"}]
 
-chargeDealData=[{"tcTotalFee":1,"desc":"charge and dual","phoneOrCard":"13718651997","dualCode":000000}]
-custCouponData = [{"tcTotalFee":1,"desc":"charge and dual","phoneOrCard":"13718651997","dualCode":000000}]
+chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
+custCouponData = [{"tcTotalFee":1,"desc":u"现金券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 
 
 tmpData = [{"phoneOrCard":"1003935039186461","tcTotalFee":1,"credit":1,"dualCode":"000000","type":1,"desc":u"储值消费"},
@@ -57,6 +57,7 @@ class TestConsumePage(unittest.TestCase):
                     divEle.click()#单击
                     break
 
+    @unittest.skip('e')
     @ddt.data(*tmpData)
     def testCase5(self, data):
         '''消费功能'''
@@ -71,7 +72,6 @@ class TestConsumePage(unittest.TestCase):
         self.assertTrue(data.has_key('type')) #数据中指定type字段
         if int(data['type'])!=1:
             self.consume.clearInputText(*(self.consume.tcStoredPay_loc))  # 清除储值支付
-
         if int(data['type'])==1:
             pass
         elif int(data['type']) ==2:
@@ -94,8 +94,6 @@ class TestConsumePage(unittest.TestCase):
         self.consume.assertPaySuccess #支付成功断言
 
 
-
-
     @unittest.skip('测试其它case临时跳过')
     @ddt.data(*testData)
     def testCase1(self,data):
@@ -105,55 +103,60 @@ class TestConsumePage(unittest.TestCase):
         #断言
         self.assertTrue(self.consume.assertCustom,msg='消费->确定->未找到手机号')
 
-    @unittest.skip('b')
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
+        print '功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit'])
         self.consume_func(data) #进入消费页
         self.consume.inputText(data['tcTotalFee'],*(self.consume.tcTotalFee_loc)) #输入金额
         self.consume.clearInputText(*(self.consume.tcStoredPay_loc)) #清除储值支付
         self.consume.inputText(data['credit'],*(self.consume.tcUseCredit_loc)) #使用积分
 
-        self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
+        #self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
         self.consume.inputText(data['desc'],*(self.consume.note_loc)) #输入备注
 
         self.consume.clickBtn(*(self.consume.showSubmit_loc)) #确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc)) #最终确认消费
-        
+        '''
         self.consume.inputText(data['dualCode'],*(self.consume.pay_pwd)) #输入交易密码
         self.consume.clickBtn(*(self.consume.pay_pwd_confirm)) #交易密码页面确认按钮
+        '''
+        self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('c')
+
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
+        print '功能:{0},消费金额{1},储值抵扣{2}元.'.format(data['desc'],data['tcTotalFee'],data['tcTotalFee'])
         self.consume_func(data) #进入消费页
         self.consume.inputText(data['tcTotalFee'],*(self.consume.tcTotalFee_loc)) #输入金额
-        self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
+        #self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
         self.consume.inputText(data['desc'],*(self.consume.note_loc)) #输入备注
         self.consume.clickBtn(*(self.consume.showSubmit_loc)) #确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc)) #最终确认消费
         self.consume.inputText(data['dualCode'],*(self.consume.pay_pwd)) #输入交易密码
         self.consume.clickBtn(*(self.consume.pay_pwd_confirm)) #交易密码页面确认按钮
+        self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('d')
+    @unittest.skip('a')
     @ddt.data(*custCouponData)
     def testCase4(self,data):
         '''现金券消费'''
         self.consume_func(data)  # 进入消费页
         self.consume.inputText(data['tcTotalFee'], *(self.consume.tcTotalFee_loc))  # 输入金额
         self.iterCoupon()#选择现金券
-        self.consume.clickBtn(*(self.consume.pay_loc))  # 支付方式银行卡
+        #self.consume.clickBtn(*(self.consume.pay_loc))  # 支付方式银行卡
         self.consume.inputText(data['desc'], *(self.consume.note_loc))  # 输入备注
         self.consume.clickBtn(*(self.consume.showSubmit_loc))  # 确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc))  # 最终确认消费
         self.consume.inputText(data['dualCode'], *(self.consume.pay_pwd))  # 输入交易密码
         self.consume.clickBtn(*(self.consume.pay_pwd_confirm))  # 交易密码页面确认按钮
+        self.consume.assertPaySuccess #支付成功断言
+
 
     @classmethod
     def tearDownClass(cls):
-        pass
-        #cls.driver.quit()
+        cls.driver.quit()
 
 if __name__=="__main__":
     suite = unittest.TestSuite()

@@ -1,6 +1,7 @@
 #coding=utf-8
 from selenium.webdriver.support.wait import WebDriverWait
-
+from pos.lib import gl
+import os
 '''
 basepage封装所有公共方法
 '''
@@ -26,6 +27,7 @@ class BasePage(object):
             WebDriverWait(self.driver, 10, 0.5).until(lambda a: self.driver.find_element(*loc).is_displayed())
             return self.driver.find_element(*loc)
         except:
+            self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
             assert False,u'未能找到页面%s元素' % loc
             #print(u'未能找到页面%s元素' % loc)
 

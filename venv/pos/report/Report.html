@@ -116,19 +116,19 @@ function html_escape(s) {
 <div class='heading'>
 <h1 style="font-family: Microsoft YaHei">UI自动化测试报告</h1>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2018-06-11 16:19:25</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:27.383000</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 3，通过 2，错误 1，通过率= 66.67%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2018-06-11 17:10:30</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:22.644000</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 2，通过 2，通过率= 100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
 </div>
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 66.67% }</a>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过{ 2 }</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 3 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 2 }</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -148,17 +148,17 @@ function html_escape(s) {
     <td>详细</td>
 </tr>
 
-<tr class='errorClass warning'>
+<tr class='passClass warning'>
     <td>TestConsumePage: 消费模块</td>
-    <td class="text-center">3</td>
+    <td class="text-center">2</td>
     <td class="text-center">2</td>
     <td class="text-center">0</td>
-    <td class="text-center">1</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c1',3)" class="detail" id='c1'>详细</a></td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',2)" class="detail" id='c1'>详细</a></td>
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>testCase5_1: 消费功能</div></td>
+    <td class='passCase'><div class='testcase'>testCase2_1: 积分消费</div></td>
     <td colspan='5' align='center'>
     <!--默认收起错误信息 -Findyou
     <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
@@ -168,7 +168,7 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre>
     
-pt1_1: 功能:储值消费,1元
+pt1_1: 功能:积分消费,消费1元,抵扣1积分.
 
 
     </pre>
@@ -177,7 +177,7 @@ pt1_1: 功能:储值消费,1元
 </tr>
 
 <tr id='pt1_2' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>testCase5_2: 消费功能</div></td>
+    <td class='passCase'><div class='testcase'>testCase3_1: 储值销费</div></td>
     <td colspan='5' align='center'>
     <!--默认收起错误信息 -Findyou
     <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
@@ -187,45 +187,7 @@ pt1_1: 功能:储值消费,1元
     <div id='div_pt1_2' class="collapse in">
     <pre>
     
-pt1_2: 功能:积分消费,1元
-
-
-    </pre>
-    </div>
-    </td>
-</tr>
-
-<tr id='ft1_3' class='none'>
-    <td class='errorCase'><div class='testcase'>testCase5_3: 消费功能</div></td>
-    <td colspan='5' align='center'>
-    <!--默认收起错误信息 -Findyou
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3'>错误</button>
-    <div id='div_ft1_3' class="collapse">  -->
-    <!-- 默认展开错误信息 -Findyou -->
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3'>错误</button>
-    <div id='div_ft1_3' class="collapse in">
-    <pre>
-    
-ft1_3: 功能:券消费,1元
-Traceback (most recent call last):
-  File "D:\posWeb\venv\lib\site-packages\ddt.py", line 144, in wrapper
-    return func(self, *args, **kwargs)
-  File "D:/posWeb/venv/pos/testCase/testConsumePage.py", line 80, in testCase5
-    self.iterCoupon()  # 选择现金券
-  File "D:/posWeb/venv/pos/testCase/testConsumePage.py", line 55, in iterCoupon
-    divEle = e.find_element_by_xpath("//div[@class='ticket']")
-  File "D:\posWeb\venv\lib\site-packages\selenium\webdriver\remote\webelement.py", line 351, in find_element_by_xpath
-    return self.find_element(by=By.XPATH, value=xpath)
-  File "D:\posWeb\venv\lib\site-packages\selenium\webdriver\remote\webelement.py", line 653, in find_element
-    {"using": by, "value": value})['value']
-  File "D:\posWeb\venv\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
-    return self._parent.execute(command, params)
-  File "D:\posWeb\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 314, in execute
-    self.error_handler.check_response(response)
-  File "D:\posWeb\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
-    raise exception_class(message, screen, stacktrace)
-NoSuchElementException: Message: Unable to locate element: //div[@class='ticket']
-
+pt1_2: 功能:储值卡消费,消费金额1,储值抵扣1元.
 
 
     </pre>
@@ -235,11 +197,11 @@ NoSuchElementException: Message: Unable to locate element: //div[@class='ticket'
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>3</td>
+    <td>2</td>
     <td>2</td>
     <td>0</td>
-    <td>1</td>
-    <td>通过率：66.67%</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
 </tr>
 </table>
 
