@@ -45,8 +45,7 @@ class TestCreditPage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
-        #cls.driver.quit()
+        cls.driver.quit()
 
 
 

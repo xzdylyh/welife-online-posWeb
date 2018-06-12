@@ -1,5 +1,6 @@
 #coding=utf-8
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from pos.lib import gl
 import os
@@ -25,13 +26,13 @@ class BasePage(object):
     #查找元素
     def find_element(self,*loc):
         try:
-            WebDriverWait(self.driver, 10, 0.5).until(lambda a: self.driver.find_element(*loc).is_displayed())
-            return self.driver.find_element(*loc)
+            #WebDriverWait(self.driver, 10, 0.5).until(lambda a: a.find_element(*loc).is_displayed())
+            element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
+            return element
         except NoSuchElementException as ex:
             #self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
             assert False,u'未能找到页面{0}元素'.format(ex)
-        except TimeoutException as ex:
-            assert False,u'未能找到页面{0}元素'.format(ex)
+
 
 
     #文本框输入

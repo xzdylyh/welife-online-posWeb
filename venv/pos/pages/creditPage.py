@@ -28,6 +28,7 @@ class CreditPage(basepage.BasePage):
             self.addCookies(ck_dict)
             #time.sleep(3)
             self.driver.refresh()
+            time.sleep(3)
 
     def selectTab(self,*loc):
         '''选择tab操作'''
