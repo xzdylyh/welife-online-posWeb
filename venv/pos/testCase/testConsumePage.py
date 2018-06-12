@@ -47,7 +47,6 @@ class TestConsumePage(unittest.TestCase):
         # 点击确定按钮
         self.consume.clickBtn(*(self.consume.confirmBtn_loc))
 
-
     def iterCoupon(self):
         '''动态选择券'''
         couponDiv = self.driver.find_elements_by_class_name('ticket-wrapper') #现金券
@@ -57,85 +56,51 @@ class TestConsumePage(unittest.TestCase):
                     divEle.click()#单击
                     break
 
-    @unittest.skip('e')
-    @ddt.data(*tmpData)
-    def testCase5(self, data):
-        '''消费功能'''
-        print '功能:{0},{1}元'.format(data['desc'],data['tcTotalFee'])
-        '''type:
-        1:储值
-        2:积分
-        3:现金券
-        '''
-        self.consume_func(data)  # 进入消费页
-        self.consume.inputText(data['tcTotalFee'], *(self.consume.tcTotalFee_loc))  # 输入金额
-        self.assertTrue(data.has_key('type')) #数据中指定type字段
-        if int(data['type'])!=1:
-            self.consume.clearInputText(*(self.consume.tcStoredPay_loc))  # 清除储值支付
-        if int(data['type'])==1:
-            pass
-        elif int(data['type']) ==2:
-            self.consume.inputText(data['credit'], *(self.consume.tcUseCredit_loc))  # 使用积分
-        elif int(data['type'])==3:
-            self.iterCoupon()  # 选择现金券
-        else:
-            self.assertTrue(False,msg='type参数错误.')
-
-        #self.consume.clickBtn(*(self.consume.pay_loc))  # 支付方式银行卡
-        self.consume.inputText(data['desc'], *(self.consume.note_loc))  # 输入备注
-
-        self.consume.clickBtn(*(self.consume.showSubmit_loc))  # 确认消费按钮
-        self.consume.clickBtn(*(self.consume.confirm_consume_loc))  # 最终确认消费
-
-        if int(data['type'])!=2:
-            self.consume.inputText(data['dualCode'], *(self.consume.pay_pwd))  # 输入交易密码
-            self.consume.clickBtn(*(self.consume.pay_pwd_confirm))  # 交易密码页面确认按钮
-
-        self.consume.assertPaySuccess #支付成功断言
-
-
     @unittest.skip('测试其它case临时跳过')
     @ddt.data(*testData)
     def testCase1(self,data):
-        u'''根据手机号或卡号查询消费'''
-        print "根据{0}查询消费".format(data['desc'])
+        '''根据手机号或卡号查询消费'''
+        print u"根据{0}查询消费".format(data['desc'])
         self.consume_func(data)
         #断言
         self.assertTrue(self.consume.assertCustom,msg='消费->确定->未找到手机号')
 
+
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
-        print '功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit'])
+        print u'功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit'])
         self.consume_func(data) #进入消费页
         self.consume.inputText(data['tcTotalFee'],*(self.consume.tcTotalFee_loc)) #输入金额
         self.consume.clearInputText(*(self.consume.tcStoredPay_loc)) #清除储值支付
         self.consume.inputText(data['credit'],*(self.consume.tcUseCredit_loc)) #使用积分
-
-        #self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
         self.consume.inputText(data['desc'],*(self.consume.note_loc)) #输入备注
 
         self.consume.clickBtn(*(self.consume.showSubmit_loc)) #确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc)) #最终确认消费
-        '''
-        self.consume.inputText(data['dualCode'],*(self.consume.pay_pwd)) #输入交易密码
-        self.consume.clickBtn(*(self.consume.pay_pwd_confirm)) #交易密码页面确认按钮
-        '''
+
+        '''输入密码点击确认'''
+        self.consume.isExistAndInput(data['dualCode'],*(self.consume.pay_pwd))
+        self.consume.isExistAndClick(*(self.consume.pay_pwd_confirm))
+
         self.consume.assertPaySuccess #支付成功断言
 
 
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
-        print '功能:{0},消费金额{1},储值抵扣{2}元.'.format(data['desc'],data['tcTotalFee'],data['tcTotalFee'])
+        print u'功能:{0},消费金额{1},储值抵扣{2}元.'.format(data['desc'],data['tcTotalFee'],data['tcTotalFee'])
         self.consume_func(data) #进入消费页
         self.consume.inputText(data['tcTotalFee'],*(self.consume.tcTotalFee_loc)) #输入金额
-        #self.consume.clickBtn(*(self.consume.pay_loc)) #支付方式银行卡
+
         self.consume.inputText(data['desc'],*(self.consume.note_loc)) #输入备注
         self.consume.clickBtn(*(self.consume.showSubmit_loc)) #确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc)) #最终确认消费
-        self.consume.inputText(data['dualCode'],*(self.consume.pay_pwd)) #输入交易密码
-        self.consume.clickBtn(*(self.consume.pay_pwd_confirm)) #交易密码页面确认按钮
+
+        '''输入密码点击确认'''
+        self.consume.isExistAndInput(data['dualCode'],*(self.consume.pay_pwd))
+        self.consume.isExistAndClick(*(self.consume.pay_pwd_confirm))
+
         self.consume.assertPaySuccess #支付成功断言
 
     @unittest.skip('a')
@@ -145,12 +110,15 @@ class TestConsumePage(unittest.TestCase):
         self.consume_func(data)  # 进入消费页
         self.consume.inputText(data['tcTotalFee'], *(self.consume.tcTotalFee_loc))  # 输入金额
         self.iterCoupon()#选择现金券
-        #self.consume.clickBtn(*(self.consume.pay_loc))  # 支付方式银行卡
+
         self.consume.inputText(data['desc'], *(self.consume.note_loc))  # 输入备注
         self.consume.clickBtn(*(self.consume.showSubmit_loc))  # 确认消费按钮
         self.consume.clickBtn(*(self.consume.confirm_consume_loc))  # 最终确认消费
-        self.consume.inputText(data['dualCode'], *(self.consume.pay_pwd))  # 输入交易密码
-        self.consume.clickBtn(*(self.consume.pay_pwd_confirm))  # 交易密码页面确认按钮
+
+        '''输入密码点击确认'''
+        self.consume.isExistAndInput(data['dualCode'],*(self.consume.pay_pwd))
+        self.consume.isExistAndClick(*(self.consume.pay_pwd_confirm))
+
         self.consume.assertPaySuccess #支付成功断言
 
 
@@ -162,7 +130,6 @@ if __name__=="__main__":
     suite = unittest.TestSuite()
 
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage)]
-    # tests = [unittest.TestLoader().loadTestsFromTestCase(ScenarioTest)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
     print filePath

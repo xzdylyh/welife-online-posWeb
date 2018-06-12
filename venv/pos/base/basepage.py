@@ -1,5 +1,6 @@
 #coding=utf-8
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from pos.lib import gl
 import os
 '''
@@ -26,10 +27,10 @@ class BasePage(object):
         try:
             WebDriverWait(self.driver, 10, 0.5).until(lambda a: self.driver.find_element(*loc).is_displayed())
             return self.driver.find_element(*loc)
-        except:
-            self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
-            assert False,u'未能找到页面%s元素' % loc
-            #print(u'未能找到页面%s元素' % loc)
+        except NoSuchElementException as ex:
+            #self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
+            assert False,u'未能找到页面{0}元素'.format(ex)
+
 
     #文本框输入
     def send_keys(self,content,*loc):
@@ -56,7 +57,6 @@ class BasePage(object):
         :return: 无
         '''
         for key in ck_dict.keys():
-            #cookdict.append({"name":key,"value":ck_dict[key]})
             self.driver.add_cookie({"name":key,"value":ck_dict[key]})
 
     def isExist(self,*loc):
@@ -69,6 +69,23 @@ class BasePage(object):
             return True
         else:
             return False
+
+
+    def isExistAndClick(self,*loc):
+        '''如果元素存在则单击,不存在则忽略'''
+        try:
+            self.driver.find_element(*loc).click()
+        except NoSuchElementException,TimeoutException:
+            pass
+
+    def isExistAndInput(self,text,*loc):
+        '''如果元素存在则输入,不存在则忽略'''
+        try:
+            element = self.driver.find_element(*loc)
+            element.clear()
+            element.send_keys(text)
+        except NoSuchElementException,TimeoutException:
+            pass
 
 
 if __name__=="__main__":

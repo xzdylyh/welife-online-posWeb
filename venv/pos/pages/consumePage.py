@@ -58,6 +58,9 @@ class ConsumePage(basepage.BasePage):
         '''点击操作'''
         self.find_element(*loc).click()
 
+
+
+
     @property
     def assertCustom(self):
         '''断言进入消费页面'''
