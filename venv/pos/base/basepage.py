@@ -30,6 +30,8 @@ class BasePage(object):
         except NoSuchElementException as ex:
             #self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
             assert False,u'未能找到页面{0}元素'.format(ex)
+        except TimeoutException as ex:
+            assert False,u'未能找到页面{0}元素'.format(ex)
 
 
     #文本框输入

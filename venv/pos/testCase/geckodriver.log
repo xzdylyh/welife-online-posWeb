@@ -1,33 +1,36 @@
-1528771587952	geckodriver	INFO	geckodriver 0.20.1
-1528771587965	geckodriver	INFO	Listening on 127.0.0.1:29403
-1528771590985	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.r6dvwlSJljRt"
-1528771593155	Marionette	INFO	Listening on port 29411
-1528771594137	Marionette	WARN	TLS certificate errors will be ignored for this session
-[Child 16660, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
-[Child 16660, C[Child 8196, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
-[Child 8196, Chrome_ChildThread] WARNING: pipe error: 109: file[Parent 8724, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
-[Child 14136, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
-[Child 14136, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 3*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1528791080154	geckodriver	INFO	geckodriver 0.20.1
+1528791080167	geckodriver	INFO	Listening on 127.0.0.1:6245
+1528791083184	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.YgWlOZj3NZpK"
+1528791085370	Marionette	INFO	Listening on port 6255
+1528791086334	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://wlassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "text", needed by: text!/user/user-lock-dialog.html_unnormalized2
+http://requirejs.org/docs/errors.html#scripterror
+JavaScript error: https://wlassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "bootstrap"
+http://requirejs.org/docs/errors.html#scripterror
+JavaScript error: https://wlassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "posprint"
+http://requirejs.org/docs/errors.html#scripterror
+JavaScript error: https://wlassets.oss-cn-beijing.aliyuncs.com/pos/js/require.min.js, line 89: Error: Script error for "LodopFuncs"
+http://requirejs.org/docs/errors.html#scripterror
+[Child 9128, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 9128, Chrom[Parent 3540, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 11500, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 11500, Chrome_ChildThread] WA
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+
+[Child 2992, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_cha
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+e z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
 
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
-zed, but the handler returned false (indicating failure)
+eturned false (indicating failure)
 
-IPDL protocol error: Handler returned error code!
 
-###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
-IPDL protocol error: Handler returned error code!
-
-###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
-
-IPDL protocol error: Handler returned error code!
-
-###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
-
-IPDL protocol error: Handler returned error code!
-
-###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+tchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
 
 IPDL protocol error: Handler returned error code!
 

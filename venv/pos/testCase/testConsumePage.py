@@ -8,15 +8,9 @@ testData = [{"phoneOrCard":"13718651997","desc":'''手机号'''},
             {"phoneOrCard":"1003935039186461","desc":"卡号"}]
 
 consumeData = [{"phoneOrCard":"1003935039186461","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000","desc":u"积分消费"}]
-
 chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 custCouponData = [{"tcTotalFee":1,"desc":u"现金券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 
-
-tmpData = [{"phoneOrCard":"1003935039186461","tcTotalFee":1,"credit":1,"dualCode":"000000","type":1,"desc":u"储值消费"},
-           {"phoneOrCard": "1003935039186461", "tcTotalFee": 1, "credit": 1, "dualCode": "000000", "type": 2,"desc": u"积分消费"},
-           {"phoneOrCard": "1003935039186461", "tcTotalFee": 1, "credit": 1, "dualCode": "000000", "type": 3,"desc": u"券消费"}
-           ]
 
 @ddt.ddt
 class TestConsumePage(unittest.TestCase):
