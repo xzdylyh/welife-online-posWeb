@@ -3,7 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from pos.lib import gl
-import os
+import os,time
 '''
 basepage封装所有公共方法
 '''
@@ -18,21 +18,43 @@ class BasePage(object):
     '''
     #打开浏览器
     def _open(self,url,pagetitle):
-        self.driver.get(url)
-        #self.driver.implicitly_wait(10)
         self.driver.maximize_window()
+        self.driver.get(url)
+        self.driver.implicitly_wait(30)
         assert self.driver.title,pagetitle
 
     #查找元素
     def find_element(self,*loc):
         try:
-            #WebDriverWait(self.driver, 10, 0.5).until(lambda a: a.find_element(*loc).is_displayed())
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
             return element
-        except NoSuchElementException as ex:
-            #self.driver.get_screenshot_as_file(os.path.join(gl.reportPath,'images/error.png'))
-            assert False,u'未能找到页面{0}元素'.format(ex)
+        except TimeoutException as ex:
+            self.getImage  #截取图片
+            raise
 
+    @property
+    def getImage(self):
+        '''截取图片,并保存在images文件夹'''
+        timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
+        imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
+        print '错误截图路径:{0}'.format(imgPath)
+        self.driver.save_screenshot(imgPath)
+
+    def find_elements(self,*loc):
+        '''批量找标签'''
+        try:
+            elements = self.driver.find_elements(*loc)
+            return elements
+        except NoSuchElementException as ex:
+            self.getImage  #截取图片
+            raise
+
+
+    def iterClick(self, *loc):
+        '''批量点击某元素'''
+        element = self.find_elements(*loc)
+        for e in element:
+            e.click()
 
 
     #文本框输入
@@ -89,6 +111,7 @@ class BasePage(object):
             element.send_keys(text)
         except NoSuchElementException,TimeoutException:
             pass
+
 
 
 if __name__=="__main__":

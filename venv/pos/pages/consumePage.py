@@ -27,6 +27,10 @@ class ConsumePage(basepage.BasePage):
     confirm_consume_loc = (By.XPATH,'/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')  #确认消费按钮
     #使用积分
     tcUseCredit_loc = (By.ID,'tcUseCredit') #使用积分输入框
+    #使用券
+    couponDiv_loc = 'ticket-wrapper'
+    ticket_loc = '//div[@class="ticket"]'
+    useCount = 'useCount'
 
     #支付方式
     pay_loc = (By.XPATH,'/html/body/div[2]/div/div/div[1]/div[2]/form/div[10]/div/div/div/label[2]') #银行卡
@@ -36,7 +40,10 @@ class ConsumePage(basepage.BasePage):
     pay_pwd_confirm = (By.XPATH,"/html/body/div[2]/div[2]/div/div/div[2]/form/div[3]/div/button[1]")
 
     #支付成功
-    pay_success_loc = (By.XPATH,'/html/body/div[2]/div[1]/div/div[5]/div')
+    #pay_success_loc = (By.XPATH,'/html/body/div[2]/div[1]/div/div[5]/div')
+    pay_success_loc = (By.XPATH, '//*[@id ="showSuccess"]/div[1]')
+
+
 
     #封装操作
     def open(self,ck_dict=''):
@@ -44,7 +51,7 @@ class ConsumePage(basepage.BasePage):
         if ck_dict!='':
             self.addCookies(ck_dict)
             #time.sleep(3)
-            self.driver.refresh()
+            self._open(self.base_url, self.pagetitle)
 
     def selectTab(self,*loc):
         '''选择tab操作'''
@@ -69,6 +76,6 @@ class ConsumePage(basepage.BasePage):
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
-        self.isExist(*(self.pay_success_loc))
+        self.isExist(*(self.inputCardorPhone_loc))
 
 

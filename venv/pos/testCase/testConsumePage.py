@@ -7,9 +7,9 @@ from pos.lib import gl,HTMLTESTRunnerCN
 testData = [{"phoneOrCard":"13718651997","desc":'''手机号'''},
             {"phoneOrCard":"1003935039186461","desc":"卡号"}]
 
-consumeData = [{"phoneOrCard":"1003935039186461","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000","desc":u"积分消费"}]
+consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000"}]
 chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
-custCouponData = [{"tcTotalFee":1,"desc":u"现金券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
+custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 
 
 @ddt.ddt
@@ -18,15 +18,16 @@ class TestConsumePage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         #cls.driver = webdriver.Firefox()
-        cls.driver = webdriver.Firefox()
+        cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/consume'
+        cls.driver.delete_all_cookies() #删除所有cookies
         #cookies 免登录，有效期一天。
         cls.cookinfo = {"pos_entry_number":"1003935039186461",
                "pos_entry_actualcard":"1003935039186461",
                "pos_bid":"2048695606",
-               "pos_mid":"1155134323",
+               "pos_mid":"1234871385",
                "pos_sid":"1512995661",
-               "pos_sign":"0bf7da4d84df8a8f01425d9fb58da120"}
+               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
     def consume_func(self,data):
         '''消费->输入卡号或手机号->确定'''
@@ -43,11 +44,14 @@ class TestConsumePage(unittest.TestCase):
 
     def iterCoupon(self):
         '''动态选择券'''
-        couponDiv = self.driver.find_elements_by_class_name('ticket-wrapper') #现金券
+        couponDiv = self.driver.find_elements_by_class_name(self.consume.couponDiv_loc) #现金券
         for e in couponDiv:
-            divEle = e.find_element_by_xpath("//div[@class='ticket']")
+            divEle = e.find_element_by_xpath(self.consume.ticket_loc)
             if divEle.is_displayed():
-                    divEle.click()#单击
+                divEle.click()  # 单击
+                useCount = self.driver.find_element_by_name(self.consume.useCount)
+                if useCount.is_displayed():
+                    useCount.send_keys(1)
                     break
 
     @unittest.skip('测试其它case临时跳过')
@@ -59,7 +63,7 @@ class TestConsumePage(unittest.TestCase):
         #断言
         self.assertTrue(self.consume.assertCustom,msg='消费->确定->未找到手机号')
 
-
+    @unittest.skip('测试其它"积分消费"临时跳过')
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
@@ -79,7 +83,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-
+    @unittest.skip('测试其它"储值销费"临时跳过')
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
@@ -97,10 +101,10 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('a')
+    #@unittest.skip('测试其它"券销费"临时跳过')
     @ddt.data(*custCouponData)
     def testCase4(self,data):
-        '''现金券消费'''
+        '''券消费'''
         self.consume_func(data)  # 进入消费页
         self.consume.inputText(data['tcTotalFee'], *(self.consume.tcTotalFee_loc))  # 输入金额
         self.iterCoupon()#选择现金券
