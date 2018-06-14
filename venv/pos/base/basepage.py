@@ -20,7 +20,7 @@ class BasePage(object):
     def _open(self,url,pagetitle):
         self.driver.maximize_window()
         self.driver.get(url)
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(10)
         assert self.driver.title,pagetitle
 
     #查找元素

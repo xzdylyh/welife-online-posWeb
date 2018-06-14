@@ -63,7 +63,7 @@ class TestConsumePage(unittest.TestCase):
         #断言
         self.assertTrue(self.consume.assertCustom,msg='消费->确定->未找到手机号')
 
-    @unittest.skip('测试其它"积分消费"临时跳过')
+    #@unittest.skip('测试其它"积分消费"临时跳过')
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
@@ -83,7 +83,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('测试其它"储值销费"临时跳过')
+    #@unittest.skip('测试其它"储值销费"临时跳过')
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
