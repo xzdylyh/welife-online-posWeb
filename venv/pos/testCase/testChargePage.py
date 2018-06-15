@@ -1,7 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
 from pos.pages import chargePage
-import unittest,ddt,os
+import unittest,ddt,os,time
+from pos.lib import scripts
 from pos.lib import gl,HTMLTESTRunnerCN
 
 chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
@@ -31,6 +32,8 @@ class TestChargePage(unittest.TestCase):
         self.charge.clickBtn('确定',*(self.charge.confirmBtn_loc))
         """断言"""
         self.assertTrue(self.charge.find_element(*(self.charge.chargeRMB_loc))) #储值余额
+        self.usChargeSaving = self.driver.find_element(*(self.charge.chargeRMB_loc)).text[:-1]
+        print '当前余额:{0}'.format(self.usChargeSaving[:-1])
 
     #@unittest.skip('a')
     @ddt.data(*chargeData)
@@ -52,6 +55,11 @@ class TestChargePage(unittest.TestCase):
         self.charge.assertChargeSuccess
         """后置操作"""
         self.charge.clickBtn('立即消费',*(self.charge.consumeBtn_loc))
+        time.sleep(3)
+        """断言储值余额，是否正确"""
+        self.usDualSaving = self.driver.find_element(*(self.charge.usSaving_loc)).text
+        print '储值后当前余额:{0}'.format(self.usDualSaving)
+        self.assertTrue(float(data['present']) + float(self.usChargeSaving) ==float(self.usDualSaving))
 
     @classmethod
     def tearDownClass(cls):

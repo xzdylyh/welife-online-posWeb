@@ -27,6 +27,9 @@ class BasePage(object):
     def find_element(self,*loc):
         try:
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
+            #元素高亮显示
+            self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
+                                       element, "border: 2px solid red;")
             return element
         except TimeoutException as ex:
             self.getImage  #截取图片

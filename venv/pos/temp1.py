@@ -1,53 +1,100 @@
-# coding:utf-8
+#coding=utf-8
+from selenium import webdriver
+import time
+"""
+1.通过cookies跳过登录
+2.线性脚本写一个积分兑换
+3.添加断言
+4.定义类，方法，进行简单封装
+5.习惯性给重要步骤及函数添加注释
+6.注意单引号和双引号的区别
+7.三引号（单三引号和双三引号）
+8.time.sleep()
+"""
+CONST_URL ="http://pos.beta.acewill.net/credit" #积分换礼页面url
 
-import pytest
-import allure
+driver = webdriver.Chrome()  #创建webdriver实例
+driver.maximize_window() #最大化浏览器
+driver.get(CONST_URL) #打开指定url
+"""
+driver.implicitly_wait(30) 智能等待30秒
+所谓智能等待，在指定时间内页面加载完成
+即不在等待。
+"""
+driver.implicitly_wait(30)
 
+"""
+定位元素的八种方法X2：
+1.driver.find_element_by_id  通过id来定位
+2.driver.find_element_by_xpath 通过xpath来定位
+3.driver.find_elements_by_name 通过name来定位
+4.driver.find_element_by_tag_name 通过标签来定位
+5.driver.find_element_by_class_name 通过class属性名来定位
+6.driver.find_element_by_link_text 通过链接文本来定位
+7.driver.find_element_by_css_selector 通过css来定位
+8.driver.find_element_by_partial_link_text 通过部分链接文本来定位
+"""
+"""
+解释：
+ID定位: html标签唯一标识 <input type="button" id ="confirm_login"/>
+XPATH定位: 通过html标签树型结构，层层定位,一般用于元素没有id name等唯一标识
+    <html>
+       <head></head>
+       <body>
+            <div class="col-lg-3" id="main_div">
+                <div class="login">
+                    <input type="text" value>输入用户名</input>
+                    <input type="text" value>输入密码</input>
+                    <input type="button">登录</input>
+                <div>
+                <div>
+                    <p>请输入用户名及密码，点击登录</p>
+                </div>
+                
+            <div> 
+       </body>
+    </html>
+如上，用户名，密码，登录按钮，都没有id，name等唯一标识
+那么对于这种定位，可以使用XPATH  css等进行定位
+例上边用户名定位：展示两种方法
+driver.find_elements_by_xpath("/html/body/div[1]/div[1]/input[1]") #用户名
+driver.find_elements_by_xpath("//div[@id='main_div']/div[1]/input[1]")
 
-# 测试函数
-@allure.step("字符串相加：{0}，{1}")     # 测试步骤，可通过format机制自动获取函数参数
-def str_add(str1, str2):
-    print "hello"
-    if not isinstance(str1, str):
-        return "%s is not a string" % str1
-    if not isinstance(str2, str):
-        return "%s is not a string" % str2
-    return str1 + str2
+NAME定位:标签唯一标识name属性值
+tag Name定位：通过标签名定位
+class name定位：标签class属性值来定位，值得注意的是通过html标签class属性值有多个,以空格分开。取其一使用即可。
+       例：<div class="button input xxxx">....</div>
 
+link text定位：有一些链接没有id name，可以通过文本来定位，当然xpath都可以。定位方法可以灵活使用。
+       例:<a href="/xxx/xxx">提交</a> 可以通过找提交这个文本
 
-@allure.severity("critical")               # 优先级，包含blocker, critical, normal, minor, trivial 几个不同的等级
-@allure.feature("测试模块_demo1")           # 功能块，feature功能分块时比story大,即同时存在feature和story时,feature为父节点
-@allure.story("测试模块_demo2")             # 功能块，具有相同feature或story的用例将规整到相同模块下,执行时可用于筛选
-@allure.issue("BUG号：123")                 # 问题表识，关联标识已有的问题，可为一个url链接地址
-@allure.testcase("用例名：测试字符串相等")      # 用例标识，关联标识用例，可为一个url链接地址
-@pytest.mark.parametrize("para_one, para_two",              # 用例参数
-                         [("hello world", "hello world"),   # 用例参数的参数化数据
-                          (4, 4),
-                          ("中文", "中文")],
-                         ids=["test ASCII string",          # 对应用例参数化数据的用例名
-                              "test digital string",
-                              "test unicode string"])
-def test_case_example(para_one, para_two):
-    """用例描述：测试字符串相等
-    :param para_one: 参数1
-    :param para_two: 参数2
-    """
+partial_link_text 定位：有一些链接如果很长，或有部分是动态的。此方法正合适。
+       例:<a href="/xxx/xxx">提交xxx12fdscxv8j93k9j我是动d态的</a>  提交是固定的，可以找提交
+"""
 
-    # 获取参数
-    paras = vars()
-    # 报告中的环境参数，可用于必要环境参数的说明，相同的参数以后者为准
-    allure.environment(host="127.0.0.1", test_vars=paras)
-    # 关联的资料信息, 可在报告中记录保存必要的相关信息
-    allure.attach("用例参数", "{0}".format(paras))
-    # 调用测试函数
-    res = str_add(para_one, para_two)
-    # 对必要的测试中间结果数据做备份
-    allure.attach("str_add返回结果", "{0}".format(res))
-    # 测试步骤，对必要的测试过程加以说明
-    with pytest.allure.step("测试步骤2，结果校验 {0} == {1}".format(res, para_one+para_two)):
-        assert res == para_one+para_two, res
+"""跳过登录，向浏览器写cookies信息"""
+"""
+"""
 
+cookinfo1 = {"name":"pos_entry_number","value":"1003935039186461"}
+cookinfo2 = {"name":"pos_entry_actualcard","value":"1003935039186461"}
+cookinfo3 = {"name":"pos_bid","value":"2048695606"}
+cookinfo4 = {"name":"pos_mid","value":"1234871385"}
+cookinfo5 = {"name":"pos_sid","value":"1512995661"}
+cookinfo6 = {"name":"pos_sign","value":"369240630d5e17a24bf7e5a70f073465"}
 
-if __name__ == '__main__':
-    # 执行，指定执行测试模块_demo1, 测试模块_demo2两个模块，同时指定执行的用例优先级为critical,blocker
-    pytest.main(['--allure_stories=testPosLogin', '--allure_severities=critical, blocker'])
+"""cookies增加到浏览器，注意这个要在driver.get()之后增加，才能准备到将cookies写入打开的网址"""
+driver.add_cookie(cookinfo1)
+driver.add_cookie(cookinfo2)
+driver.add_cookie(cookinfo3)
+driver.add_cookie(cookinfo4)
+driver.add_cookie(cookinfo5)
+driver.add_cookie(cookinfo6)
+
+driver.get(CONST_URL) #写完cookies之后，要重新访问写入cookies的地址
+driver.implicitly_wait(30) #智能等待加载完成
+
+driver.find_element_by_id('charge_number').send_keys('1003935039186461') #输入卡号
+driver.find_element_by_xpath('/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button').click() #确定按钮
+
+#driver.quit() #完成以后步骤后，关闭浏览器，释放driver实例

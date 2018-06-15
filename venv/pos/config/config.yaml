@@ -1,0 +1,9 @@
+NAME: 配置信息
+CONFIG:
+    Cookies: #cook信息
+        LoginCookies: {"pos_entry_number":"1003935039186461",
+               "pos_entry_actualcard":"1003935039186461",
+               "pos_bid":"2048695606",
+               "pos_mid":"1234871385",
+               "pos_sid":"1512995661",
+               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}

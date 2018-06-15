@@ -43,6 +43,20 @@ class ConsumePage(basepage.BasePage):
     #pay_success_loc = (By.XPATH,'/html/body/div[2]/div[1]/div/div[5]/div')
     pay_success_loc = (By.XPATH, '//*[@id ="showSuccess"]/div[1]')
 
+    #实体卡开卡
+    openCard_loc = (By.XPATH,'//*[@id="openCard"]/div/div/div[2]/a[1]/i') #开卡图标
+    phoneNo_loc = (By.ID,'inputUserNumber') #手机号
+    username_loc = (By.NAME,'username') #姓名
+    sex_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/form/div[4]/div/label[1]') #姓别
+    birthday_loc = (By.ID,'inputBirthday') #生日2018-05-29
+    password_loc = (By.NAME,'password') #交易密码
+    cardConfirmBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[3]/div/button') #确定
+    cardOpen_success_loc = (By.ID,'tcTotalFee') #实体卡开卡成功后返回到收费界面
+    #绑卡
+    cardBind_loc = (By.XPATH,'//*[@id="openCard"]/div/div/div[2]/a[2]/i') #绑卡
+    cardPhone_loc = (By.ID,'inputUserNumber') #输入卡号
+    cardBindBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/form/div[2]/div/button') #确定按钮
+    cardofBtn_loc =(By.XPATH,'//*[@id="associatedModal"]/div/div/div[3]/button[1]') #选择卡确认
 
 
     #封装操作
@@ -78,4 +92,9 @@ class ConsumePage(basepage.BasePage):
         '''断言支付成功'''
         self.isExist(*(self.inputCardorPhone_loc))
 
+
+    @property
+    def assertCardSuccess(self):
+        '''断言支付成功'''
+        self.isExist(*(self.cardOpen_success_loc))
 

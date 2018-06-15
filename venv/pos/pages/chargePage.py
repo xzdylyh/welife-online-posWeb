@@ -15,10 +15,11 @@ class ChargePage(basepage.BasePage):
     payType_loc =(By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')#支付类型
     noteRemark_loc = (By.ID,'note') #备注
     chargeSubmit_loc = (By.ID,'chargeSubmit') #储值提交确定按钮
-    chargeRMB_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[1]/div')
+    chargeRMB_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[1]/div') #储值余额
     chargesBtn_loc = (By.ID,'chargeCheckBtn') #储值最后确认
     assertChargeSuccess_loc = (By.XPATH,'//*[@id="chargeSuccessModal"]/div/div/div[1]/h3') #储值成功提示
     consumeBtn_loc = (By.ID,'consumeBtn') #立即消费按钮
+    usSaving_loc = (By.ID,'usSaving') #储值余额
 
 
     #封装操作
@@ -41,7 +42,7 @@ class ChargePage(basepage.BasePage):
 
     def clickBtn(self,desc,*loc):
         '''点击操作'''
-        print '点击:{0}'.format(desc)
+        print '单击:{0}'.format(desc)
         self.find_element(*loc).click()
 
 

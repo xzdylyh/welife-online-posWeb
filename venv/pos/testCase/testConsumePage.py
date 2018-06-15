@@ -2,14 +2,14 @@
 from selenium import webdriver
 from pos.pages import consumePage
 import unittest,ddt,os
+from pos.lib.excel import Excel
 from pos.lib import gl,HTMLTESTRunnerCN
-
-testData = [{"phoneOrCard":"13718651997","desc":'''手机号'''},
-            {"phoneOrCard":"1003935039186461","desc":"卡号"}]
 
 consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000"}]
 chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
+cardData = [{"PhoneNo":"13712345676","desc":u"实体卡开卡",'username':'yhleng','birthday':'1985-03-21','password':'000000'}]
+cardBindData = [{"PhoneNo": "13712345678","desc":u"绑卡正常流程"}]
 
 
 @ddt.ddt
@@ -29,6 +29,8 @@ class TestConsumePage(unittest.TestCase):
                "pos_sid":"1512995661",
                "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
+        cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
+
     def consume_func(self,data):
         '''消费->输入卡号或手机号->确定'''
         self.consume = consumePage.ConsumePage(self.url, self.driver, '消费 - 微生活POS系统')
@@ -42,6 +44,7 @@ class TestConsumePage(unittest.TestCase):
         # 点击确定按钮
         self.consume.clickBtn(*(self.consume.confirmBtn_loc))
 
+    """消费模块，动态选择券"""
     def iterCoupon(self):
         '''动态选择券'''
         couponDiv = self.driver.find_elements_by_class_name(self.consume.couponDiv_loc) #现金券
@@ -54,16 +57,39 @@ class TestConsumePage(unittest.TestCase):
                     useCount.send_keys(1)
                     break
 
-    @unittest.skip('测试其它case临时跳过')
-    @ddt.data(*testData)
+    @unittest.skip('实体开卡临时跳过')
+    @ddt.data(*cardData)
     def testCase1(self,data):
-        '''根据手机号或卡号查询消费'''
-        print u"根据{0}查询消费".format(data['desc'])
-        self.consume_func(data)
+        '''实体卡开卡'''
+        print '功能：{0}'.format(data['desc'])
+        cardNo = {'phoneOrCard':str(self.excel.getCardNo)} #获取卡号
+        print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
+        self.consume_func(cardNo)
+        self.consume.clickBtn(*(self.consume.openCard_loc)) #实体卡开卡
+        self.consume.inputText(data['PhoneNo'],*(self.consume.phoneNo_loc)) #输入手机号
+        self.consume.inputText(data['username'],*(self.consume.username_loc)) #姓名
+        self.consume.clickBtn(*(self.consume.sex_loc)) #性别
+        self.consume.inputText(data['birthday'],*(self.consume.birthday_loc)) #生日
+        self.consume.inputText(data['password'],*(self.consume.password_loc)) #交易密码
+        self.consume.clickBtn(*(self.consume.cardConfirmBtn_loc)) #确定
         #断言
-        self.assertTrue(self.consume.assertCustom,msg='消费->确定->未找到手机号')
+        self.assertTrue(self.consume.assertCardSuccess,msg='实体卡开卡失败')
 
-    #@unittest.skip('测试其它"积分消费"临时跳过')
+    @ddt.data(*cardBindData)
+    def testCase5(self,data):
+        """实体卡绑卡"""
+        print '功能：{0}'.format(data['desc'])
+        cardNo = {'phoneOrCard': str(self.excel.getCardNo)}  # 获取卡号
+        print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
+        self.consume_func(cardNo)
+        self.consume.clickBtn(*(self.consume.cardBind_loc)) #绑卡按钮
+        self.consume.inputText(data['PhoneNo'],*(self.consume.cardPhone_loc)) #输入卡号
+        self.consume.clickBtn(*(self.consume.cardBindBtn_loc)) #确定
+        self.consume.clickBtn(*(self.consume.cardofBtn_loc)) #确认
+        """断言"""
+
+
+    @unittest.skip('测试其它"积分消费"临时跳过')
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
@@ -83,7 +109,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    #@unittest.skip('测试其它"储值销费"临时跳过')
+    @unittest.skip('测试其它"储值销费"临时跳过')
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
@@ -101,7 +127,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    #@unittest.skip('测试其它"券销费"临时跳过')
+    @unittest.skip('测试其它"券销费"临时跳过')
     @ddt.data(*custCouponData)
     def testCase4(self,data):
         '''券消费'''
@@ -122,7 +148,8 @@ class TestConsumePage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.driver.quit()
+        pass
+        #cls.driver.quit()
 
 if __name__=="__main__":
     suite = unittest.TestSuite()
