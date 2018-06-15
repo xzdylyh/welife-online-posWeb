@@ -3,6 +3,7 @@ from selenium import webdriver
 from pos.pages import consumePage
 import unittest,ddt,os
 from pos.lib.excel import Excel
+from pos.lib import scripts
 from pos.lib import gl,HTMLTESTRunnerCN
 
 consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000"}]
@@ -57,7 +58,7 @@ class TestConsumePage(unittest.TestCase):
                     useCount.send_keys(1)
                     break
 
-    @unittest.skip('实体开卡临时跳过')
+    @unittest.skipIf(scripts.getRunFlag('CONSUME',('testCase1'))=='N','验证执行配置')
     @ddt.data(*cardData)
     def testCase1(self,data):
         '''实体卡开卡'''
@@ -75,6 +76,7 @@ class TestConsumePage(unittest.TestCase):
         #断言
         self.assertTrue(self.consume.assertCardSuccess,msg='实体卡开卡失败')
 
+    @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
     @ddt.data(*cardBindData)
     def testCase5(self,data):
         """实体卡绑卡"""
@@ -85,7 +87,7 @@ class TestConsumePage(unittest.TestCase):
         self.consume.clickBtn(*(self.consume.cardBind_loc)) #绑卡按钮
         self.consume.inputText(data['PhoneNo'],*(self.consume.cardPhone_loc)) #输入卡号
         self.consume.clickBtn(*(self.consume.cardBindBtn_loc)) #确定
-        self.consume.clickBtn(*(self.consume.cardofBtn_loc)) #确认
+        #self.consume.clickBtn(*(self.consume.cardofBtn_loc)) #确认
         """断言"""
 
 

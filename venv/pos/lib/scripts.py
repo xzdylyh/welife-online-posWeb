@@ -33,14 +33,14 @@ def getYamlfield(yamlpath):
 
 
 """获取执行标记"""
-def getRunFlag(scenarioKey):
+def getRunFlag(scenarioKey,casename):
     """
     获取运行标记，来决定是否执行
     :param scenarioKey:
     :return: Y 或 N
     """
     yamldict = getYamlfield(os.path.join(gl.configPath,'config.yaml'))
-    return yamldict['RUNING'][scenarioKey]['Flag']
+    return yamldict['RUNING'][scenarioKey]['Flag'][casename]['Flag']
 
 
 """获取配置数据，装饰器"""
