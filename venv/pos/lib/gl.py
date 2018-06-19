@@ -7,6 +7,7 @@ global casePath
 global imgPath
 global configPath
 global dataPath
+global curDate
 
 PATH =lambda p:os.path.abspath(os.path.join(os.path.dirname(__file__),p))
 
@@ -17,6 +18,9 @@ casePath = os.path.join(PATH(os.path.dirname(libPath)),'testCase')
 imgPath = os.path.join(PATH(reportPath),'images')
 configPath = os.path.join(PATH(os.path.dirname(libPath)),'config')
 dataPath = os.path.join(PATH(os.path.dirname(libPath)),'data')
+curDate = time.strftime('%Y-%m-%d')
+
+
 if __name__=="__main__":
     print "lib路径:%s"%libPath
     print "report路径:%s"%reportPath

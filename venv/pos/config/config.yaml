@@ -4,14 +4,16 @@ CONFIG:
         LoginCookies: {"pos_entry_number":"1003935039186461",
                "pos_entry_actualcard":"1003935039186461",
                "pos_bid":"2048695606",
-               "pos_mid":"1234871385",
+               "pos_mid":"1151957379",
                "pos_sid":"1512995661",
-               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
+               "pos_sign":"d0c5d8d04c71e1342cf8a632102dfe65"}
 
+        BossLoginCookies: {"name":"UserSession","value":"5b28be4b3cdfb"}
 
 RUNING: #case执行配置
-    REPLAY:
-        Time: 800 #回放时间为毫秒
+    REPLAY: #元素回放配置
+        Time: 900 #回放时间为毫秒
+
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块
         Flag: {"testCase1":{"Flag":"N","desc":"实体卡开卡"},
@@ -21,8 +23,8 @@ RUNING: #case执行配置
                "testCase5":{"Flag":"Y","desc":"实体卡绑卡"}}
 
     CHARGE: #储值模块
-        Flag: {"testCase1":{"Flag":"N","desc":"储值"},
+        Flag: {"testCase1":{"Flag":"Y","desc":"储值"},
               "testCase2":{"Flag":"Y","desc":"储值并补开发票"}}
 
     CREDIT: #积分换礼模块
-        Flag: {"testCase1":"Y","testCase2":"Y"}
+        Flag: {"testCase1":{"Flag":"Y","desc":"积分换礼"}}

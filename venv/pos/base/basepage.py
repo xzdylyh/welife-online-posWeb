@@ -114,6 +114,7 @@ class BasePage(object):
         :param loc: 定位器
         :return: 元素存在返回True;否则返回False
         '''
+        self.driver.implicitly_wait(10)
         if self.find_element(*loc).is_displayed():
             return True
         else:

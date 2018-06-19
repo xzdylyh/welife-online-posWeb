@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from pos.pages import creditPage
 import unittest,ddt,os
-from pos.lib import gl,HTMLTESTRunnerCN
+from pos.lib import gl,HTMLTESTRunnerCN,scripts
 
 creditData = [{"charge_number":"1003935039186461","ExchangeNumber":1,"ExchangeDetail":u"自动化测试大礼包1个","desc":u"正常积分兑换流程"}]
 
@@ -11,29 +11,21 @@ creditData = [{"charge_number":"1003935039186461","ExchangeNumber":1,"ExchangeDe
 class TestCreditPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        #cls.driver = webdriver.Firefox()
+        """初始化webdriver"""
         cls.driver = webdriver.Chrome()
-
         cls.url = 'http://pos.beta.acewill.net/credit'
-        #cookies 免登录，有效期一天。
-        #cls.driver.delete_all_cookies()
-        cls.cookinfo = {"pos_entry_number":"1003935039186461",
-               "pos_entry_actualcard":"1003935039186461",
-               "pos_bid":"2048695606",
-               "pos_mid":"1234871385",
-               "pos_sid":"1512995661",
-               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
+
 
     def creditFunc(self,data):
         '''输入卡号或手号并点击确定'''
         self.credit = creditPage.CreditPage(self.url,self.driver,u"积分换礼 - 微生活POS系统")
-        self.credit.open(ck_dict=self.cookinfo) #增加cookies信息,并打开积分换礼页
+        self.credit.open  #增加cookies信息,并打开积分换礼页
 
         self.credit.inputText(data['charge_number'],"输入手机号或卡号",*(self.credit.charge_number_loc))
         self.credit.clickBtn("确定按钮",*(self.credit.creditBtn_loc))
 
 
-
+    @unittest.skipIf(scripts.getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
     def testCase1(self,data):
         '''积分换礼'''
@@ -48,8 +40,7 @@ class TestCreditPage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
-        #cls.driver.quit()
+        cls.driver.quit()
 
 
 

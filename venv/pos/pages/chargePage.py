@@ -1,8 +1,9 @@
 #coding=utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts
-import time
+from pos.lib import scripts,gl
+import time,os
+
 
 class ChargePage(basepage.BasePage):
     '''储值模块'''
@@ -31,12 +32,14 @@ class ChargePage(basepage.BasePage):
 
 
     #封装操作
-    def open(self,ck_dict=''):
+    @property
+    def open(self):
+        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
         self._open(self.base_url,self.pagetitle)
-        if ck_dict!='':
-            self.addCookies(ck_dict)
-            #time.sleep(3)
-            self._open(self.base_url, self.pagetitle)
+        self.addCookies(ck_dict)
+        #time.sleep(3)
+        self._open(self.base_url, self.pagetitle)
 
     @scripts.Replay
     def selectTab(self,*loc):
@@ -66,7 +69,7 @@ class ChargePage(basepage.BasePage):
     @property
     def assertChargeSuccess(self):
         '''断言支付成功'''
-        self.isExist(*(self.assertChargeSuccess_loc))
+        return self.isExist(*(self.assertChargeSuccess_loc))
 
 
 

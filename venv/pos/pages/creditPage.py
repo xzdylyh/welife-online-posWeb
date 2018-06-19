@@ -1,8 +1,8 @@
 #coding:utf-8
 from pos.base import basepage
-from pos.lib import scripts
 from selenium.webdriver.common.by import By
-import time
+from pos.lib import scripts,gl
+import time,os
 
 class CreditPage(basepage.BasePage):
     '''积分换礼页面'''
@@ -27,14 +27,14 @@ class CreditPage(basepage.BasePage):
     success_loc = (By.XPATH, '/html/body/div[5]')  # 兑换成功提示消息
 
     '''操作'''
-    def open(self,ck_dict=''):
+    @property
+    def open(self):
+        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
         self._open(self.base_url,self.pagetitle)
-        if ck_dict!='':
-            self.addCookies(ck_dict)
-            #time.sleep(3)
-            #self.driver.refresh()
-            self._open(self.base_url, self.pagetitle)
-            #time.sleep(3)
+        self.addCookies(ck_dict)
+        #time.sleep(3)
+        self._open(self.base_url, self.pagetitle)
 
     def selectTab(self,*loc):
         '''选择tab操作'''
@@ -67,4 +67,4 @@ class CreditPage(basepage.BasePage):
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
-        self.isExist(*(self.charge_number_loc))
+        return self.isExist(*(self.charge_number_loc))

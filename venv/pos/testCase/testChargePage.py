@@ -20,18 +20,12 @@ class TestChargePage(unittest.TestCase):
         #cls.option.add_argument('headless') #后台运行,不显示界面
         cls.driver = webdriver.Chrome(chrome_options=cls.option)
         cls.url = 'http://pos.beta.acewill.net/charge/index'
-        cls.cookinfo = {"pos_entry_number":"1003935039186461",
-               "pos_entry_actualcard":"1003935039186461",
-               "pos_bid":"2048695606",
-               "pos_mid":"1234871385",
-               "pos_sid":"1512995661",
-               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
 
     def inChargePage(self,data):
         """输入卡号进入储值页面"""
         self.charge = chargePage.ChargePage(self.url,self.driver,'充值 - 微生活POS系统')
-        self.charge.open(ck_dict=self.cookinfo)
+        self.charge.open #打开目标url
         """输入卡号，确定，进入储值页面"""
         self.charge.inputText(data['charge_number'],'输入会员卡号或手机号',*(self.charge.charge_number_loc))
         self.charge.clickBtn('确定',*(self.charge.confirmBtn_loc))

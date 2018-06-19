@@ -1,8 +1,9 @@
 #coding:utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts
-import time
+from pos.lib import scripts,gl
+import time,os
+
 
 class ConsumePage(basepage.BasePage):
     '''消费功能模块'''
@@ -58,15 +59,21 @@ class ConsumePage(basepage.BasePage):
     cardPhone_loc = (By.ID,'inputUserNumber') #输入卡号
     cardBindBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/form/div[2]/div/button') #确定按钮
     cardofBtn_loc =(By.XPATH,'//*[@id="associatedModal"]/div/div/div[3]/button[1]') #选择卡确认
+    code_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/div[2]/div[1]/input') #验证码
+    codeBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/div[2]/div[3]/div/button[1]')#确定按钮
 
+    #手机验证码
+    boss_code_xpath = '//*[@id="example2"]/tbody/tr[1]/td[4]'
 
     #封装操作
-    def open(self,ck_dict=''):
+    @property
+    def open(self):
+        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
         self._open(self.base_url,self.pagetitle)
-        if ck_dict!='':
-            self.addCookies(ck_dict)
-            #time.sleep(3)
-            self._open(self.base_url, self.pagetitle)
+        self.addCookies(ck_dict)
+        #time.sleep(3)
+        self._open(self.base_url, self.pagetitle)
 
     @scripts.Replay
     def selectTab(self,*loc):
@@ -95,11 +102,12 @@ class ConsumePage(basepage.BasePage):
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
-        self.isExist(*(self.inputCardorPhone_loc))
+        return self.isExist(*(self.inputCardorPhone_loc))
 
 
     @property
     def assertCardSuccess(self):
         '''断言支付成功'''
-        self.isExist(*(self.cardOpen_success_loc))
+        return self.isExist(*(self.cardOpen_success_loc))
+
 

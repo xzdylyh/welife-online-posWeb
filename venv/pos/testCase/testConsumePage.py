@@ -5,6 +5,7 @@ import unittest,ddt,os
 from pos.lib.excel import Excel
 from pos.lib import scripts
 from pos.lib import gl,HTMLTESTRunnerCN
+import time,json
 
 consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000"}]
 chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
@@ -18,18 +19,8 @@ class TestConsumePage(unittest.TestCase):
     '''消费模块'''
     @classmethod
     def setUpClass(cls):
-        #cls.driver = webdriver.Firefox()
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/consume'
-        cls.driver.delete_all_cookies() #删除所有cookies
-        #cookies 免登录，有效期一天。
-        cls.cookinfo = {"pos_entry_number":"1003935039186461",
-               "pos_entry_actualcard":"1003935039186461",
-               "pos_bid":"2048695606",
-               "pos_mid":"1234871385",
-               "pos_sid":"1512995661",
-               "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
-
         cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
 
     def consume_func(self,data):
@@ -37,7 +28,7 @@ class TestConsumePage(unittest.TestCase):
         self.consume = consumePage.ConsumePage(self.url, self.driver, '消费 - 微生活POS系统')
 
         # 打开浏览器，并转到消费页
-        self.consume.open(ck_dict=self.cookinfo)
+        self.consume.open
         # 选择会员卡号/手机号
         self.consume.selectTab(*(self.consume.selectCardNo_loc))
         # 输入卡号或手机号
@@ -58,6 +49,39 @@ class TestConsumePage(unittest.TestCase):
                     useCount.send_keys(1)
                     break
 
+
+    def getCode(self,data):
+        """
+        从Boss获取验证码
+        :param data: 参数化数据
+        :return: 验证码
+        """
+        """参数变量url,cookies,time"""
+        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        cookies= yamldict['CONFIG']['Cookies']['BossLoginCookies']
+        #timeStr = time.strftime('%Y-%m-%d')
+        url = 'http://boss.beta.acewill.net/sms/search?phone={0}&begin={1}&end={2}'.format(data['PhoneNo'], gl.curDate, gl.curDate)
+
+        """设置浏览器,选项,隐藏获窗口运行"""
+        option = webdriver.ChromeOptions()
+        option.add_argument('disable-infobars') #不显示"Chrome正在受自动测试软件控制"
+        option.add_argument('headless') #后台运行,不显示界面
+
+        """启动浏览器,增加cookies"""
+        driver1 = webdriver.Chrome(chrome_options=option)
+        driver1.maximize_window()
+        driver1.get(url)
+        driver1.implicitly_wait(30)
+        driver1.add_cookie(cookies)
+        driver1.get(url)
+
+        """获取验证码,并返回验证码"""
+        txtcode = driver1.find_element_by_xpath(self.consume.boss_code_xpath).text
+        code = json.loads(txtcode)['template']['yanzhengma']
+        driver1.quit()
+        return code
+
+
     @unittest.skipIf(scripts.getRunFlag('CONSUME',('testCase1'))=='N','验证执行配置')
     @ddt.data(*cardData)
     def testCase1(self,data):
@@ -76,6 +100,9 @@ class TestConsumePage(unittest.TestCase):
         #断言
         self.assertTrue(self.consume.assertCardSuccess,msg='实体卡开卡失败')
 
+
+
+
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
     @ddt.data(*cardBindData)
     def testCase5(self,data):
@@ -87,9 +114,12 @@ class TestConsumePage(unittest.TestCase):
         self.consume.clickBtn(*(self.consume.cardBind_loc)) #绑卡按钮
         self.consume.inputText(data['PhoneNo'],*(self.consume.cardPhone_loc)) #输入卡号
         self.consume.clickBtn(*(self.consume.cardBindBtn_loc)) #确定
-        #self.consume.clickBtn(*(self.consume.cardofBtn_loc)) #确认
+        code = self.getCode(data)  #获取验证码
+        print '验证码:{0}'.format(code)
+        self.consume.inputText(code,*(self.consume.code_loc)) #输入验证码
+        self.consume.clickBtn(*(self.consume.codeBtn_loc)) #验证码确认
         """断言"""
-
+        self.assertTrue(self.consume.assertCardSuccess, msg='实体卡绑定失败')
 
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase2')=='N','验证执行配置')
     @ddt.data(*consumeData)
@@ -150,7 +180,8 @@ class TestConsumePage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.driver.quit()
+        #cls.driver.quit()
+        pass
 
 if __name__=="__main__":
     suite = unittest.TestSuite()

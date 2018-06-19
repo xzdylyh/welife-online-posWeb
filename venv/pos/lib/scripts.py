@@ -42,6 +42,18 @@ def getRunFlag(scenarioKey,casename):
     yamldict = getYamlfield(os.path.join(gl.configPath,'config.yaml'))
     return yamldict['RUNING'][scenarioKey]['Flag'][casename]['Flag']
 
+def CookInfo(func):
+    """
+    从配置文件获取cookies信息
+    :param func: 函数名
+    :return: 函数
+    """
+    def warpper(*args,**kwargs):
+        yamldict = getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        cook1= yamldict['CONFIG']['Cookies']['LoginCookies']
+        return func(cook=cook1,*args,**kwargs)
+    return warpper
+
 
 def Replay(func):
     """
@@ -69,11 +81,11 @@ def Config(func):
         return func(configData,**kwargs)
     return wrapper
 
-@Replay
-def demo():
-    print 'this is demo.'
+@CookInfo
+def demo(cook=''):
+    print 'this is demo.:'.format(cook)
 
 if __name__=="__main__":
     #print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')
-    demo()
+    demo(cook='')
 
