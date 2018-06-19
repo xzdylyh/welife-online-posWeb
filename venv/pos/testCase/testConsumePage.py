@@ -180,8 +180,8 @@ class TestConsumePage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        #cls.driver.quit()
-        pass
+        cls.driver.quit()
+
 
 if __name__=="__main__":
     suite = unittest.TestSuite()

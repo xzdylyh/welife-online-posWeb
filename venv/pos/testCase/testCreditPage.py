@@ -9,6 +9,7 @@ creditData = [{"charge_number":"1003935039186461","ExchangeNumber":1,"ExchangeDe
 
 @ddt.ddt
 class TestCreditPage(unittest.TestCase):
+    """积分兑换模块"""
     @classmethod
     def setUpClass(cls):
         """初始化webdriver"""
