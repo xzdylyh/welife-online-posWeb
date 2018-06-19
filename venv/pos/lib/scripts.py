@@ -43,6 +43,20 @@ def getRunFlag(scenarioKey,casename):
     return yamldict['RUNING'][scenarioKey]['Flag'][casename]['Flag']
 
 
+def Replay(func):
+    """
+    执行函数之后,等封若干毫秒
+    :param func: 函数名
+    :return: wrapper
+    """
+    def wrapper(*args,**kwargs):
+        func(*args,**kwargs)
+        yamldict = getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
+        time.sleep(yamldict['RUNING']['REPLAY']['Time'] / 1000)
+        return func
+    return wrapper
+
+
 """获取配置数据，装饰器"""
 def Config(func):
     """
@@ -50,13 +64,16 @@ def Config(func):
     :param func: 函数
     :return: config.yaml字典内容
     """
-    def war(*args,**kwargs):
+    def wrapper(*args,**kwargs):
         configData = getYamlfield(os.path.join(gl.configPath,'config.yaml'))
         return func(configData,**kwargs)
-    return war()
+    return wrapper
 
-
+@Replay
+def demo():
+    print 'this is demo.'
 
 if __name__=="__main__":
-    print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')
+    #print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')
+    demo()
 

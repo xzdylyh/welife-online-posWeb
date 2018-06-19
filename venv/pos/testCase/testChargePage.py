@@ -6,6 +6,7 @@ from pos.lib import scripts
 from pos.lib import gl,HTMLTESTRunnerCN
 
 chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
+FillData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值并补开发票","txtName":"text"}]
 
 
 @ddt.ddt
@@ -14,7 +15,10 @@ class TestChargePage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.option = webdriver.ChromeOptions()
+        cls.option.add_argument('disable-infobars') #不显示"Chrome正在受自动测试软件控制"
+        #cls.option.add_argument('headless') #后台运行,不显示界面
+        cls.driver = webdriver.Chrome(chrome_options=cls.option)
         cls.url = 'http://pos.beta.acewill.net/charge/index'
         cls.cookinfo = {"pos_entry_number":"1003935039186461",
                "pos_entry_actualcard":"1003935039186461",
@@ -25,6 +29,7 @@ class TestChargePage(unittest.TestCase):
 
 
     def inChargePage(self,data):
+        """输入卡号进入储值页面"""
         self.charge = chargePage.ChargePage(self.url,self.driver,'充值 - 微生活POS系统')
         self.charge.open(ck_dict=self.cookinfo)
         """输入卡号，确定，进入储值页面"""
@@ -35,10 +40,9 @@ class TestChargePage(unittest.TestCase):
         self.usChargeSaving = self.driver.find_element(*(self.charge.chargeRMB_loc)).text[:-1]
         print '当前余额:{0}'.format(self.usChargeSaving[:-1])
 
-    #@unittest.skip('a')
-    @ddt.data(*chargeData)
-    def testCase1(self,data):
-        """储值"""
+
+    def chargeFunc(self,data):
+        """储值功能操作"""
         print '功能:{0}'.format(data['desc'])
         """输入卡号或手机号，确定，进入储值页面"""
         self.inChargePage(data)
@@ -60,6 +64,33 @@ class TestChargePage(unittest.TestCase):
         self.usDualSaving = self.driver.find_element(*(self.charge.usSaving_loc)).text
         print '储值后当前余额:{0}'.format(self.usDualSaving)
         self.assertTrue(float(data['present']) + float(self.usChargeSaving) ==float(self.usDualSaving))
+
+
+
+    @unittest.skipIf(scripts.getRunFlag('CHARGE', 'testCase1') == 'N', '验证执行配置')
+    @ddt.data(*chargeData)
+    def testCase1(self,data):
+        """储值"""
+        self.chargeFunc(data) #调用储值功能函数
+
+
+    @unittest.skipIf(scripts.getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
+    @ddt.data(*FillData)
+    def testCase2(self,data):
+        """储值->补开发票"""
+        self.chargeFunc(data) #调用储值功能函数
+        """补开发票"""
+        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
+        NotRMB = self.charge.getTagText(data['txtName'],*(self.charge.not_fill_RMB_loc)) #未开票金额
+        self.charge.inputText(NotRMB,'开票金额',*(self.charge.fill_RMB_loc))
+        self.charge.clickBtn('确定',*(self.charge.fillBtn_loc))
+        """断言补开票成功"""
+        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
+        time.sleep(1)
+        notRMB = (self.charge.getTagText(data['txtName'],*(self.charge.not_fill_RMB_loc))).encode('utf-8') #未开票金额
+        print '补开发票金额剩余:{0}'.format(notRMB)
+        self.assertEqual(notRMB,'0.00',msg='开票余额,不为零.')
+
 
     @classmethod
     def tearDownClass(cls):

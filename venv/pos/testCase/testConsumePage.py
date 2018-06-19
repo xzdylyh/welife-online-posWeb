@@ -91,7 +91,7 @@ class TestConsumePage(unittest.TestCase):
         """断言"""
 
 
-    @unittest.skip('测试其它"积分消费"临时跳过')
+    @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase2')=='N','验证执行配置')
     @ddt.data(*consumeData)
     def testCase2(self,data):
         '''积分消费'''
@@ -111,7 +111,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('测试其它"储值销费"临时跳过')
+    @unittest.skipIf(scripts.getRunFlag('CONSUME', 'testCase3') == 'N', '验证执行配置')
     @ddt.data(*chargeDealData)
     def testCase3(self,data):
         '''储值销费'''
@@ -129,7 +129,7 @@ class TestConsumePage(unittest.TestCase):
 
         self.consume.assertPaySuccess #支付成功断言
 
-    @unittest.skip('测试其它"券销费"临时跳过')
+    @unittest.skipIf(scripts.getRunFlag('CONSUME', 'testCase4') == 'N', '验证执行配置')
     @ddt.data(*custCouponData)
     def testCase4(self,data):
         '''券消费'''
@@ -150,8 +150,7 @@ class TestConsumePage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
-        #cls.driver.quit()
+        cls.driver.quit()
 
 if __name__=="__main__":
     suite = unittest.TestSuite()

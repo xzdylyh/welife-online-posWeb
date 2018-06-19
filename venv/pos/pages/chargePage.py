@@ -1,6 +1,7 @@
 #coding=utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
+from pos.lib import scripts
 import time
 
 class ChargePage(basepage.BasePage):
@@ -21,6 +22,13 @@ class ChargePage(basepage.BasePage):
     consumeBtn_loc = (By.ID,'consumeBtn') #立即消费按钮
     usSaving_loc = (By.ID,'usSaving') #储值余额
 
+    #被开发票
+    toReceipt_loc = (By.ID,"toReceipt") #补开发票
+    fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[5]/input') #第一行发票金额
+
+    not_fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4]') #未开发票金额
+    fillBtn_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[3]/div') #确定按钮
+
 
     #封装操作
     def open(self,ck_dict=''):
@@ -30,16 +38,18 @@ class ChargePage(basepage.BasePage):
             #time.sleep(3)
             self._open(self.base_url, self.pagetitle)
 
-
+    @scripts.Replay
     def selectTab(self,*loc):
         '''选择tab操作'''
         self.find_element(*loc).click()
 
+    @scripts.Replay
     def inputText(self,text,desc,*loc):
         '''输入文本操作'''
         print '输入{0}:{1}'.format(desc,text)
         self.send_keys(text,*loc)
 
+    @scripts.Replay
     def clickBtn(self,desc,*loc):
         '''点击操作'''
         print '单击:{0}'.format(desc)

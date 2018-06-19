@@ -8,7 +8,14 @@ import os,time
 basepage封装所有公共方法
 '''
 class BasePage(object):
+    """PO公共方法类"""
     def __init__(self,baseurl,driver,pagetitle):
+        """
+        初始化,driver对象及数据
+        :param baseurl: 目标地址
+        :param driver: webdriver对象
+        :param pagetitle: 用来断言的目标页标题
+        """
         self.base_url = baseurl
         self.driver = driver
         self.pagetitle = pagetitle
@@ -18,6 +25,12 @@ class BasePage(object):
     '''
     #打开浏览器
     def _open(self,url,pagetitle):
+        """
+        打开浏览器，并断言标题
+        :param url: 目标地址
+        :param pagetitle: 目标页标题
+        :return: 无
+        """
         self.driver.maximize_window()
         self.driver.get(url)
         self.driver.implicitly_wait(10)
@@ -25,6 +38,11 @@ class BasePage(object):
 
     #查找元素
     def find_element(self,*loc):
+        """
+        自封装，查找元素，智能等待
+        :param loc: 元素定位器(By.ID,"xxxx")
+        :return: 元素对象
+        """
         try:
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
             #元素高亮显示
@@ -37,7 +55,10 @@ class BasePage(object):
 
     @property
     def getImage(self):
-        '''截取图片,并保存在images文件夹'''
+        '''
+        截取图片,并保存在images文件夹
+        :return: 无
+        '''
         timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
         imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
         print '错误截图路径:{0}'.format(imgPath)
@@ -115,7 +136,19 @@ class BasePage(object):
         except NoSuchElementException,TimeoutException:
             pass
 
-
+    def getTagText(self,txtName,*loc):
+        """
+        获取元素对象属性值
+        :param propertyName: 属性名称
+        :param loc: #定位器
+        :return: 属性值 或 raise
+        """
+        element = self.find_element(*loc)
+        try:
+            proValue = getattr(element,str(txtName))
+            return proValue
+        except Exception as ex:
+            raise
 
 if __name__=="__main__":
     ck_dict = {"pos_entry_number":"13522656892",

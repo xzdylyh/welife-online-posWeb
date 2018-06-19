@@ -1,6 +1,7 @@
 #coding:utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
+from pos.lib import scripts
 import time
 
 class ConsumePage(basepage.BasePage):
@@ -67,14 +68,18 @@ class ConsumePage(basepage.BasePage):
             #time.sleep(3)
             self._open(self.base_url, self.pagetitle)
 
+    @scripts.Replay
     def selectTab(self,*loc):
         '''选择tab操作'''
         self.find_element(*loc).click()
 
+    @scripts.Replay
     def inputText(self,text,*loc):
         '''输入文本操作'''
         self.send_keys(text,*loc)
 
+
+    @scripts.Replay
     def clickBtn(self,*loc):
         '''点击操作'''
         self.find_element(*loc).click()

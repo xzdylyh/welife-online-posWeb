@@ -1,5 +1,6 @@
 #coding:utf-8
 from pos.base import basepage
+from pos.lib import scripts
 from selenium.webdriver.common.by import By
 import time
 
@@ -39,16 +40,19 @@ class CreditPage(basepage.BasePage):
         '''选择tab操作'''
         self.find_element(*loc).click()
 
+    @scripts.Replay
     def inputText(self,text,desc,*loc):
         '''输入文本操作'''
         print '输入{0}:{1}'.format(desc,text)
         self.send_keys(text,*loc)
 
+    @scripts.Replay
     def clickBtn(self,desc,*loc):
         '''点击操作'''
         print '点击:{0}'.format(desc)
         self.find_element(*loc).click()
 
+    @scripts.Replay
     def iterClick(self,desc,*loc):
         '''批量勾选积分规则'''
         elements = self.find_elements(*loc)
