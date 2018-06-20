@@ -8,7 +8,7 @@ CONFIG:
                "pos_sid":"1512995661",
                "pos_sign":"d0c5d8d04c71e1342cf8a632102dfe65"}
 
-        BossLoginCookies: {"name":"UserSession","value":"5b28be4b3cdfb"}
+        BossLoginCookies: {"name":"UserSession","value":"5b2a0ee4e0a18"}
 
 RUNING: #case执行配置
     REPLAY: #元素回放配置
@@ -28,3 +28,12 @@ RUNING: #case执行配置
 
     CREDIT: #积分换礼模块
         Flag: {"testCase1":{"Flag":"Y","desc":"积分换礼"}}
+
+    PRINT: #班结小票
+        Flag: {"testCase1":{"Flag":"Y","desc":"班结小票打印"}}
+
+    CONSUMELIST: #交易流水-消费
+        Flag: {"testCase1":{"Flag":"Y","desc":"撤销消费"}}
+
+    CREDITLIST: #交易流水-积分
+        Flag: {"testCase1":{"Flag":"Y","desc":"撤销积分"}}

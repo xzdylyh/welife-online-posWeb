@@ -110,7 +110,7 @@ class BasePage(object):
 
     def isExist(self,*loc):
         '''
-        判断元素是否存在
+        判断元素存在,并且是否显示
         :param loc: 定位器
         :return: 元素存在返回True;否则返回False
         '''
@@ -118,6 +118,19 @@ class BasePage(object):
         if self.find_element(*loc).is_displayed():
             return True
         else:
+            return False
+
+    def isOrNoExist(self,*loc):
+        """
+        判断元素,是否存在
+        :param loc: 定位器(By.ID,'kw')
+        :return: True 或 False
+        """
+        self.driver.implicitly_wait(30)
+        try:
+            self.driver.find_element(*loc)
+            return True
+        except NoSuchElementException as ex:
             return False
 
 
@@ -150,6 +163,20 @@ class BasePage(object):
             return proValue
         except Exception as ex:
             raise
+
+    @property
+    def switch_window(self):
+        """
+        切换window窗口,切换一次后退出
+        :return: 无
+        """
+        curHandle = self.driver.current_window_handle
+        allHandle = self.driver.window_handles
+        for h in allHandle:
+            if h != curHandle:
+                self.driver.switch_to.window(h)
+                break
+
 
 if __name__=="__main__":
     ck_dict = {"pos_entry_number":"13522656892",
