@@ -1,6 +1,6 @@
 #_*_coding:utf-8_*_
 import unittest
-import os,time,json
+import os
 from pos.lib import (HTMLTESTRunnerCN,gl)
 from pos.testCase.testConsumePage import TestConsumePage
 from pos.testCase.testChargePage import TestChargePage
@@ -8,6 +8,7 @@ from pos.testCase.testCreditPage import TestCreditPage
 from pos.testCase.testBjPrintPage import TestBjPrintPage
 from pos.testCase.testConsumeListPage import TestConsumeListPage
 from pos.testCase.testCreditListPage import TestCreditListPage
+from pos.testCase.testChargeListPage import TestChargeListPage
 
 
 if __name__=="__main__":
@@ -17,7 +18,8 @@ if __name__=="__main__":
              unittest.TestLoader().loadTestsFromTestCase(TestCreditPage),
              unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage),
              unittest.TestLoader().loadTestsFromTestCase(TestConsumeListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestCreditListPage)
+             unittest.TestLoader().loadTestsFromTestCase(TestCreditListPage),
+             unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage)
              ]
 
     suite.addTests(tests)

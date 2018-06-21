@@ -8,7 +8,7 @@ CONFIG:
                "pos_sid":"1512995661",
                "pos_sign":"d0c5d8d04c71e1342cf8a632102dfe65"}
 
-        BossLoginCookies: {"name":"UserSession","value":"5b2a0ee4e0a18"}
+        BossLoginCookies: {"name":"UserSession","value":"5b2b3a77a904d"} #boss,浏览器关闭session过期
 
 RUNING: #case执行配置
     REPLAY: #元素回放配置
@@ -23,8 +23,8 @@ RUNING: #case执行配置
                "testCase5":{"Flag":"Y","desc":"实体卡绑卡"}}
 
     CHARGE: #储值模块
-        Flag: {"testCase1":{"Flag":"Y","desc":"储值"},
-              "testCase2":{"Flag":"Y","desc":"储值并补开发票"}}
+        Flag: {"testCase1":{"Flag":"N","desc":"储值"},
+               "testCase2":{"Flag":"Y","desc":"储值并补开发票"}}
 
     CREDIT: #积分换礼模块
         Flag: {"testCase1":{"Flag":"Y","desc":"积分换礼"}}
@@ -37,3 +37,6 @@ RUNING: #case执行配置
 
     CREDITLIST: #交易流水-积分
         Flag: {"testCase1":{"Flag":"Y","desc":"撤销积分"}}
+
+    CHARGELIST:  #充值流水
+        Flag: {"testCase1":{"Flag":"Y","desc":"撤销充值"}}
