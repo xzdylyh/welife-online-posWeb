@@ -45,13 +45,15 @@ class BasePage(object):
         """
         try:
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
+            #element = WebDriverWait(self.driver, 10, 0.5).until(lambda d:d.find_element(*loc))
+
             #元素高亮显示
             self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
                                        element, "border: 2px solid red;")
             return element
-        except TimeoutException as ex:
+        except NoSuchElementException as ex:
             self.getImage  #截取图片
-            raise
+            raise ex
 
     @property
     def getImage(self):
@@ -68,6 +70,11 @@ class BasePage(object):
         '''批量找标签'''
         try:
             elements = self.driver.find_elements(*loc)
+
+            #元素高亮显示
+            for e in elements:
+                self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
+                                           e, "border: 2px solid red;")
             return elements
         except NoSuchElementException as ex:
             self.getImage  #截取图片
@@ -79,6 +86,21 @@ class BasePage(object):
         element = self.find_elements(*loc)
         for e in element:
             e.click()
+
+    def iterInput(self,text=[],*loc):
+        """
+        批量输入
+        :param text: 输入内容
+        :param loc: 定位器(By.XPATH,'//*[@id='xxxx']/input')
+        :return: 无
+        """
+        elements = self.find_elements(*loc)
+        i = 0
+        for e in elements:
+            self.wait(1000)
+            e.clear()
+            e.send_keys(text[i])
+            i+=1
 
 
     #文本框输入
@@ -176,6 +198,19 @@ class BasePage(object):
             if h != curHandle:
                 self.driver.switch_to.window(h)
                 break
+
+
+    def wait(self,ms):
+        """
+        线程休眼时间
+        :param ms: 毫秒
+        :return: 无
+        """
+        ms = int(ms) / 1000
+        time.sleep(ms)
+
+
+
 
 
 if __name__=="__main__":

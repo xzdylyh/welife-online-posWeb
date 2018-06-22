@@ -9,7 +9,8 @@ from pos.testCase.testBjPrintPage import TestBjPrintPage
 from pos.testCase.testConsumeListPage import TestConsumeListPage
 from pos.testCase.testCreditListPage import TestCreditListPage
 from pos.testCase.testChargeListPage import TestChargeListPage
-
+from pos.testCase.testCardIndexPage import TestCardIndexPage
+from pos.testCase.testCouponsaleIndexPage import TestCouponsaleIndexPage
 
 if __name__=="__main__":
     suite = unittest.TestSuite()
@@ -19,7 +20,9 @@ if __name__=="__main__":
              unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage),
              unittest.TestLoader().loadTestsFromTestCase(TestConsumeListPage),
              unittest.TestLoader().loadTestsFromTestCase(TestCreditListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage)
+             unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage),
+             unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage),
+             unittest.TestLoader().loadTestsFromTestCase(TestCouponsaleIndexPage)
              ]
 
     suite.addTests(tests)

@@ -12,7 +12,7 @@ chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935
 custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
 cardData = [{"PhoneNo":"13712345676","desc":u"实体卡开卡",'username':'yhleng','birthday':'1985-03-21','password':'000000'}]
 cardBindData = [{"PhoneNo": "13712345678","desc":u"绑卡正常流程"}]
-
+cardofData = [{"desc":u"次卡开卡"}]
 
 @ddt.ddt
 class TestConsumePage(unittest.TestCase):
@@ -22,6 +22,7 @@ class TestConsumePage(unittest.TestCase):
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/consume'
         cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
+        cls.toexcel = Excel(os.path.join(gl.dataPath, 'posNotNameCardData.xls').decode('utf-8'))
 
     def consume_func(self,data):
         '''消费->输入卡号或手机号->确定'''
@@ -87,7 +88,7 @@ class TestConsumePage(unittest.TestCase):
     def testCase1(self,data):
         '''实体卡开卡'''
         print '功能：{0}'.format(data['desc'])
-        cardNo = {'phoneOrCard':str(self.excel.getCardNo)} #获取卡号
+        cardNo = {'phoneOrCard':str(self.excel.getCardNo())} #获取卡号
         print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
         self.consume_func(cardNo)
         self.consume.clickBtn(*(self.consume.openCard_loc)) #实体卡开卡
@@ -102,13 +103,29 @@ class TestConsumePage(unittest.TestCase):
 
 
 
+    @unittest.skipIf(scripts.getRunFlag('CONSUME',('testCase6'))=='N','验证执行配置')
+    @ddt.data(*cardofData)
+    def testCase6(self,data):
+        """不记名卡开卡"""
+        print '功能：{0}'.format(data['desc'])
+
+        cardNo = {'phoneOrCard':str(self.toexcel.getCardNo(cell_col=0))} #获取磁道号
+        print cardNo
+        self.consume_func(cardNo)
+
+        """开卡页面"""
+        self.consume.clickBtn(*(self.consume.cardOfOpenBtn_loc)) #开卡页面,确定按钮
+
+        """断言操作"""
+
+
 
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
     @ddt.data(*cardBindData)
     def testCase5(self,data):
         """实体卡绑卡"""
         print '功能：{0}'.format(data['desc'])
-        cardNo = {'phoneOrCard': str(self.excel.getCardNo)}  # 获取卡号
+        cardNo = {'phoneOrCard': str(self.excel.getCardNo())}  # 获取卡号
         print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
         self.consume_func(cardNo)
         self.consume.clickBtn(*(self.consume.cardBind_loc)) #绑卡按钮
@@ -120,6 +137,8 @@ class TestConsumePage(unittest.TestCase):
         self.consume.clickBtn(*(self.consume.codeBtn_loc)) #验证码确认
         """断言"""
         self.assertTrue(self.consume.assertCardSuccess, msg='实体卡绑定失败')
+
+
 
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase2')=='N','验证执行配置')
     @ddt.data(*consumeData)

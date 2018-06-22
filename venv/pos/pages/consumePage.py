@@ -65,6 +65,10 @@ class ConsumePage(basepage.BasePage):
     #手机验证码
     boss_code_xpath = '//*[@id="example2"]/tbody/tr[1]/td[4]'
 
+    #次卡绑卡
+    cardOfOpenBtn_loc = (By.ID,'chargeSubmit') #次卡开卡页面,确定按钮
+
+
     #封装操作
     @property
     def open(self):

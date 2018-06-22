@@ -33,8 +33,8 @@ class Excel(object):
             return ex.message()
         return table.row_values(rownum)
 
-    @property
-    def getCardNo(self,start_col=0,sheet_name='Sheet1'):
+
+    def getCardNo(self,start_col=0,cell_col=1,cell_valueType=0,sheet_name='Sheet1'):
         """
         获取实体卡，卡号
         :param start_col: 定义列所在行号
@@ -49,13 +49,17 @@ class Excel(object):
         for n in range(1,rowCount):
             openCardflag = table.cell(n,2).value
             if str(openCardflag).upper() != 'Y':
-                cardNo = table.cell(n,1).value #卡号
+                cardNo = str(table.cell(n,cell_col).value) #卡号
                 newData = copy(data)
                 ws = newData.get_sheet(0)
                 ws.write(n,2,'Y')
                 newData.save(self.excelPath)
                 break
-        return cardNo[1:]
+
+        if cell_valueType ==0:
+            cardNo = cardNo[1:]
+
+        return cardNo
 
 
 
@@ -91,6 +95,6 @@ class Excel(object):
 
 
 if __name__=="__main__":
-    excelPath = os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8')
-    Excel(excelPath).getCardNo
-    print excelPath
+    excelPath = os.path.join(gl.dataPath, 'posChargeCard.xls').decode('utf-8')
+    a =  Excel(excelPath).getCardNo(cell_col=0,cell_valueType=1)
+    print int(float(a))
