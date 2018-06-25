@@ -1,0 +1,60 @@
+#coding=utf-8
+from selenium import webdriver
+from pos.pages import numbercardListPage
+import unittest,ddt,os
+from pos.lib import scripts
+from pos.lib import gl,HTMLTESTRunnerCN
+
+
+
+listCardData = [{"useNum":1,"phoneOrCard":"13712345678","desc":u"次卡消费,正常流程","title":u"次卡消费 - 微生活POS系统"}]
+
+@ddt.ddt
+class TestNumberCardListPage(unittest.TestCase):
+    """交易流水模块"""
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome()
+        cls.url = 'http://pos.beta.acewill.net/numbercard/list'
+
+    @unittest.skipIf(scripts.getRunFlag('NUMBERCARDLIST', 'testCase1') == 'N', '验证执行配置')
+    @ddt.data(*listCardData)
+    def testCase1(self,data):
+        """次卡消费撤销"""
+        print '功能:{0}'.format(data['desc'])
+        self.list = numbercardListPage.NumberCardListPage(self.url,self.driver,data['title'])
+        self.list.open #打开目标地址
+
+        """撤销操作"""
+        self.list.clickBtn('撤销消费',*(self.list.list_undoLink_loc))
+        self.list.clickBtn('确认',*(self.list.list_confirmBtn_loc))
+
+        """检查断言"""
+        self.assertTrue(self.list.assertSuccess)
+        self.assertEqual(self.list.find_element(*(self.list.list_assert_loc)).text,'撤销消费')
+
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+
+
+if __name__=="__main__":
+    suite = unittest.TestSuite()
+
+    tests = [unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage)]
+    suite.addTests(tests)
+    filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
+    print filePath
+
+    with file(filePath, 'wb') as fp:
+        runner = HTMLTESTRunnerCN.HTMLTestRunner(
+            stream=fp,
+            title=u'UI自动化测试报告',
+            description=u'详细测试用例结果',  # 不传默认为空
+            tester=u"yhleng"  # 测试人员名字，不传默认为小强
+        )
+        # 运行测试用例
+        runner.run(suite)
+        fp.close()

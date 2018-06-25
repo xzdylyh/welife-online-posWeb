@@ -22,6 +22,8 @@ class TestNumberCardPage(unittest.TestCase):
     @ddt.data(*numberCardData)
     def testCase1(self,data):
         """次卡消费"""
+        print '功能:{0}'.format(data['desc'])
+
         self.number = numbercardPage.NumberCardPage(self.url,self.driver,data['title'])
         self.number.open #打开目标地址
 

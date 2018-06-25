@@ -8,7 +8,7 @@ CONFIG:
                "pos_sid":"1512995661",
                "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
-        BossLoginCookies: {"name":"UserSession","value":"5b3057c7e0379"} #boss,浏览器关闭session过期
+        BossLoginCookies: {"name":"UserSession","value":"5b307fb9584c2"} #boss,浏览器关闭session过期
 
 RUNING: #case执行配置
     REPLAY: #元素回放配置
@@ -50,3 +50,6 @@ RUNING: #case执行配置
 
     NUMBERCARD: #次卡消费
         Flag: {"testCase1":{"Flag":"Y","desc":"次卡消费正常流程"}}
+
+    NUMBERCARDLIST: #交易流水-次卡消费
+        Flag: {"testCase1":{"Flag":"Y","desc":"次卡消费撤销正常流程"}}

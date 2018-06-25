@@ -4,6 +4,8 @@ from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,TimeoutException
 from pos.lib import gl
 import os,time
+
+
 '''
 basepage封装所有公共方法
 '''
@@ -175,16 +177,16 @@ class BasePage(object):
         '''如果元素存在则单击,不存在则忽略'''
         try:
             self.driver.find_element(*loc).click()
-        except NoSuchElementException,TimeoutException:
+        except NoSuchElementException as ex:
             pass
 
     def isExistAndInput(self,text,*loc):
         '''如果元素存在则输入,不存在则忽略'''
         try:
-            element = self.driver.find_element(*loc)
+            element =self.driver.find_element(*loc)
             element.clear()
             element.send_keys(text)
-        except NoSuchElementException,TimeoutException:
+        except NoSuchElementException as ex:
             pass
 
     def getTagText(self,txtName,*loc):
@@ -221,7 +223,8 @@ class BasePage(object):
         :param ms: 毫秒
         :return: 无
         """
-        ms = int(ms) / 1000
+
+        ms = float(ms) / 1000
         time.sleep(ms)
 
 
