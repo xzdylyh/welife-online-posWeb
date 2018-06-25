@@ -13,6 +13,7 @@ from pos.testCase.testCardIndexPage import TestCardIndexPage
 from pos.testCase.testCouponsaleIndexPage import TestCouponsaleIndexPage
 from pos.testCase.testNumberCardPage import TestNumberCardPage
 from pos.testCase.testNumberCardListPage import TestNumberCardListPage
+from pos.testCase.testConsumeCouponListPage import TestConsumeCouponListPage
 
 
 if __name__=="__main__":
@@ -27,7 +28,8 @@ if __name__=="__main__":
              unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage),
              unittest.TestLoader().loadTestsFromTestCase(TestCouponsaleIndexPage),
              unittest.TestLoader().loadTestsFromTestCase(TestNumberCardPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage)
+             unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage),
+             unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)
              ]
 
     suite.addTests(tests)
