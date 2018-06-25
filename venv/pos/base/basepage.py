@@ -45,15 +45,24 @@ class BasePage(object):
         """
         try:
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
-            #element = WebDriverWait(self.driver, 10, 0.5).until(lambda d:d.find_element(*loc))
 
             #元素高亮显示
-            self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
-                                       element, "border: 2px solid red;")
+            self.hightlight(element)
             return element
         except NoSuchElementException as ex:
             self.getImage  #截取图片
             raise ex
+
+
+    def hightlight(self,element):
+        """
+        元素高亮显示
+        :param element: 元素对象
+        :return: 无
+        """
+        self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
+                                   element, "border: 2px solid red;")
+
 
     @property
     def getImage(self):
@@ -73,8 +82,8 @@ class BasePage(object):
 
             #元素高亮显示
             for e in elements:
-                self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
-                                           e, "border: 2px solid red;")
+                self.hightlight(e)
+
             return elements
         except NoSuchElementException as ex:
             self.getImage  #截取图片
@@ -132,15 +141,19 @@ class BasePage(object):
 
     def isExist(self,*loc):
         '''
-        判断元素存在,并且是否显示
+        元素存在,判断是否显示
         :param loc: 定位器
         :return: 元素存在返回True;否则返回False
         '''
-        self.driver.implicitly_wait(10)
-        if self.find_element(*loc).is_displayed():
-            return True
-        else:
+        try:
+            element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
+            if element.is_displayed():
+                return True
+            else:
+                return False
+        except NoSuchElementException as ex:
             return False
+
 
     def isOrNoExist(self,*loc):
         """
@@ -148,9 +161,11 @@ class BasePage(object):
         :param loc: 定位器(By.ID,'kw')
         :return: True 或 False
         """
-        self.driver.implicitly_wait(30)
         try:
-            self.driver.find_element(*loc)
+            e = WebDriverWait(self.driver, 10, 0.5).until(lambda d:d.find_element(*loc))
+            """高亮显示,定位元素"""
+            self.hightlight(e)
+
             return True
         except NoSuchElementException as ex:
             return False

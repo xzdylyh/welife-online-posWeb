@@ -8,11 +8,11 @@ CONFIG:
                "pos_sid":"1512995661",
                "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
-        BossLoginCookies: {"name":"UserSession","value":"5b2cbdcaca74c"} #boss,浏览器关闭session过期
+        BossLoginCookies: {"name":"UserSession","value":"5b3057c7e0379"} #boss,浏览器关闭session过期
 
 RUNING: #case执行配置
     REPLAY: #元素回放配置
-        Time: 900 #回放时间为毫秒
+        Time: 1000 #回放时间为毫秒
 
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块
@@ -47,3 +47,6 @@ RUNING: #case执行配置
 
     COUPONSALEINDEX: #商品售卖
         Flag: {"testCase1":{"Flag":"Y","desc":"商品售卖-次卡+券_直接购买"}}
+
+    NUMBERCARD: #次卡消费
+        Flag: {"testCase1":{"Flag":"Y","desc":"次卡消费正常流程"}}
