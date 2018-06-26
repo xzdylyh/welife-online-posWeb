@@ -66,7 +66,7 @@ class TestConsumePage(unittest.TestCase):
         """设置浏览器,选项,隐藏获窗口运行"""
         option = webdriver.ChromeOptions()
         option.add_argument('disable-infobars') #不显示"Chrome正在受自动测试软件控制"
-        #option.add_argument('headless') #后台运行,不显示界面
+        option.add_argument('headless') #后台运行,不显示界面
 
         """启动浏览器,增加cookies"""
         driver1 = webdriver.Chrome(chrome_options=option)

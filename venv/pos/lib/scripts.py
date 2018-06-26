@@ -13,10 +13,9 @@ def writeYmal(yamlPath,data):
     :param data: 写入的数据
     :return: 无
     """
-    fp = open(yamlPath,'w')
-    yaml.dump(data,fp)
-    fp.close()
-
+    with open(yamlPath,'wb') as fp:
+        yaml.dump(data, fp)
+        fp.close()
 
 """读取YAML文件内容"""
 def getYamlfield(yamlpath):
@@ -25,10 +24,11 @@ def getYamlfield(yamlpath):
     :param yamlpath: xxxx.YAML文件所在路径
     :return: 指定节点内容
     """
-    f = open(yamlpath,'r')
-    cont = f.read()
+    with open(yamlpath,'rb') as fp:
+        cont = fp.read()
+        fp.close()
+
     ret = yaml.load(cont)
-    f.close()
     return ret
 
 
@@ -64,7 +64,8 @@ def Replay(func):
     def wrapper(*args,**kwargs):
         func(*args,**kwargs)
         yamldict = getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        time.sleep(yamldict['RUNING']['REPLAY']['Time'] / 1000)
+        sleepTime = float(yamldict['RUNING']['REPLAY']['Time']) / 1000
+        time.sleep(sleepTime)
         return func
     return wrapper
 

@@ -106,12 +106,10 @@ class BasePage(object):
         :return: 无
         """
         elements = self.find_elements(*loc)
-        i = 0
-        for e in elements:
+        for i,e in enumerate(elements):
             self.wait(1000)
             e.clear()
             e.send_keys(text[i])
-            i+=1
 
 
     #文本框输入
