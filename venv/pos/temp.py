@@ -1,10 +1,11 @@
 #coding=utf-8
 
+import time
 import requests
 from PIL import Image
 import pytesseract
-import time
-import os
+
+
 
 
 pic = requests.get('https://pos.acewill.net/captcha')

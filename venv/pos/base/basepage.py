@@ -47,13 +47,13 @@ class BasePage(object):
         """
         try:
             element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
-
+            #element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
             #元素高亮显示
             self.hightlight(element)
             return element
-        except NoSuchElementException as ex:
+        except TimeoutException,NoSuchElementException:
             self.getImage  #截取图片
-            raise ex
+            raise
 
 
     def hightlight(self,element):
