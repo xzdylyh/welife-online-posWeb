@@ -17,7 +17,7 @@ from pos.testCase.testConsumeCouponListPage import TestConsumeCouponListPage
 
 
 if __name__=="__main__":
-    scripts.rmDirsAndFiles(gl.imgPath)
+    #scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
              unittest.TestLoader().loadTestsFromTestCase(TestChargePage),

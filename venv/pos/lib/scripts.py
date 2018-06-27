@@ -90,12 +90,13 @@ def rmDirsAndFiles(dirpath):
     :return: 无
     """
     listdir = os.listdir(dirpath)
-    for f in listdir:
-        filepath = os.path.join(dirpath,f)
-        if os.path.isfile(filepath):
-            os.remove(filepath)
-        if os.path.isdir(filepath):
-            os.rmdir(filepath)
+    if listdir:
+        for f in listdir:
+            filepath = os.path.join(dirpath,f)
+            if os.path.isfile(filepath):
+                os.remove(filepath)
+            if os.path.isdir(filepath):
+                os.rmdir(filepath)
 
 if __name__=="__main__":
     #print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')

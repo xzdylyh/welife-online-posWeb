@@ -65,6 +65,7 @@ def rmDirsAndFiles(dirpath):
     :return: 无
     """
     listdir = os.listdir(dirpath)
+    print listdir
     for f in listdir:
         filepath = os.path.join(dirpath,f)
         if os.path.isfile(filepath):
@@ -74,7 +75,9 @@ def rmDirsAndFiles(dirpath):
 
 
 rmDirsAndFiles(dirpath)
-
+somelist2 = []
+if somelist2:
+    print 'True'
 
 def switch_frame(self,*loc):
     """
