@@ -91,3 +91,9 @@ def switch_frame(self,*loc):
         self.driver.switch_to.frame(element)
     except NoSuchElementException as ex:
         raise
+
+
+tmp = {"des":"aaaa","am":"1234"}
+for num,key in enumerate(tmp):
+    print num
+    print key

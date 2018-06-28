@@ -308,7 +308,7 @@ table       { font-size: 100%; }
     #
 
     HEADING_TMPL = """<div class='heading'>
-<h1 style="font-family: Microsoft YaHei">%(title)s</h1>
+<h4 style="font-family: Microsoft YaHei">%(title)s</h4>
 %(parameters)s
 <p class='description'>%(description)s</p>
 </div>

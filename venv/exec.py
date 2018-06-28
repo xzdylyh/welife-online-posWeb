@@ -1,7 +1,7 @@
 #_*_coding:utf-8_*_
 import unittest
 import os
-from pos.lib import (HTMLTESTRunnerCN,gl,scripts)
+from pos.lib import HTMLTESTRunnerCN,gl
 from pos.testCase.testConsumePage import TestConsumePage
 from pos.testCase.testChargePage import TestChargePage
 from pos.testCase.testCreditPage import TestCreditPage
@@ -17,7 +17,6 @@ from pos.testCase.testConsumeCouponListPage import TestConsumeCouponListPage
 
 
 if __name__=="__main__":
-    #scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
              unittest.TestLoader().loadTestsFromTestCase(TestChargePage),

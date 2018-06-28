@@ -12,7 +12,7 @@ CONFIG:
 
 RUNING: #case执行配置
     REPLAY: #元素回放配置
-        Time: 500 #回放时间为毫秒
+        Time: 900 #回放时间为毫秒
 
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块

@@ -15,10 +15,33 @@ from pos.testCase.testNumberCardPage import TestNumberCardPage
 from pos.testCase.testNumberCardListPage import TestNumberCardListPage
 from pos.testCase.testConsumeCouponListPage import TestConsumeCouponListPage
 
+def loadTestCase(caselist):
+    """
+    加载测试类
+    :param caselist:
+    :return:
+    """
+    testlist = []
+    if caselist:
+        for i in caselist:
+           testlist.append(unittest.TestLoader().loadTestsFromTestCase(i))
+        return testlist
+    else:
+        print '至少要指定一个测试'
+        return None
+
+
 
 if __name__=="__main__":
     scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
+    caselist = [TestConsumePage,TestChargePage,TestCreditPage,TestBjPrintPage,TestConsumeListPage,
+                TestCreditListPage,TestChargeListPage,TestCardIndexPage,TestCouponsaleIndexPage,
+                TestNumberCardPage,TestNumberCardListPage,TestConsumeCouponListPage]
+
+    tests = loadTestCase(caselist)
+
+    """
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
              unittest.TestLoader().loadTestsFromTestCase(TestChargePage),
              unittest.TestLoader().loadTestsFromTestCase(TestCreditPage),
@@ -32,7 +55,7 @@ if __name__=="__main__":
              unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage),
              unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)
              ]
-
+    """
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
     print filePath

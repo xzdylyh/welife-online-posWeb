@@ -37,6 +37,7 @@ class TestCardIndexPage(unittest.TestCase):
         self.card.clickBtn('储值卡类型',*(self.card.card_Type_loc))
         self.card.inputText(cardNo,'储值卡号',*(self.card.card_Numer_loc))
         self.card.clickBtn('确定',*(self.card.card_ConfirmBtn_loc))
+        self.card.wait(2000)
         self.card.clickBtn('再次确定',*(self.card.card_toConfirmBtn_loc))
 
         """后置断言操作"""
@@ -46,14 +47,9 @@ class TestCardIndexPage(unittest.TestCase):
         self.assertEqual(self.card.assertChareSuccess,data['assert'],msg='断言已售的卡不能再售,来判断售卡成功')
 
 
-
-
-
-
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-        #pass
 
 
 

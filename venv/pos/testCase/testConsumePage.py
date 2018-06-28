@@ -37,6 +37,7 @@ class TestConsumePage(unittest.TestCase):
         # 点击确定按钮
         self.consume.clickBtn(*(self.consume.confirmBtn_loc))
 
+
     """消费模块，动态选择券"""
     def iterCoupon(self):
         '''动态选择券'''
