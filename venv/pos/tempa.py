@@ -2,98 +2,42 @@
 from requests import Session
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-import time,os
-somelist = ['a','b','c','d','e','f','g','h']
-print somelist[:]
-print somelist[3:]
-print somelist[3:5]
-print somelist[3:-1]
-print somelist[3:-2]
-print somelist[-3:]
-print somelist[-3:-1]
-print somelist[-0:]
-print somelist[0:]
+from selenium.webdriver.common.by import By
+import time
 
-print somelist[::-1]
-print somelist[::2]
-print somelist[1::2]
-print somelist[::-2]
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.get('https://www.baidu.com')
+driver.implicitly_wait(30)
 
-"""列表迭代,并取下标"""
-for num,iter in enumerate(somelist):
-    print '{0}:{1}'.format(num,iter)
+loc = (By.ID,'kw')
 
-for i in range(len(somelist)):
-    print '{0}:{1}'.format(i,somelist[i])
-
-"""数组是否为空判断"""
-if somelist:
-    print True
-else:
-    print False
-
-if len(somelist)==0:
-    print True
-else:
-    print False
-
-"""列表推导式"""
-list = [x +'a' for x in somelist]
-print list
-
-list = [x +'a' for x in somelist if x == 'c']
-print list
-
-url = 'http://boss.beta.acewill.net/captcha'
-session = Session()
-session.get(url)
-
-login_url = 'http://boss.beta.acewill.net/user/login'
-data = {"captcha":"2ema","password":"baihongye","username":"bhy@acewill.cn","refer":""}
-res = session.post(login_url,data=data)
-#print res.content
-
-timestrac = int(time.time())
-print timestrac
-
-dirpath = r'D:\posWeb\venv\pos\report\images'
-
-def rmDirsAndFiles(dirpath):
+def find_element(*loc):
     """
-    删除目标,目录下文件及文件夹
-    :param dirpath: 目标目录
-    :return: 无
-    """
-    listdir = os.listdir(dirpath)
-    print listdir
-    for f in listdir:
-        filepath = os.path.join(dirpath,f)
-        if os.path.isfile(filepath):
-            os.remove(filepath)
-        if os.path.isdir(filepath):
-            os.rmdir(filepath)
-
-
-rmDirsAndFiles(dirpath)
-somelist2 = []
-if somelist2:
-    print 'True'
-
-def switch_frame(self,*loc):
-    """
-    切换frame
+    查询元素
     :param loc: 定位器
-    :return: 无
+    :return: 找到返回元素对象 否则返回 None
     """
-    try:
-        element = self.driver.find_element(*loc)
-        self.driver.switch_to.default_content()
-        self.driver.switch_to.frame(element)
-    except NoSuchElementException as ex:
-        raise
+    """时间设置(秒)"""
+    timeout = 10 #超时时间
+    poll_frequency = 0.5 #轮询间隔时间
+
+    start_time = time.time().__int__()
+    while True:
+        try:
+            element = driver.find_element(*loc)
+            return element
+        except NoSuchElementException as ex:
+            if (time.time().__int__() - start_time) >timeout:
+                return None
+        time.sleep(poll_frequency)
 
 
-tmp = {"des":"aaaa","am":"1234"}
-for num,key in enumerate(tmp):
-    print num
-    print key
+
+
+print find_element(*loc)
+driver.quit()
+
+
+
+

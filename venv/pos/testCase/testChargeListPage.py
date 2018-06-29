@@ -5,6 +5,7 @@ import unittest,ddt,os
 from pos.lib import scripts
 from pos.lib import gl,HTMLTESTRunnerCN
 
+
 chargeData = [{"desc": u"充值撤销正常流程", "pageTitle": u"充值流水 - 微生活POS系统"}]
 
 @ddt.ddt
@@ -22,7 +23,7 @@ class TestChargeListPage(unittest.TestCase):
     @ddt.data(*chargeData)
     def testCase1(self,data):
         """充值撤销"""
-        print '功能:{0}'.format(data['desc'])
+        #print '功能:{0}'.format(data['desc'])
         self.charge = chargeListPage.ChargeListPage(self.url,self.driver,data['pageTitle'])
         self.charge.open #打开目标页
         self.charge.clickBtn('充值撤销',*(self.charge.charge_undoLink_loc))

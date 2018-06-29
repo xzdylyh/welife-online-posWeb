@@ -1,9 +1,10 @@
 #coding=utf-8
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EX
-from selenium.common.exceptions import NoSuchElementException,TimeoutException
+from selenium.common.exceptions import NoSuchElementException,TimeoutException,ElementNotVisibleException
 from pos.lib import gl
 import os,time
+from PIL import Image
 
 
 '''
@@ -38,6 +39,7 @@ class BasePage(object):
         self.driver.implicitly_wait(10)
         assert self.driver.title,pagetitle
 
+    '''
     #查找元素
     def find_element(self,*loc):
         """
@@ -46,14 +48,44 @@ class BasePage(object):
         :return: 元素对象
         """
         try:
-            element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
-            #element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
+            #element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
+            element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
             #元素高亮显示
             self.hightlight(element)
             return element
         except TimeoutException,NoSuchElementException:
             self.getImage  #截取图片
             raise
+        '''
+
+    def find_element(self,*loc):
+        """
+        查询元素
+        :param loc: 定位器
+        :return: 找到返回元素对象 否则返回 None
+        """
+        """时间设置(秒)"""
+        timeout = 10  # 超时时间
+        poll_frequency = 0.5  # 轮询间隔时间
+
+        start_time = time.time().__int__()
+        while True:
+            try:
+                element = self.driver.find_element(*loc)
+                if element.is_displayed():
+                    self.hightlight(element) #高亮显示
+                    return element
+                else:
+                    raise ElementNotVisibleException
+
+            except NoSuchElementException as ex:
+                if (time.time().__int__() - start_time) > timeout:
+                    self.getImage  # 截取图片
+                    raise ex
+                    #return None
+            time.sleep(poll_frequency)
+
+
 
 
     def hightlight(self,element):
@@ -65,6 +97,28 @@ class BasePage(object):
         self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
                                    element, "border: 2px solid red;")
 
+    def getElementImage(self,element):
+        """
+        截图,指定元素图片
+        :param element: 元素对象
+        :return: 无
+        """
+        """图片路径"""
+        timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
+        imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
+
+        self.driver.save_screenshot(imgPath)
+        left = element.location['x']
+        top = element.location['y']
+        elementWidth = left + element.size['width']
+        elementHeight = top + element.size['height']
+
+        picture = Image.open(imgPath)
+        picture = picture.crop((left, top, elementWidth, elementHeight))
+        timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
+        imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
+        picture.save(imgPath)
+        print  'screenshot:', timestrmap, '.png'
 
     @property
     def getImage(self):
@@ -74,8 +128,9 @@ class BasePage(object):
         '''
         timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
         imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
-        print '错误截图路径:{0}'.format(imgPath)
+
         self.driver.save_screenshot(imgPath)
+        print  'screenshot:', timestrmap, '.png'
 
     def find_elements(self,*loc):
         '''批量找标签'''

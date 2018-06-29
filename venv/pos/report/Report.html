@@ -116,8 +116,8 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2018-06-28 15:31:52</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:26.050000</p>
+<p class='attribute'><strong>开始时间 : </strong> 2018-06-29 17:42:17</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:22.355000</p>
 <p class='attribute'><strong>测试结果 : </strong> 共 1，通过 1，通过率= 100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
@@ -126,6 +126,7 @@ function html_escape(s) {
 
 <p id='show_detail_line'>
 <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
+<a class="btn btn-warning" href='javascript:showCase(1)'>错误{ 0 }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过{ 1 }</a>
 <a class="btn btn-info" href='javascript:showCase(3)'>所有{ 1 }</a>
@@ -133,6 +134,7 @@ function html_escape(s) {
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
 <col align='left' />
+<col align='right' />
 <col align='right' />
 <col align='right' />
 <col align='right' />
@@ -146,20 +148,22 @@ function html_escape(s) {
     <td>失败</td>
     <td>错误</td>
     <td>详细</td>
+    <td>截图</td>
 </tr>
 
 <tr class='passClass warning'>
-    <td>TestCardIndexPage: 储值售卖模块</td>
+    <td>TestChargePage: 储值模块</td>
     <td class="text-center">1</td>
     <td class="text-center">1</td>
     <td class="text-center">0</td>
     <td class="text-center">0</td>
     <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>testCase1_1: 储值卡售卖-实体储值卡</div></td>
-    <td colspan='5' align='center'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1: 储值</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
     <!--默认收起错误信息 -Findyou
     <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
     <div id='div_pt1_1' class="collapse">  -->
@@ -168,19 +172,34 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre>
     
-pt1_1: 功能:实体储值卡售卖
-Click:储值卡类型
-Input储值卡号:3696632979
-Click:确定
-Click:再次确定
-Click:储值卡类型
-Input储值卡号:3696632979
+pt1_1: 功能:储值正常流程
+输入输入会员卡号或手机号:1003935039186461
+单击:确定
+当前余额:23174.0
+单击:选择储值奖励规则
+单击:自定义规则
+输入自定义金额:2
+单击:确定
+单击:现金
+输入备注:自动化测试充值
+单击:确定
+单击:确认
+screenshot: 20180629_17.42.32 .png
+单击:立即消费
+储值后当前余额:23176.00
 
 
     </pre>
     </div>
     </td>
+    <td align="right">
+        <a  href="./images/20180629_17.42.32.png">
+            <img   src="./images/20180629_17.42.32.png" height="200" width="400"/>
+        </a>
+    </td>
 </tr>
+
+
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
@@ -189,6 +208,7 @@ Input储值卡号:3696632979
     <td>0</td>
     <td>0</td>
     <td>通过率：100.00%</td>
+    <td> <a href="" target="_blank"></a></td>
 </tr>
 </table>
 

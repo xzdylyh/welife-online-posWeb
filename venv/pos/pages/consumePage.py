@@ -101,11 +101,13 @@ class ConsumePage(basepage.BasePage):
     @property
     def assertCustom(self):
         '''断言进入消费页面'''
+        self.getImage
         return self.isExist(*(self.assertPhone))
 
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
+        self.getImage
         return self.isExist(*(self.inputCardorPhone_loc))
 
 

@@ -52,6 +52,7 @@ class CouponsaleIndexPage(basepage.BasePage):
     @property
     def assertShopSuccess(self):
         '''断言售卖成功'''
+        self.getImage
         resultBool = self.isExist(*(self.shop_phone_loc))
         print '返回到输入卡号界面?{0}'.format(resultBool)
         return resultBool

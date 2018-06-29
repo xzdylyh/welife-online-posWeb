@@ -55,7 +55,7 @@ class TestCardIndexPage(unittest.TestCase):
 
 
 if __name__=="__main__":
-
+    scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
 
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage)]

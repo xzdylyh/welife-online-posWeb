@@ -52,6 +52,7 @@ class TestChargePage(unittest.TestCase):
         """断言操作"""
         self.charge.assertChargeSuccess
         """后置操作"""
+        self.charge.wait(2000)
         self.charge.clickBtn('立即消费',*(self.charge.consumeBtn_loc))
         time.sleep(3)
         """断言储值余额，是否正确"""

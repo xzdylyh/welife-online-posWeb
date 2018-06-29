@@ -52,6 +52,7 @@ class CardIndexPage(basepage.BasePage):
         print 'Input{0}:{1}'.format(desc,text)
         self.send_keys(text,*loc)
 
+
     @scripts.Replay
     def clickBtn(self,desc,*loc):
         '''点击操作'''
@@ -63,6 +64,7 @@ class CardIndexPage(basepage.BasePage):
     @property
     def assertChareSuccess(self):
         '''断言支付成功'''
+        self.getImage
         return self.getTagText('text',*(self.card_AssertSuccess_loc))
 
 

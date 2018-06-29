@@ -326,6 +326,7 @@ table       { font-size: 100%; }
     REPORT_TMPL = """
 <p id='show_detail_line'>
 <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ %(passrate)s }</a>
+<a class="btn btn-warning" href='javascript:showCase(1)'>错误{ %(error)s }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ %(fail)s }</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过{ %(Pass)s }</a>
 <a class="btn btn-info" href='javascript:showCase(3)'>所有{ %(count)s }</a>
@@ -333,6 +334,7 @@ table       { font-size: 100%; }
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
 <col align='left' />
+<col align='right' />
 <col align='right' />
 <col align='right' />
 <col align='right' />
@@ -346,6 +348,7 @@ table       { font-size: 100%; }
     <td>失败</td>
     <td>错误</td>
     <td>详细</td>
+    <td>截图</td>
 </tr>
 %(test_list)s
 <tr id='total_row' class="text-center active">
@@ -355,6 +358,7 @@ table       { font-size: 100%; }
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td>通过率：%(passrate)s</td>
+    <td> <a href="" target="_blank"></a></td>
 </tr>
 </table>
 """ # variables: (test_list, count, Pass, fail, error ,passrate)
@@ -367,14 +371,15 @@ table       { font-size: 100%; }
     <td class="text-center">%(fail)s</td>
     <td class="text-center">%(error)s</td>
     <td class="text-center"><a href="javascript:showClassDetail('%(cid)s',%(count)s)" class="detail" id='%(cid)s'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
 
     #失败 的样式，去掉原来JS效果，美化展示效果  -Findyou
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
-    <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>
+    <td class='%(style)s' width='300px'><div class='testcase'>%(desc)s</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
     <!--默认收起错误信息 -Findyou
     <button id='btn_%(tid)s' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_%(tid)s'>%(status)s</button>
     <div id='div_%(tid)s' class="collapse">  -->
@@ -386,7 +391,14 @@ table       { font-size: 100%; }
     </pre>
     </div>
     </td>
+    <td align="right">
+        <a %(hidde)s href="%(image)s">
+            <img   src="%(image)s" height="200" width="400"/>
+        </a>
+    </td>
 </tr>
+
+
 """ # variables: (tid, Class, style, desc, status)
 
     # 通过 的样式，加标签效果  -Findyou
@@ -394,6 +406,11 @@ table       { font-size: 100%; }
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
     <td colspan='5' align='center'><span class="label label-success success">%(status)s</span></td>
+    <td align="right">
+        <a %(hidde)s href="%(image)s">
+            <img   src="%(image)s" height="200" width="400"/>
+        </a>
+    </td>
 </tr>
 """ # variables: (tid, Class, style, desc, status)
 
@@ -698,6 +715,16 @@ class HTMLTestRunner(Template_mixin):
             id = tid,
             output = saxutils.escape(uo+ue),
         )
+        # 插入图片
+        unum = str(uo).find('screenshot:')
+        if ((uo or ue) and unum !=-1):
+            hidde_status = ''
+            unum=str(uo).find('screenshot:')
+            image_url = './images/'+str(uo)[unum+11:unum+34].replace(' ','')
+
+        else:
+            hidde_status = '''hidden="hidden"'''
+            image_url = ''
 
         row = tmpl % dict(
             tid = tid,
@@ -705,6 +732,8 @@ class HTMLTestRunner(Template_mixin):
             style = n == 2 and 'errorCase' or (n == 1 and 'failCase' or 'passCase'),
             desc = desc,
             script = script,
+            hidde=hidde_status,
+            image=image_url,
             status = self.STATUS[n],
         )
         rows.append(row)

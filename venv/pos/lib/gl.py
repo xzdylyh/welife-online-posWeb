@@ -1,6 +1,6 @@
 #_*_coding:utf-8_*_
 import os,time
-
+import reportLog
 global libPath
 global reportPath #报告路径
 global casePath
@@ -8,6 +8,9 @@ global imgPath
 global configPath
 global dataPath
 global curDate
+
+logInstance = reportLog.cREPORTXML()
+
 
 PATH =lambda p:os.path.abspath(os.path.join(os.path.dirname(__file__),p))
 
@@ -19,6 +22,8 @@ imgPath = os.path.join(PATH(reportPath),'images')
 configPath = os.path.join(PATH(os.path.dirname(libPath)),'config')
 dataPath = os.path.join(PATH(os.path.dirname(libPath)),'data')
 curDate = time.strftime('%Y-%m-%d')
+
+
 
 
 if __name__=="__main__":
