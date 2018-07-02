@@ -57,6 +57,7 @@ class ConsumePage(basepage.BasePage):
     #绑卡
     cardBind_loc = (By.XPATH,'//*[@id="openCard"]/div/div/div[2]/a[2]/i') #绑卡
     cardPhone_loc = (By.ID,'inputUserNumber') #输入卡号
+    cardNumber_loc = (By.ID,'charge_number')
     cardBindBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/form/div[2]/div/button') #确定按钮
     cardofBtn_loc =(By.XPATH,'//*[@id="associatedModal"]/div/div/div[3]/button[1]') #选择卡确认
     code_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/div[2]/div[1]/input') #验证码
@@ -87,12 +88,14 @@ class ConsumePage(basepage.BasePage):
     @scripts.Replay
     def inputText(self,text,*loc):
         '''输入文本操作'''
+        print 'Input:{0}'.format(text)
         self.send_keys(text,*loc)
 
 
     @scripts.Replay
     def clickBtn(self,*loc):
         '''点击操作'''
+        print 'Click:{0}'.format(loc)
         self.find_element(*loc).click()
 
 
@@ -121,3 +124,4 @@ class ConsumePage(basepage.BasePage):
     def assertOpenCardSuccess(self):
         """断言次卡开卡成功"""
         self.getImage
+        return self.isExist(*(self.cardNumber_loc))

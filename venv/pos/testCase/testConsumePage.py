@@ -99,8 +99,9 @@ class TestConsumePage(unittest.TestCase):
         self.consume.inputText(data['birthday'],*(self.consume.birthday_loc)) #生日
         self.consume.inputText(data['password'],*(self.consume.password_loc)) #交易密码
         self.consume.clickBtn(*(self.consume.cardConfirmBtn_loc)) #确定
+
         #断言
-        self.assertTrue(self.consume.assertCardSuccess,msg='实体卡开卡失败')
+        self.assertTrue(self.consume.assertCardSuccess)
 
 
 
@@ -118,7 +119,7 @@ class TestConsumePage(unittest.TestCase):
         self.consume.clickBtn(*(self.consume.cardOfOpenBtn_loc)) #开卡页面,确定按钮
 
         """断言操作"""
-        self.consume.assertOpenCardSuccess
+        self.assertTrue(self.consume.assertOpenCardSuccess)
 
 
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
@@ -136,6 +137,7 @@ class TestConsumePage(unittest.TestCase):
         print '验证码:{0}'.format(code)
         self.consume.inputText(code,*(self.consume.code_loc)) #输入验证码
         self.consume.clickBtn(*(self.consume.codeBtn_loc)) #验证码确认
+
         """断言"""
         self.assertTrue(self.consume.assertCardSuccess, msg='实体卡绑定失败')
 
@@ -183,6 +185,7 @@ class TestConsumePage(unittest.TestCase):
     @ddt.data(*custCouponData)
     def testCase4(self,data):
         '''券消费'''
+        print u'功能:{0},消费{1}积分.'.format(data['desc'], data['tcTotalFee'])
         self.consume_func(data)  # 进入消费页
         self.consume.inputText(data['tcTotalFee'], *(self.consume.tcTotalFee_loc))  # 输入金额
         self.iterCoupon()#选择现金券
