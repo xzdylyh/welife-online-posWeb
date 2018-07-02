@@ -33,9 +33,11 @@ class EmailClass(object):
         msg['To'] = self.To
         msg['Subject'] = Header('%s%s'%(self.msg_title,self.curDateTime),'utf-8')
 
-        #两个附件路径
+        #附件路径
+        dirpath = gl.reportPath
+        zipfile = os.path.join(os.path.dirname(dirpath), 'report.zip')
         reportfile = os.path.join(gl.reportPath, 'Report.html')
-
+        scripts.zipDir(dirpath,zipfile) #压缩报告
         #增加邮件内容为html
         fp = open(reportfile, 'rb')
         reportHtmlText = fp.read()
@@ -43,7 +45,7 @@ class EmailClass(object):
         fp.close()
 
         #增加附件
-        html = self.addAttach(reportfile,filename='Report%s.html'%self.curDateTime) #自动化测试报告附件
+        html = self.addAttach(zipfile,filename='Report%s.zip'%self.curDateTime) #自动化测试报告附件
         msg.attach(html)
 
         return msg
