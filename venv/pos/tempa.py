@@ -4,14 +4,14 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 import time
-
+'''
 driver = webdriver.Chrome()
 driver.maximize_window()
 driver.get('https://www.baidu.com')
 driver.implicitly_wait(30)
 
 loc = (By.ID,'kw')
-
+'''
 def find_element(*loc):
     """
     查询元素
@@ -33,10 +33,10 @@ def find_element(*loc):
         time.sleep(poll_frequency)
 
 
+a = r"""%(id)s"""
+print a % 3
 
 
-print find_element(*loc)
-driver.quit()
 
 
 

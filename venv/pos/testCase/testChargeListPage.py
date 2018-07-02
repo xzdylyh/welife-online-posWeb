@@ -29,7 +29,8 @@ class TestChargeListPage(unittest.TestCase):
         self.charge.clickBtn('充值撤销',*(self.charge.charge_undoLink_loc))
         self.charge.clickBtn('确定',*(self.charge.charge_confirmBtn_loc))
         """断言"""
-        #self.assertTrue(self.charge.assertUndoSuccess,msg='储值撤销失败,请检查状态.')
+        self.charge.assertUndoSuccess
+        #self.assertTrue(self.charge.assertUndoSuccess)
         txt = self.driver.find_element(*(self.charge.charge_undoStatus_loc)).text
         print '充值撤销状态:{0}'.format(txt)
         self.assertEqual(txt,u'撤销充值',msg='撤销充值记录列表中,不存在状态为<撤销充值>的记录')

@@ -114,6 +114,10 @@ class ConsumePage(basepage.BasePage):
     @property
     def assertCardSuccess(self):
         '''断言支付成功'''
+        self.getImage
         return self.isExist(*(self.cardOpen_success_loc))
 
-
+    @property
+    def assertOpenCardSuccess(self):
+        """断言次卡开卡成功"""
+        self.getImage

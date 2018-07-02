@@ -118,7 +118,7 @@ class TestConsumePage(unittest.TestCase):
         self.consume.clickBtn(*(self.consume.cardOfOpenBtn_loc)) #开卡页面,确定按钮
 
         """断言操作"""
-
+        self.consume.assertOpenCardSuccess
 
 
     @unittest.skipIf(scripts.getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
