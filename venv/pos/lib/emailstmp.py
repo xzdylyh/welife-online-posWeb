@@ -8,7 +8,7 @@ from email.header import Header
 from email import encoders
 import time
 import yaml,os,base64
-from pos.lib import gl
+from pos.lib import gl,scripts
 
 
 class EmailClass(object):
@@ -35,7 +35,6 @@ class EmailClass(object):
 
         #两个附件路径
         reportfile = os.path.join(gl.reportPath, 'Report.html')
-        countPath = os.path.join(gl.reportPath,'count.xlsx')
 
         #增加邮件内容为html
         fp = open(reportfile, 'rb')
@@ -45,9 +44,7 @@ class EmailClass(object):
 
         #增加附件
         html = self.addAttach(reportfile,filename='Report%s.html'%self.curDateTime) #自动化测试报告附件
-        xlsx = self.addAttach(countPath,filename='接口开发情况统计表.xlsx') #xlsx接口进度表
         msg.attach(html)
-        msg.attach(xlsx)
 
         return msg
 

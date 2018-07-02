@@ -2,6 +2,7 @@
 import unittest
 import os
 from pos.lib import (HTMLTESTRunnerCN,gl,scripts)
+from pos.lib.emailstmp import EmailClass
 from pos.testCase.testConsumePage import TestConsumePage
 from pos.testCase.testChargePage import TestChargePage
 from pos.testCase.testCreditPage import TestCreditPage
@@ -35,13 +36,7 @@ def loadTestCase(caselist):
 if __name__=="__main__":
     scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
-    caselist = [TestConsumePage,TestChargePage,TestCreditPage,TestBjPrintPage,TestConsumeListPage,
-                TestCreditListPage,TestChargeListPage,TestCardIndexPage,TestCouponsaleIndexPage,
-                TestNumberCardPage,TestNumberCardListPage,TestConsumeCouponListPage]
 
-    tests = loadTestCase(caselist)
-
-    """
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
              unittest.TestLoader().loadTestsFromTestCase(TestChargePage),
              unittest.TestLoader().loadTestsFromTestCase(TestCreditPage),
@@ -55,7 +50,7 @@ if __name__=="__main__":
              unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage),
              unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)
              ]
-    """
+
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
     print filePath
@@ -71,3 +66,4 @@ if __name__=="__main__":
         runner.run(suite)
         fp.close()
 
+    EmailClass().send
