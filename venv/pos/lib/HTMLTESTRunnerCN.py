@@ -191,6 +191,7 @@ output_list = Array();
 1:Failed  //pt hiddenRow, ft none
 2:Pass    //pt none, ft hiddenRow
 3:All     //pt none, ft none
+4:Error  
 */
 function showCase(level) {
     trs = document.getElementsByTagName("tr");
@@ -206,7 +207,7 @@ function showCase(level) {
             }
         }
         if (id.substr(0,2) == 'pt') {
-            if (level < 2) {
+            if (level < 2 || level ==4) {
                 tr.className = 'hiddenRow';
             }
             else {
@@ -326,7 +327,7 @@ table       { font-size: 100%; }
     REPORT_TMPL = """
 <p id='show_detail_line'>
 <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ %(passrate)s }</a>
-<a class="btn btn-warning" href='javascript:showCase(1)'>错误{ %(error)s }</a>
+<a class="btn btn-warning" href='javascript:showCase(4)'>错误{ %(error)s }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ %(fail)s }</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过{ %(Pass)s }</a>
 <a class="btn btn-info" href='javascript:showCase(3)'>所有{ %(count)s }</a>

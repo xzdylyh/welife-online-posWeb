@@ -39,6 +39,7 @@ output_list = Array();
 1:Failed  //pt hiddenRow, ft none
 2:Pass    //pt none, ft hiddenRow
 3:All     //pt none, ft none
+4:Error  
 */
 function showCase(level) {
     trs = document.getElementsByTagName("tr");
@@ -54,7 +55,7 @@ function showCase(level) {
             }
         }
         if (id.substr(0,2) == 'pt') {
-            if (level < 2) {
+            if (level < 2 || level ==4) {
                 tr.className = 'hiddenRow';
             }
             else {
@@ -116,8 +117,8 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2018-07-02 17:33:50</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:04:57.088000</p>
+<p class='attribute'><strong>开始时间 : </strong> 2018-07-04 16:08:22</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:05:12.892000</p>
 <p class='attribute'><strong>测试结果 : </strong> 共 17，通过 17，通过率= 100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
@@ -126,7 +127,7 @@ function html_escape(s) {
 
 <p id='show_detail_line'>
 <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
-<a class="btn btn-warning" href='javascript:showCase(1)'>错误{ 0 }</a>
+<a class="btn btn-warning" href='javascript:showCase(4)'>错误{ 0 }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过{ 17 }</a>
 <a class="btn btn-info" href='javascript:showCase(3)'>所有{ 17 }</a>
@@ -173,8 +174,8 @@ function html_escape(s) {
     <pre>
     
 pt1_1: 功能：实体卡开卡
-实体卡，卡号为：1383619329481477
-Input:1383619329481477
+实体卡，卡号为：1383619434931255
+Input:1383619434931255
 Click:('xpath', "//div[@id='ipt_box1']/div[1]/div[1]/button")
 Click:('xpath', '//*[@id="openCard"]/div/div/div[2]/a[1]/i')
 Input:13712345676
@@ -183,15 +184,15 @@ Click:('xpath', '/html/body/div[1]/div/div/div/div[2]/form/div[4]/div/label[1]')
 Input:1985-03-21
 Input:000000
 Click:('xpath', '/html/body/div[1]/div/div/div/div[3]/div/button')
-screenshot: 20180702_17.34.05 .png
+screenshot: 20180704_16.08.37 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.34.05.png">
-            <img   src="./images/20180702_17.34.05.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.08.37.png">
+            <img   src="./images/20180704_16.08.37.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -217,15 +218,15 @@ Input:1
 Input:积分消费
 Click:('id', 'showSubmit')
 Click:('xpath', '/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')
-screenshot: 20180702_17.34.32 .png
+screenshot: 20180704_16.09.05 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.34.32.png">
-            <img   src="./images/20180702_17.34.32.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.09.05.png">
+            <img   src="./images/20180704_16.09.05.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -250,15 +251,15 @@ Input:1
 Input:储值卡消费
 Click:('id', 'showSubmit')
 Click:('xpath', '/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')
-screenshot: 20180702_17.34.38 .png
+screenshot: 20180704_16.09.11 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.34.38.png">
-            <img   src="./images/20180702_17.34.38.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.09.11.png">
+            <img   src="./images/20180704_16.09.11.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -283,15 +284,15 @@ Input:1
 Input:券消费
 Click:('id', 'showSubmit')
 Click:('xpath', '/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')
-screenshot: 20180702_17.35.07 .png
+screenshot: 20180704_16.09.40 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.35.07.png">
-            <img   src="./images/20180702_17.35.07.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.09.40.png">
+            <img   src="./images/20180704_16.09.40.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -310,19 +311,19 @@ screenshot: 20180702_17.35.07 .png
     <pre>
     
 pt1_5: 功能：次卡开卡
-{'phoneOrCard': '541395226010153018952260101530'}
-Input:541395226010153018952260101530
+{'phoneOrCard': '541395226608117968952266081179'}
+Input:541395226608117968952266081179
 Click:('xpath', "//div[@id='ipt_box1']/div[1]/div[1]/button")
 Click:('id', 'chargeSubmit')
-screenshot: 20180702_17.35.11 .png
+screenshot: 20180704_16.09.44 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.35.11.png">
-            <img   src="./images/20180702_17.35.11.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.09.44.png">
+            <img   src="./images/20180704_16.09.44.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -353,7 +354,7 @@ screenshot: 20180702_17.35.11 .png
 pt2_1: 功能:储值正常流程
 输入输入会员卡号或手机号:1003935039186461
 单击:确定
-当前余额:23179.0
+当前余额:23185.0
 单击:选择储值奖励规则
 单击:自定义规则
 输入自定义金额:2
@@ -362,17 +363,18 @@ pt2_1: 功能:储值正常流程
 输入备注:自动化测试充值
 单击:确定
 单击:确认
-screenshot: 20180702_17.35.29 .png
+screenshot: 20180704_16.10.04 .png
+screenshot: 20180704_16.10.05 .png
 单击:立即消费
-储值后当前余额:23181.00
+储值后当前余额:23187.00
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.35.29.png">
-            <img   src="./images/20180702_17.35.29.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.10.04.png">
+            <img   src="./images/20180704_16.10.04.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -393,7 +395,7 @@ screenshot: 20180702_17.35.29 .png
 pt2_2: 功能:储值并补开发票
 输入输入会员卡号或手机号:1003935039186461
 单击:确定
-当前余额:23181.0
+当前余额:23187.0
 单击:选择储值奖励规则
 单击:自定义规则
 输入自定义金额:2
@@ -402,9 +404,10 @@ pt2_2: 功能:储值并补开发票
 输入备注:自动化测试充值
 单击:确定
 单击:确认
-screenshot: 20180702_17.35.43 .png
+screenshot: 20180704_16.10.19 .png
+screenshot: 20180704_16.10.19 .png
 单击:立即消费
-储值后当前余额:23183.00
+储值后当前余额:23189.00
 单击:补开发票
 输入开票金额:2.00
 单击:确定
@@ -416,8 +419,8 @@ screenshot: 20180702_17.35.43 .png
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.35.43.png">
-            <img   src="./images/20180702_17.35.43.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.10.19.png">
+            <img   src="./images/20180704_16.10.19.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -454,15 +457,15 @@ pt3_1: 正常积分兑换流程
 输入积分数量:1
 输入积分详情:自动化测试大礼包1个
 点击:确定按钮
-screenshot: 20180702_17.36.08 .png
+screenshot: 20180704_16.10.47 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.36.08.png">
-            <img   src="./images/20180702_17.36.08.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.10.47.png">
+            <img   src="./images/20180704_16.10.47.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -493,15 +496,15 @@ screenshot: 20180702_17.36.08 .png
 pt4_1: 功能:班结小票打印正常流程
 单击:打印班结小票
 单击:打印
-screenshot: 20180702_17.36.27 .png
+screenshot: 20180704_16.11.08 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.36.27.png">
-            <img   src="./images/20180702_17.36.27.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.11.08.png">
+            <img   src="./images/20180704_16.11.08.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -532,15 +535,15 @@ screenshot: 20180702_17.36.27 .png
 pt5_1: 功能:撤销消费正常流程
 Click撤销消费:('xpath', '//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[21]/span/a')
 Click确定:('id', 'undo')
-screenshot: 20180702_17.36.43 .png
+screenshot: 20180704_16.11.23 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.36.43.png">
-            <img   src="./images/20180702_17.36.43.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.11.23.png">
+            <img   src="./images/20180704_16.11.23.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -571,15 +574,15 @@ screenshot: 20180702_17.36.43 .png
 pt6_1: 功能:积分换礼-撤销积分
 Click撤销积分:('xpath', '//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]')
 Click确定:('id', 'cancelGift')
-screenshot: 20180702_17.36.57 .png
+screenshot: 20180704_16.11.40 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.36.57.png">
-            <img   src="./images/20180702_17.36.57.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.11.40.png">
+            <img   src="./images/20180704_16.11.40.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -609,7 +612,7 @@ screenshot: 20180702_17.36.57 .png
     
 pt7_1: Click:充值撤销
 Click:确定
-screenshot: 20180702_17.37.13 .png
+screenshot: 20180704_16.11.55 .png
 充值撤销状态:撤销充值
 
 
@@ -617,8 +620,8 @@ screenshot: 20180702_17.37.13 .png
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.37.13.png">
-            <img   src="./images/20180702_17.37.13.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.11.55.png">
+            <img   src="./images/20180704_16.11.55.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -648,20 +651,20 @@ screenshot: 20180702_17.37.13 .png
     
 pt8_1: 功能:实体储值卡售卖
 Click:储值卡类型
-Input储值卡号:3994848346
+Input储值卡号:3536059725
 Click:确定
 Click:再次确定
 Click:储值卡类型
-Input储值卡号:3994848346
-screenshot: 20180702_17.37.40 .png
+Input储值卡号:3536059725
+screenshot: 20180704_16.12.25 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.37.40.png">
-            <img   src="./images/20180702_17.37.40.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.12.25.png">
+            <img   src="./images/20180704_16.12.25.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -693,7 +696,7 @@ pt9_1: 功能:券包+次卡+直接购买
 Input手机号或卡号:13712345678
 Click:确定
 Click:确认
-screenshot: 20180702_17.37.56 .png
+screenshot: 20180704_16.12.41 .png
 返回到输入卡号界面?True
 
 
@@ -701,8 +704,8 @@ screenshot: 20180702_17.37.56 .png
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.37.56.png">
-            <img   src="./images/20180702_17.37.56.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.12.41.png">
+            <img   src="./images/20180704_16.12.41.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -736,15 +739,15 @@ Click确定:('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/butto
 Input次数:1
 Click确定:('id', 'numberSubmit')
 断言:返回到次卡消费初始页
-screenshot: 20180702_17.38.09 .png
+screenshot: 20180704_16.12.54 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.38.09.png">
-            <img   src="./images/20180702_17.38.09.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.12.54.png">
+            <img   src="./images/20180704_16.12.54.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -776,15 +779,15 @@ pt11_1: 功能:次卡消费,正常流程
 Click撤销消费:('xpath', '//*[@id="giftRunWater"]/table/tbody/tr[1]/td[7]')
 Click确认:('id', 'cancelCost')
 断言:交易流水,新增一条,交易类型为撤销消费的记录
-screenshot: 20180702_17.38.22 .png
+screenshot: 20180704_16.13.07 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.38.22.png">
-            <img   src="./images/20180702_17.38.22.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.13.07.png">
+            <img   src="./images/20180704_16.13.07.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -815,7 +818,7 @@ screenshot: 20180702_17.38.22 .png
 pt12_1: 功能:券包+次卡+直接购买
 Click撤销:('xpath', '//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[12]/span[1]/a')
 Click确认:('id', 'undo')
-screenshot: 20180702_17.38.36 .png
+screenshot: 20180704_16.13.22 .png
 断言:交易流水,新增一条,交易类型为撤销商品售卖的记录
 
 
@@ -823,8 +826,8 @@ screenshot: 20180702_17.38.36 .png
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180702_17.38.36.png">
-            <img   src="./images/20180702_17.38.36.png" height="200" width="400"/>
+        <a  href="./images/20180704_16.13.22.png">
+            <img   src="./images/20180704_16.13.22.png" height="200" width="400"/>
         </a>
     </td>
 </tr>

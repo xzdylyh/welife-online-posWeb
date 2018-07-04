@@ -16,21 +16,6 @@ from pos.testCase.testNumberCardPage import TestNumberCardPage
 from pos.testCase.testNumberCardListPage import TestNumberCardListPage
 from pos.testCase.testConsumeCouponListPage import TestConsumeCouponListPage
 
-def loadTestCase(caselist):
-    """
-    加载测试类
-    :param caselist:
-    :return:
-    """
-    testlist = []
-    if caselist:
-        for i in caselist:
-           testlist.append(unittest.TestLoader().loadTestsFromTestCase(i))
-        return testlist
-    else:
-        print '至少要指定一个测试'
-        return None
-
 
 
 if __name__=="__main__":

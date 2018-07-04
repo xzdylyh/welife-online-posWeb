@@ -76,6 +76,7 @@ class BasePage(object):
                     self.hightlight(element) #高亮显示
                     return element
                 else:
+                    self.getImage  # 截取图片
                     raise ElementNotVisibleException
 
             except NoSuchElementException as ex:
@@ -163,7 +164,7 @@ class BasePage(object):
         elements = self.find_elements(*loc)
         for i,e in enumerate(elements):
             self.wait(1000)
-            e.clear()
+            #e.clear()
             e.send_keys(text[i])
 
 
@@ -176,7 +177,7 @@ class BasePage(object):
         :return:
         '''
         inputElement = self.find_element(*loc)
-        inputElement.clear()
+        #inputElement.clear()
         inputElement.send_keys(content)
 
     def clearInputText(self,*loc):
@@ -205,8 +206,10 @@ class BasePage(object):
             if element.is_displayed():
                 return True
             else:
+                self.getImage
                 return False
         except NoSuchElementException as ex:
+            self.getImage
             return False
 
 
@@ -223,6 +226,7 @@ class BasePage(object):
 
             return True
         except NoSuchElementException as ex:
+            self.getImage
             return False
 
 
@@ -230,6 +234,7 @@ class BasePage(object):
         '''如果元素存在则单击,不存在则忽略'''
         try:
             self.driver.find_element(*loc).click()
+            #self.find_element(*loc).click()
         except NoSuchElementException as ex:
             pass
 
@@ -237,7 +242,8 @@ class BasePage(object):
         '''如果元素存在则输入,不存在则忽略'''
         try:
             element =self.driver.find_element(*loc)
-            element.clear()
+            #element = self.find_element(*loc)
+            #element.clear()
             element.send_keys(text)
         except NoSuchElementException as ex:
             pass
@@ -254,7 +260,7 @@ class BasePage(object):
             proValue = getattr(element,str(txtName))
             return proValue
         except Exception as ex:
-            raise
+            self.getImage
 
     @property
     def switch_window(self):
