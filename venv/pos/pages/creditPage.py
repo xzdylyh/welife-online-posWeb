@@ -67,5 +67,6 @@ class CreditPage(basepage.BasePage):
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
+        bool_var = self.isExist(*(self.charge_number_loc))
         self.getImage
-        return self.isExist(*(self.charge_number_loc))
+        return bool_var

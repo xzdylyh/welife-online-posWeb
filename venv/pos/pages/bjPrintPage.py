@@ -44,6 +44,7 @@ class BjPrintPage(basepage.BasePage):
     @property
     def assertPrint(self):
         """断言,弹出打印页面,点击打后后,页面消失_"""
+        bool_var = self.isOrNoExist(*(self.bjPrintPopBtn_loc))
         self.getImage
-        return self.isOrNoExist(*(self.bjPrintPopBtn_loc))
+        return bool_var
 

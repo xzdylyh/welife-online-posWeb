@@ -46,8 +46,9 @@ class ChargeListPage(basepage.BasePage):
     @property
     def assertCustom(self):
         '''断言进入消费页面'''
+        bool_var = self.isExist(*(self.assertPhone))
         self.getImage
-        return self.isExist(*(self.assertPhone))
+        return bool_var
 
     @property
     def assertUndoSuccess(self):

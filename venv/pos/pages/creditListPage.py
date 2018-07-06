@@ -47,5 +47,6 @@ class CreditListPage(basepage.BasePage):
     @property
     def assertCancelSuccess(self):
         """断言,撤销成功"""
+        text = self.find_element(*(self.undo_assertList_loc)).text
         self.getImage
-        return self.find_element(*(self.undo_assertList_loc)).text
+        return text

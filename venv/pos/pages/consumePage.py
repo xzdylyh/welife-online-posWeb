@@ -104,24 +104,28 @@ class ConsumePage(basepage.BasePage):
     @property
     def assertCustom(self):
         '''断言进入消费页面'''
+        bool_var = self.isExist(*(self.assertPhone))
         self.getImage
-        return self.isExist(*(self.assertPhone))
+        return bool_var
 
     @property
     def assertPaySuccess(self):
         '''断言支付成功'''
+        bool_var = self.isExist(*(self.inputCardorPhone_loc))
         self.getImage
-        return self.isExist(*(self.inputCardorPhone_loc))
+        return bool_var
 
 
     @property
     def assertCardSuccess(self):
         '''断言支付成功'''
+        bool_var = self.isExist(*(self.cardOpen_success_loc))
         self.getImage
-        return self.isExist(*(self.cardOpen_success_loc))
+        return bool_var
 
     @property
     def assertOpenCardSuccess(self):
         """断言次卡开卡成功"""
+        bool_var = self.isExist(*(self.cardNumber_loc))
         self.getImage
-        return self.isExist(*(self.cardNumber_loc))
+        return bool_var

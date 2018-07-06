@@ -64,8 +64,9 @@ class CardIndexPage(basepage.BasePage):
     @property
     def assertChareSuccess(self):
         '''断言支付成功'''
+        text = self.getTagText('text',*(self.card_AssertSuccess_loc))
         self.getImage
-        return self.getTagText('text',*(self.card_AssertSuccess_loc))
+        return text
 
 
 

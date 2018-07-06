@@ -45,5 +45,6 @@ class ConsumeCouponListPage(basepage.BasePage):
     def assertSuccess(self):
         """断言,撤销消费成功"""
         print '断言:交易流水,新增一条,交易类型为撤销商品售卖的记录'
+        bool_var = self.isOrNoExist(*(self.coupon_assert_loc))
         self.getImage
-        return self.isOrNoExist(*(self.coupon_assert_loc))
+        return bool_var

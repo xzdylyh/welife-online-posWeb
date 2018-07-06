@@ -64,14 +64,16 @@ class ChargePage(basepage.BasePage):
     @property
     def assertCustom(self):
         '''断言进入消费页面'''
+        bool_var = self.isExist(*(self.assertPhone))
         self.getImage
-        return self.isExist(*(self.assertPhone))
+        return bool_var
 
     @property
     def assertChargeSuccess(self):
         '''断言支付成功'''
+        bool_var = self.isExist(*(self.assertChargeSuccess_loc))
         self.getImage
-        return self.isExist(*(self.assertChargeSuccess_loc))
+        return bool_var
 
 
 

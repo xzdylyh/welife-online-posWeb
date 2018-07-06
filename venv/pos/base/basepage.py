@@ -59,9 +59,7 @@ class BasePage(object):
                     self.hightlight(element) #高亮显示
                     return element
 
-            except NoSuchElementException as ex:
-                raise_var = ex
-            except ElementNotVisibleException as ex:
+            except (NoSuchElementException,ElementNotVisibleException) as ex:
                 raise_var = ex
 
             self.wait(poll_frequency)
@@ -90,6 +88,7 @@ class BasePage(object):
         timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
         imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
 
+        """截图，获取元素坐标"""
         self.driver.save_screenshot(imgPath)
         left = element.location['x']
         top = element.location['y']
@@ -189,7 +188,7 @@ class BasePage(object):
         '''
         start_time = int(time.time())
         raise_var = None
-        while (int(time.time())-start_time) <10:
+        while (int(time.time())-start_time) <=10:
             try:
                 element = self.driver.find_element(*loc)
                 if element.is_displayed():
@@ -210,9 +209,9 @@ class BasePage(object):
         """
         start_time = int(time.time())
         raise_var = None
-        while (int(time.time())-start_time)<10:
+        while (int(time.time())-start_time)<=10:
             try:
-                e = self.find_element(*loc)
+                e = self.driver.find_element(*loc)
                 """高亮显示,定位元素"""
                 self.hightlight(e)
                 return True
@@ -228,7 +227,7 @@ class BasePage(object):
         print 'Click:{0}'.format(loc)
         start_time = int(time.time())
         raise_var = None
-        while (int(time.time()) - start_time) < 10:
+        while (int(time.time()) - start_time) <= 10:
             try:
                 element = self.driver.find_element(*loc)
                 self.hightlight(element)
@@ -244,7 +243,7 @@ class BasePage(object):
         print 'Input:{0}'.format(text)
         start_time = int(time.time())
         raise_var = None
-        while (int(time.time())-start_time) < 10: #10秒寻找时间
+        while (int(time.time())-start_time) <= 10: #10秒寻找时间
             try:
                 element =self.driver.find_element(*loc)
                 self.hightlight(element) #高亮显示
@@ -264,7 +263,7 @@ class BasePage(object):
         """
         start_time = int(time.time())
         raise_var = None
-        while (int(time.time())-start_time)<10:
+        while (int(time.time())-start_time)<=10:
             try:
                 element = self.find_element(*loc)
                 self.hightlight(element) #高亮显示

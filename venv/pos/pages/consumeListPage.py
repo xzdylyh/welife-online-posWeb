@@ -47,5 +47,6 @@ class ConsumeListPage(basepage.BasePage):
     @property
     def assertCancelSuccess(self):
         """断言,撤销成功"""
+        bool_var = self.isOrNoExist(*(self.undo_assert_loc))
         self.getImage
-        return self.isOrNoExist(*(self.undo_assert_loc))
+        return bool_var
