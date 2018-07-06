@@ -29,12 +29,12 @@ RUNING: #case执行配置
 
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块
-        Flag: {"testCase1":{"Flag":"Y","desc":"实体卡开卡"},
+        Flag: {"testCase1":{"Flag":"N","desc":"实体卡开卡"},
                "testCase2":{"Flag":"Y","desc":"积分消费"},
                "testCase3":{"Flag":"Y","desc":"储值消费"},
                "testCase4":{"Flag":"Y","desc":"券消费"},
                "testCase5":{"Flag":"N","desc":"实体卡绑卡"},
-               "testCase6":{"Flag":"Y","desc":"次卡开卡"}}
+               "testCase6":{"Flag":"N","desc":"次卡开卡"}}
 
     CHARGE: #储值模块
         Flag: {"testCase1":{"Flag":"Y","desc":"储值"},
@@ -56,7 +56,7 @@ RUNING: #case执行配置
         Flag: {"testCase1":{"Flag":"Y","desc":"撤销充值"}}
 
     CARDINDEX: #储值卡售卖
-        Flag: {"testCase1":{"Flag":"Y","desc":"储值卡-实体卡售卖"}}
+        Flag: {"testCase1":{"Flag":"N","desc":"储值卡-实体卡售卖"}}
 
     COUPONSALEINDEX: #商品售卖
         Flag: {"testCase1":{"Flag":"Y","desc":"商品售卖-次卡+券_直接购买"}}

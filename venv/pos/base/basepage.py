@@ -39,24 +39,6 @@ class BasePage(object):
         self.driver.implicitly_wait(10)
         assert self.driver.title,pagetitle
 
-    '''
-    #查找元素
-    def find_element(self,*loc):
-        """
-        自封装，查找元素，智能等待
-        :param loc: 元素定位器(By.ID,"xxxx")
-        :return: 元素对象
-        """
-        try:
-            #element = WebDriverWait(self.driver, 10, 0.5).until(EX.visibility_of_element_located((loc)))
-            element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
-            #元素高亮显示
-            self.hightlight(element)
-            return element
-        except TimeoutException,NoSuchElementException:
-            self.getImage  #截取图片
-            raise
-        '''
 
     def find_element(self,*loc):
         """
@@ -66,26 +48,25 @@ class BasePage(object):
         """
         """时间设置(秒)"""
         timeout = 10  # 超时时间
-        poll_frequency = 0.5  # 轮询间隔时间
+        poll_frequency = 500  # 轮询间隔时间毫秒
 
         start_time = time.time().__int__()
-        while True:
+        raise_var = None
+        while (int(time.time())-start_time)<=timeout:
             try:
                 element = self.driver.find_element(*loc)
                 if element.is_displayed():
                     self.hightlight(element) #高亮显示
                     return element
-                else:
-                    self.getImage  # 截取图片
-                    raise ElementNotVisibleException
 
             except NoSuchElementException as ex:
-                if (time.time().__int__() - start_time) > timeout:
-                    self.getImage  # 截取图片
-                    raise ex
-                    #return None
-            time.sleep(poll_frequency)
+                raise_var = ex
+            except ElementNotVisibleException as ex:
+                raise_var = ex
 
+            self.wait(poll_frequency)
+        self.getImage #元素未找到，或未显示截图
+        return raise_var
 
 
 
@@ -97,6 +78,7 @@ class BasePage(object):
         """
         self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
                                    element, "border: 2px solid red;")
+
 
     def getElementImage(self,element):
         """
@@ -133,19 +115,23 @@ class BasePage(object):
         self.driver.save_screenshot(imgPath)
         print  'screenshot:', timestrmap, '.png'
 
+
     def find_elements(self,*loc):
         '''批量找标签'''
-        try:
-            elements = self.driver.find_elements(*loc)
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time())-start_time) <=10:
+            try:
+                elements = self.driver.find_elements(*loc)
+                #元素高亮显示
+                for e in elements:
+                    self.hightlight(e)
 
-            #元素高亮显示
-            for e in elements:
-                self.hightlight(e)
-
-            return elements
-        except NoSuchElementException as ex:
-            self.getImage  #截取图片
-            raise
+                return elements
+            except NoSuchElementException as ex:
+                raise_var = ex
+        self.getImage  # 截取图片
+        raise raise_var
 
 
     def iterClick(self, *loc):
@@ -199,18 +185,21 @@ class BasePage(object):
         '''
         元素存在,判断是否显示
         :param loc: 定位器
-        :return: 元素存在返回True;否则返回False
+        :return: 元素存在并显示返回True;否则返回False
         '''
-        try:
-            element = WebDriverWait(self.driver, 10, 0.5).until(lambda d: d.find_element(*loc))
-            if element.is_displayed():
-                return True
-            else:
-                self.getImage
-                return False
-        except NoSuchElementException as ex:
-            self.getImage
-            return False
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time())-start_time) <10:
+            try:
+                element = self.driver.find_element(*loc)
+                if element.is_displayed():
+                    self.hightlight(element)
+                    return True
+            except NoSuchElementException as ex:
+                raise_var = ex
+            self.wait(500)
+        self.getImage #10秒还未找到显示的元素
+        return False
 
 
     def isOrNoExist(self,*loc):
@@ -219,34 +208,52 @@ class BasePage(object):
         :param loc: 定位器(By.ID,'kw')
         :return: True 或 False
         """
-        try:
-            e = WebDriverWait(self.driver, 10, 0.5).until(lambda d:d.find_element(*loc))
-            """高亮显示,定位元素"""
-            self.hightlight(e)
-
-            return True
-        except NoSuchElementException as ex:
-            self.getImage
-            return False
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time())-start_time)<10:
+            try:
+                e = self.find_element(*loc)
+                """高亮显示,定位元素"""
+                self.hightlight(e)
+                return True
+            except NoSuchElementException as ex:
+                raise_var = ex
+            self.wait(500) #每隔500毫秒，寻找一次
+        self.getImage #10秒还未找到元素，截图
+        return False
 
 
     def isExistAndClick(self,*loc):
         '''如果元素存在则单击,不存在则忽略'''
-        try:
-            self.driver.find_element(*loc).click()
-            #self.find_element(*loc).click()
-        except NoSuchElementException as ex:
-            pass
+        print 'Click:{0}'.format(loc)
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time()) - start_time) < 10:
+            try:
+                element = self.driver.find_element(*loc)
+                self.hightlight(element)
+                element.click()
+                break
+            except NoSuchElementException as ex:
+                raise_var = ex
+            self.wait(500)
+
 
     def isExistAndInput(self,text,*loc):
         '''如果元素存在则输入,不存在则忽略'''
-        try:
-            element =self.driver.find_element(*loc)
-            #element = self.find_element(*loc)
-            #element.clear()
-            element.send_keys(text)
-        except NoSuchElementException as ex:
-            pass
+        print 'Input:{0}'.format(text)
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time())-start_time) < 10: #10秒寻找时间
+            try:
+                element =self.driver.find_element(*loc)
+                self.hightlight(element) #高亮显示
+                element.send_keys(text)
+                break
+            except NoSuchElementException as ex:
+                raise_var = ex
+            self.wait(500)
+
 
     def getTagText(self,txtName,*loc):
         """
@@ -255,12 +262,24 @@ class BasePage(object):
         :param loc: #定位器
         :return: 属性值 或 raise
         """
-        element = self.find_element(*loc)
-        try:
-            proValue = getattr(element,str(txtName))
-            return proValue
-        except Exception as ex:
-            self.getImage
+        start_time = int(time.time())
+        raise_var = None
+        while (int(time.time())-start_time)<10:
+            try:
+                element = self.find_element(*loc)
+                self.hightlight(element) #高亮显示
+                try:
+                    proValue = getattr(element,str(txtName))
+                    return proValue
+                except Exception as ex:
+                    self.getImage #获取属性错误，截图
+                    raise ex
+            except NoSuchElementException as ex:
+                raise_var = ex
+            self.wait(500)
+        self.getImage #10秒未找到元素，截图
+
+
 
     @property
     def switch_window(self):
@@ -282,7 +301,6 @@ class BasePage(object):
         :param ms: 毫秒
         :return: 无
         """
-
         ms = float(ms) / 1000
         time.sleep(ms)
 
