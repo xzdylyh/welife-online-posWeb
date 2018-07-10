@@ -8,7 +8,7 @@ class CreditListPage(basepage.BasePage):
     """交易流水模块"""
     """定位器"""
     #交易流水-撤销积分
-    undo_LinkBtn_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]') #撤销积分链接
+    undo_LinkBtn_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]/span/a') #撤销积分链接
     undo_Btn_loc = (By.ID,'cancelGift') #确定按钮
     undo_assertList_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[7]/span') #撤销积分后,交易列表增加一条状态,撤销积分换礼
 

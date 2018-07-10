@@ -75,6 +75,11 @@ class ChargePage(basepage.BasePage):
         self.getImage
         return bool_var
 
+    def assertReceiptSuccess(self):
+        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
+        time.sleep(1)
+        notRMB = (self.charge.getTagText(data['txtName'],*(self.charge.not_fill_RMB_loc))).encode('utf-8') #未开票金额
+        print '补开发票金额剩余:{0}'.format(notRMB)
 
 
 

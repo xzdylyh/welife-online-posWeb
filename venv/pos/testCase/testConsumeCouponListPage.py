@@ -29,10 +29,12 @@ class TestConsumeCouponListPage(unittest.TestCase):
         """商品售卖,撤销"""
         self.undo.clickBtn('撤销',*(self.undo.coupon_undoLink_loc))
         self.undo.clickBtn('确认',*(self.undo.coupon_confirmBtn_loc))
+        self.undo.wait(3000)
 
         """后置断言操作"""
         self.assertTrue(self.undo.assertSuccess)
-        self.assertEqual(self.undo.find_element(*(self.undo.coupon_assert_loc)).text,'撤销商品售卖')
+        self.assertEqual(self.undo.find_element(
+            *(self.undo.coupon_assert_loc)).text,'撤销商品售卖')
 
 
 

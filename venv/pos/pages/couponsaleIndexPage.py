@@ -11,6 +11,7 @@ class CouponsaleIndexPage(basepage.BasePage):
     #定位器
     shop_phone_loc = (By.ID,'charge_number') #卡号或手机号
     shop_phoneBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')#确定按钮
+
     """商品售卖页面"""
     shop_select_loc = (By.CLASS_NAME,'checkbox-inline') #商口复选择框
     shop_Num_loc = (By.NAME,'num') #数量输入框
@@ -45,7 +46,6 @@ class CouponsaleIndexPage(basepage.BasePage):
     def clickBtn(self,desc,*loc):
         '''点击操作'''
         print 'Click:{0}'.format(desc)
-        self.wait(1000) #线程休眠1000毫秒
         self.find_element(*loc).click()
 
 

@@ -33,7 +33,6 @@ class TestCouponsaleIndexPage(unittest.TestCase):
         """商品售卖页"""
         self.shop.wait(1000)
         self.shop.iterClick(*(self.shop.shop_select_loc))
-        #self.shop.iterInput(data['iterInput'],*(self.shop.shop_Num_loc))
         self.shop.clickBtn('确认',*(self.shop.shop_confirmBtn_loc))
 
         """后置断言操作"""

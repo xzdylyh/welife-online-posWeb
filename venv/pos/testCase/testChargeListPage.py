@@ -31,7 +31,7 @@ class TestChargeListPage(unittest.TestCase):
         """断言"""
         self.charge.assertUndoSuccess
         #self.assertTrue(self.charge.assertUndoSuccess)
-        txt = self.driver.find_element(*(self.charge.charge_undoStatus_loc)).text
+        txt = self.charge.find_element(*(self.charge.charge_undoStatus_loc)).text
         print '充值撤销状态:{0}'.format(txt)
         self.assertEqual(txt,u'撤销充值',msg='撤销充值记录列表中,不存在状态为<撤销充值>的记录')
 
