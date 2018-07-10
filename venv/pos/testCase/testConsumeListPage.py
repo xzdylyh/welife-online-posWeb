@@ -26,7 +26,7 @@ class TestConsumeListPage(unittest.TestCase):
         print '功能:{0}'.format(data['desc'])
         self.consumeList = consumeListPage.ConsumeListPage(self.url,self.driver,data['consumeListTitle'])
         self.consumeList.open #打开目标地址
-        self.consumeList.wait(2000)
+
         self.consumeList.clickBtn('撤销消费',*(self.consumeList.undo_deal_loc))
         self.consumeList.clickBtn('确定',*(self.consumeList.undo_dealBtn_loc))
         """断言"""

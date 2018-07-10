@@ -31,7 +31,6 @@ class TestCouponsaleIndexPage(unittest.TestCase):
         self.shop.clickBtn('确定',*(self.shop.shop_phoneBtn_loc))
 
         """商品售卖页"""
-        self.shop.wait(1000)
         self.shop.iterClick(*(self.shop.shop_select_loc))
         self.shop.clickBtn('确认',*(self.shop.shop_confirmBtn_loc))
 
