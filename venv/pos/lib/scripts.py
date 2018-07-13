@@ -57,7 +57,7 @@ def CookInfo(func):
 
 def Replay(func):
     """
-    执行函数之后,等封若干毫秒
+    回放速度
     :param func: 函数名
     :return: wrapper
     """
@@ -114,6 +114,8 @@ def zipDir(dirpath,outFullName):
         for filename in filenames:
             zip.write(os.path.join(path,filename),os.path.join(fpath,filename))
     zip.close()
+
+
 
 
 

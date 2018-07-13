@@ -1,7 +1,8 @@
 #coding=utf-8
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EX
-from selenium.common.exceptions import NoSuchElementException,TimeoutException,ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException,\
+    TimeoutException,ElementNotVisibleException,UnexpectedAlertPresentException
 from pos.lib import gl
 import os,time
 from PIL import Image
@@ -47,7 +48,7 @@ class BasePage(object):
         在指定时间内，轮询元素是否显示
         :param element: 元素对象
         :param timeSes: 轮询时间
-        :return:
+        :return: bool
         """
         start_time = int(time.time()) #秒级时间戳
         timeStr = int(timeSes)
@@ -55,6 +56,8 @@ class BasePage(object):
             if element.is_displayed():
                 return True
             self.wait(500)
+
+        self.getImage
         return False
 
 
@@ -77,7 +80,7 @@ class BasePage(object):
             self.driver.implicitly_wait(0) #恢复超时设置
             return element
 
-        except (NoSuchElementException,ElementNotVisibleException) as ex:
+        except (NoSuchElementException,ElementNotVisibleException,UnexpectedAlertPresentException) as ex:
             self.getImage
             raise ex
 
@@ -117,6 +120,7 @@ class BasePage(object):
         picture.save(imgPath)
         print  'screenshot:', timestrmap, '.png'
 
+
     @property
     def getImage(self):
         '''
@@ -128,6 +132,7 @@ class BasePage(object):
 
         self.driver.save_screenshot(imgPath)
         print  'screenshot:', timestrmap, '.png'
+
 
 
     def find_elements(self,*loc):
@@ -153,6 +158,7 @@ class BasePage(object):
         element = self.find_elements(*loc)
         for e in element:
             e.click()
+
 
     def iterInput(self,text=[],*loc):
         """
@@ -212,9 +218,10 @@ class BasePage(object):
             else:
                 return False
             self.driver.implicitly_wait(0)
-        except (NoSuchElementException,ElementNotVisibleException) as ex:
+        except (NoSuchElementException,ElementNotVisibleException,UnexpectedAlertPresentException) as ex:
             self.getImage #10秒还未找到显示的元素
             return False
+
 
 
     def isOrNoExist(self,*loc):
@@ -321,6 +328,16 @@ class BasePage(object):
         time.sleep(ms)
 
 
+    def jsClick(self,*loc):
+        """
+        通过js注入的方式去，单击元素
+        :param loc: 定位器
+        :return: 无
+        """
+        print 'Click:{0}'.format(loc)
+
+        element = self.find_element(*loc)
+        self.driver.execute_script("arguments[0].click();",element)
 
 
 
