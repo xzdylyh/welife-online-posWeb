@@ -328,13 +328,13 @@ class BasePage(object):
         time.sleep(ms)
 
 
-    def jsClick(self,*loc):
+    def jsClick(self,desc,*loc):
         """
         通过js注入的方式去，单击元素
         :param loc: 定位器
         :return: 无
         """
-        print 'Click:{0}'.format(loc)
+        print 'Click{0}:{1}'.format(desc,loc)
 
         element = self.find_element(*loc)
         self.driver.execute_script("arguments[0].click();",element)

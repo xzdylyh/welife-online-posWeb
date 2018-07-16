@@ -27,7 +27,8 @@ class TestCreditListPage(unittest.TestCase):
         self.creditList = creditListPage.CreditListPage(self.url,self.driver,data['CreditListTitle'])
         self.creditList.open #打开目标地址
         """撤销积分"""
-        self.creditList.clickBtn('撤销积分',*(self.creditList.undo_LinkBtn_loc))
+        #self.creditList.clickBtn('撤销积分',*(self.creditList.undo_LinkBtn_loc))
+        self.creditList.jsClick('撤销积分',*(self.creditList.undo_LinkBtn_loc))
         self.creditList.clickBtn('确定',*(self.creditList.undo_Btn_loc))
         """断言"""
         txt=self.creditList.assertCancelSuccess
