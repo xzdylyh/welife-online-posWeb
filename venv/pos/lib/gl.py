@@ -22,7 +22,7 @@ imgPath = os.path.join(PATH(reportPath),'images')
 configPath = os.path.join(PATH(os.path.dirname(libPath)),'config')
 dataPath = os.path.join(PATH(os.path.dirname(libPath)),'data')
 curDate = time.strftime('%Y-%m-%d')
-
+configFile = os.path.join(configPath,'config.yaml')
 
 
 

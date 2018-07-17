@@ -80,9 +80,15 @@ class BasePage(object):
             self.driver.implicitly_wait(0) #恢复超时设置
             return element
 
-        except (NoSuchElementException,ElementNotVisibleException,UnexpectedAlertPresentException) as ex:
+        except (
+                NoSuchElementException,
+                ElementNotVisibleException,
+                UnexpectedAlertPresentException
+                ) as ex:
             self.getImage
             raise ex
+        else:
+            self.getImage
 
 
 
