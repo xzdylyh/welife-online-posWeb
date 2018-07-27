@@ -1,11 +1,14 @@
 #coding=utf-8
+import os,time
+from PIL import Image
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,\
     TimeoutException,ElementNotVisibleException,UnexpectedAlertPresentException
+
+from pos.lib.scripts import getYamlfield,Replay
 from pos.lib import gl
-import os,time
-from PIL import Image
 
 
 '''
@@ -74,16 +77,14 @@ class BasePage(object):
             element = self.driver.find_element(*loc) #如果element没有找到，到此处会开始等待
             if self.isDisplayTimeOut(element,TimeOut):
                 self.hightlight(element)  #高亮显示
+                self.driver.implicitly_wait(0)  # 恢复超时设置
+                return element
             else:
                 raise ElementNotVisibleException #抛出异常，给except捕获
 
-            self.driver.implicitly_wait(0) #恢复超时设置
-            return element
-
         except (
                 NoSuchElementException,
-                ElementNotVisibleException,
-                UnexpectedAlertPresentException
+                ElementNotVisibleException
                 ) as ex:
             self.getImage
             raise ex
@@ -208,6 +209,7 @@ class BasePage(object):
             self.driver.add_cookie({"name":key,"value":ck_dict[key]})
 
     def isExist(self,*loc):
+        #isDisable
         '''
         元素存在,判断是否显示
         :param loc: 定位器
@@ -333,18 +335,43 @@ class BasePage(object):
         ms = float(ms) / 1000
         time.sleep(ms)
 
-
+    @Replay
     def jsClick(self,desc,*loc):
-        """
-        通过js注入的方式去，单击元素
-        :param loc: 定位器
-        :return: 无
-        """
-        print 'Click{0}:{1}'.format(desc,loc)
-
+        """通过js注入的方式去，单击元素"""
+        print 'Click{}:{}'.format(desc,loc)
         element = self.find_element(*loc)
         self.driver.execute_script("arguments[0].click();",element)
 
+
+    @Replay
+    def inputText(self, text,desc, *loc):
+        """输入文本操作"""
+        print 'Input{}:{}'.format(desc,text)
+        self.send_keys(text, *loc)
+
+
+    @Replay
+    def clickBtn(self, desc,*loc):
+        """点击操作"""
+        print 'Click:{}{}'.format(desc,loc)
+        self.find_element(*loc).click()
+
+
+    @Replay
+    def selectTab(self,*loc):
+        '''选择tab操作'''
+        print 'Select:{}'.format(loc)
+        self.find_element(*loc).click()
+
+
+    @property
+    def open(self):
+        """打开浏览器，写入cookies登录信息"""
+        yamldict = getYamlfield(gl.configFile)
+        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
+        self._open(self.base_url, self.pagetitle)
+        self.addCookies(ck_dict)
+        self._open(self.base_url, self.pagetitle)
 
 
 if __name__=="__main__":

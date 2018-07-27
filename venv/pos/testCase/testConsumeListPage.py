@@ -1,11 +1,12 @@
 #coding=utf-8
+import time,json
 from selenium import webdriver
-from pos.pages import consumeListPage
+from pos.pages.consumeListPage import ConsumeListPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
-import time,json
+
 
 consumeData = [{"consumeListTitle": "消费流水 - 微生活POS系统","desc":u"撤销消费正常流程"}]
 
@@ -19,20 +20,26 @@ class TestConsumeListPage(unittest.TestCase):
         cls.url = 'http://pos.beta.acewill.net/consume/list'
 
 
-    @unittest.skipIf(scripts.getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*consumeData)
     def testCase1(self,data):
         """交易流水-撤销消费"""
         print '功能:{0}'.format(data['desc'])
-        self.consumeList = consumeListPage.ConsumeListPage(self.url,self.driver,data['consumeListTitle'])
-        self.consumeList.open #打开目标地址
 
-        self.consumeList.clickBtn('撤销消费',*(self.consumeList.undo_deal_loc))
-        self.consumeList.clickBtn('确定',*(self.consumeList.undo_dealBtn_loc))
+        #实例化ConsumeListPage类
+        self.consumeList = ConsumeListPage(self.url,self.driver,data['consumeListTitle'])
+        # 打开目标地址
+        self.consumeList.open
+
+        #单击撤销消费 链接
+        self.consumeList.clickUndoLink
+        #单击 确定按钮
+        self.consumeList.clickConfirmBtn
+
         """断言"""
         self.assertTrue(self.consumeList.assertCancelSuccess) #断言,弹出撤销成功div框
-        txt = self.consumeList.find_element(*(self.consumeList.undo_assert_list_loc)).text #断言弹出成功提示div
-        self.assertEqual(txt,u'撤销消费',msg='撤销消费,列表中增加一条撤销记录')
+
+        self.assertEqual(self.consumeList.getContentText,u'撤销消费') #撤销消费,列表中增加一条撤销记录
 
 
 

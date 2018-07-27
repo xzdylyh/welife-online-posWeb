@@ -8,7 +8,7 @@ CONFIG:
                "pos_sid":"1512995661",
                "pos_sign":"369240630d5e17a24bf7e5a70f073465"}
 
-        BossLoginCookies: {"name":"UserSession","value":"5b32ebdee86fb"} #boss,浏览器关闭session过期
+        BossLoginCookies: {"name":"UserSession","value":"5b5ae93a272d7"} #boss,浏览器关闭session过期
 
 
 #发送测试报告,邮件配置

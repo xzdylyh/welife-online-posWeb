@@ -1,8 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import chargePage
+from pos.pages.chargePage import ChargePage
 import unittest,ddt,os,time
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
 
 chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
@@ -16,28 +16,35 @@ class TestChargePage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.option = webdriver.ChromeOptions()
-        cls.option.add_argument('disable-infobars') #不显示"Chrome正在受自动测试软件控制"
-        #cls.option.add_argument('headless') #后台运行,不显示界面
+        # 不显示"Chrome正在受自动测试软件控制"
+        cls.option.add_argument('disable-infobars')
+        # 后台运行,不显示界面
+        #cls.option.add_argument('headless')
         cls.driver = webdriver.Chrome(chrome_options=cls.option)
         cls.url = 'http://pos.beta.acewill.net/charge/index'
 
 
     def inChargePage(self,data):
         """输入卡号进入储值页面"""
-        self.charge = chargePage.ChargePage(self.url,self.driver,'充值 - 微生活POS系统')
-        self.charge.open #打开目标url
+        #实例化ChargePage类
+        self.charge = ChargePage(self.url,self.driver,'充值 - 微生活POS系统')
+        # 打开目标url
+        self.charge.open
 
         """输入卡号，确定，进入储值页面"""
-        self.charge.inputText(data['charge_number'],'输入会员卡号或手机号',*(self.charge.charge_number_loc))
-        self.charge.clickBtn('确定',*(self.charge.confirmBtn_loc))
+        #输入 卡号
+        self.charge.inputPhoneOrCardNo((data['charge_number']))
+        #单击 确定
+        self.charge.clickConfirmBtn
 
-        """断言"""
-        self.assertTrue(self.charge.find_element(
-            *(self.charge.chargeRMB_loc))) #储值余额
+        """断言操作"""
+        #储值余额
+        self.assertTrue(self.charge.assertfindRMB)
 
-        self.usChargeSaving = self.charge.find_element(
-            *(self.charge.chargeRMB_loc)).text[:-1]
-        print '当前余额:{0}'.format(self.usChargeSaving[:-1])
+        #储值前的 储值余额
+        self.usChargeSaving = self.charge.getAfterRMB
+
+        print '当前余额:{0}'.format(self.usChargeSaving)
 
 
     def chargeFunc(self,data):
@@ -48,56 +55,77 @@ class TestChargePage(unittest.TestCase):
         self.inChargePage(data)
 
         """储值操作"""
-        self.charge.clickBtn('选择储值奖励规则',*(self.charge.chargeGZ_loc))
-        self.charge.clickBtn('自定义规则',*(self.charge.coustomGZ_loc))
-        self.charge.inputText(data['present'],'自定义金额',*(self.charge.present_loc))
-        self.charge.clickBtn('确定',*(self.charge.customBtn_loc))
-        self.charge.clickBtn('现金',*(self.charge.payType_loc))
-        self.charge.inputText(data['note'],'备注',*(self.charge.noteRemark_loc))
-        self.charge.clickBtn('确定',*(self.charge.chargeSubmit_loc))
-        self.charge.clickBtn('确认',*(self.charge.chargesBtn_loc))
+        #选择储值奖励规则
+        self.charge.clickChargeGZ
+        #单击 自定义规则
+        self.charge.clickCustomGZ
+        #输入 自定义金额
+        self.charge.inputCustomPresent(data['present'])
+        #点击 自定义金额对话框  确定按钮
+        self.charge.clickCustomConfirmBtn
+        #点击 现金支付方式
+        self.charge.clickPayType
+        #输入 备注
+        self.charge.inputRemark(data['note'])
+        #单击 确定，进入储值确认对话框
+        self.charge.clickSubmitBtn
+        #单击 确认，并储值
+        self.charge.clickLastConfirmBtn
 
         """断言操作"""
         self.charge.assertChargeSuccess
 
         """后置操作"""
-        self.charge.clickBtn('立即消费',*(self.charge.consumeBtn_loc))
+        #单击 立即消费按钮
+        self.charge.clickConsumeBtn
 
         """断言储值余额，是否正确"""
-        self.usDualSaving = self.charge.find_element(*(self.charge.usSaving_loc)).text
+        #获取 储值后余额
+        self.usDualSaving = self.charge.getLastRMB
 
         print '储值后当前余额:{0}'.format(self.usDualSaving)
-        self.assertTrue(float(data['present']) + float(self.usChargeSaving) ==float(self.usDualSaving))
+        self.assertTrue(
+            float(data['present']) + float(self.usChargeSaving) ==float(self.usDualSaving)
+        )
 
 
 
-    @unittest.skipIf(scripts.getRunFlag('CHARGE', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CHARGE', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*chargeData)
     def testCase1(self,data):
-        """储值"""
-        self.chargeFunc(data) #调用储值功能函数
+        """正常储值功能"""
+        #调用储值功能函数
+        self.chargeFunc(data)
 
 
-    @unittest.skipIf(scripts.getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
     @ddt.data(*FillData)
     def testCase2(self,data):
-        """储值->补开发票"""
-        self.chargeFunc(data) #调用储值功能函数
+        """储值并补开发票"""
+
+        # 调用储值功能函数
+        self.chargeFunc(data)
+
         """补开发票"""
-        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
-        NotRMB = self.charge.getTagText(
-            data['txtName'],*(self.charge.not_fill_RMB_loc)) #未开票金额
-        self.charge.inputText(NotRMB,'开票金额',*(self.charge.fill_RMB_loc))
-        self.charge.clickBtn('确定',*(self.charge.fillBtn_loc))
+        #单击 补开发票按钮
+        self.charge.clickFillReceipt
+        #获取 未开票金额
+        notFillPresent = self.charge.getNotFillPresent(data['txtName'])
+        #输入 开票金额
+        self.charge.inputFillPresent(notFillPresent)
+        #单击 确定 开发票
+        self.charge.clickFillConfirmBtn
+
 
         """断言补开票成功"""
-        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
+        #单击 补开发票按钮
+        self.charge.clickFillReceipt
+        #获取 未开票金额
+        notFillPresent = self.charge.getNotFillPresent(data['txtName'])
 
-        notRMB = (self.charge.getTagText(
-            data['txtName'],*(self.charge.not_fill_RMB_loc))).encode('utf-8') #未开票金额
-        print '补开发票金额剩余:{0}'.format(notRMB)
-
-        self.assertEqual(notRMB,'0.00',msg='开票余额,不为零.')
+        print '补开发票金额剩余:{0}'.format(notFillPresent)
+        #断言补开发票后，第一行补开发票为零
+        self.assertEqual(notFillPresent,'0.00',msg='开票余额,不为零.')
 
 
     @classmethod

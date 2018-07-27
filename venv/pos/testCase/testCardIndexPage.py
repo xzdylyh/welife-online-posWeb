@@ -1,9 +1,10 @@
 #coding=utf-8
+import unittest,ddt,os,time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from pos.pages import cardIndexPage
-import unittest,ddt,os,time
-from pos.lib import scripts
+from pos.pages.cardIndexPage import CardIndexPage
+
+from pos.lib.scripts import Replay,getRunFlag,getYamlfield,rmDirsAndFiles
 from pos.lib.excel import Excel
 from pos.lib import gl,HTMLTESTRunnerCN
 
@@ -20,29 +21,43 @@ class TestCardIndexPage(unittest.TestCase):
         cls.excel = Excel(os.path.join(gl.dataPath, 'posChargeCard.xls').decode('utf-8'))
 
 
-    @unittest.skipIf(scripts.getRunFlag('CARDINDEX', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CARDINDEX', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*cardShopData)
     def testCase1(self,data):
-        """储值卡售卖-实体储值卡"""
+        """储值卡售卖-实体储值卡售卖"""
         print '功能:{0}'.format(data['desc'])
 
         """前置初始操作"""
-        self.card = cardIndexPage.CardIndexPage(self.url,self.driver,data['pagetitle'])
-        self.card.open #打开目标地址
+        #实例化CardIndexPage类
+        self.card = CardIndexPage(self.url,self.driver,data['pagetitle'])
+        # 打开浏览器并转到指定url
+        self.card.open
 
+        #从excel获取一条标记为N的卡号
         cardNo = float(self.excel.getCardNo(cell_col=0,cell_valueType=1)).__int__().__str__()
-        """储值售卖页面"""
-        #self.card.selectDownList(option=0,index=0) #按索引,选择第一个.索引从0开始
 
-        self.card.clickBtn('储值卡类型',*(self.card.card_Type_loc))
-        self.card.inputText(cardNo,'储值卡号',*(self.card.card_Numer_loc))
-        self.card.clickBtn('确定',*(self.card.card_ConfirmBtn_loc))
-        self.card.clickBtn('再次确定',*(self.card.card_toConfirmBtn_loc))
+        """储值售卖页面"""
+        #单击储值卡类型  实体卡储值
+        self.card.clickCardType
+
+        #输入 储值卡号
+        self.card.inputCardNo(cardNo)
+
+        #单击 确定按钮
+        self.card.clickConfirmBtn
+
+        #单击 再次确定按钮
+        self.card.clickSubmitBtn
 
         """后置断言操作"""
-        self.card.clickBtn('储值卡类型',*(self.card.card_Type_loc))
-        self.card.inputText(cardNo,'储值卡号',*(self.card.card_Numer_loc))
-        self.assertEqual(self.card.assertChareSuccess,data['assert'],msg='断言已售的卡不能再售,来判断售卡成功')
+        self.card.wait(2000)
+
+        #点击储值卡类型为  实体卡储值
+        self.card.clickCardType
+        #输入 储值卡号
+        self.card.inputCardNo(cardNo)
+
+        self.assertEqual(self.card.assertChareSuccess,data['assert'])#断言已售的卡不能再售,来判断售卡成功
 
 
     @classmethod
@@ -53,7 +68,7 @@ class TestCardIndexPage(unittest.TestCase):
 
 
 if __name__=="__main__":
-    scripts.rmDirsAndFiles(gl.imgPath)
+    rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
 
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage)]

@@ -23,7 +23,8 @@ class TestCreditPage(unittest.TestCase):
         self.credit.open  #增加cookies信息,并打开积分换礼页
 
         self.credit.inputText(data['charge_number'],"输入手机号或卡号",*(self.credit.charge_number_loc))
-        self.credit.clickBtn("确定按钮",*(self.credit.creditBtn_loc))
+        #self.credit.clickBtn("确定按钮",*(self.credit.creditBtn_loc))
+        self.credit.jsClick('确定按钮',*(self.credit.creditBtn_loc))
 
 
     @unittest.skipIf(scripts.getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')

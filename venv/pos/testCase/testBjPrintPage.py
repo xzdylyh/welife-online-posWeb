@@ -1,8 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import bjPrintPage
+from pos.pages.bjPrintPage import BjPrintPage
 import unittest,ddt,os
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
 import time
 
@@ -16,24 +16,34 @@ class TestBjPrintPage(unittest.TestCase):
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/consume/list'
 
-    @unittest.skipIf(scripts.getRunFlag('PRINT', 'testCase1') == 'N', '验证执行配置')
+
+
+    @unittest.skipIf(getRunFlag('PRINT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*printData)
     def testCase1(self,data):
         """班结小结打印"""
         print '功能:{0}'.format(data['desc'])
-        self.bjPrint = bjPrintPage.BjPrintPage(self.url,self.driver,u'消费 - 微生活POS系统')
-        self.bjPrint.open #打开交易流水
-        self.bjPrint.clickBtn('打印班结小票',*(self.bjPrint.bjPrintLink_loc))
-        """
-        self.bjPrint.inputText(data['startDate'],'开始时间',*(self.bjPrint.bjPrintStartDate_loc))
-        self.bjPrint.inputText(data['endDate'],'结束时间',*(self.bjPrint.bjPrintEndDate_loc))
-        """
-        self.bjPrint.clickBtn('打印',*(self.bjPrint.bjPrintBtn_loc))
+
+        #实例化BjPrintPage类
+        self.bjPrint = BjPrintPage(
+            self.url,
+            self.driver,
+            u'消费 - 微生活POS系统'
+        )
+        # 打开交易流水页面
+        self.bjPrint.open
+
+        #点击 班结小票链接
+        self.bjPrint.clickPrintLink
+
+        #点击 打印按钮
+        self.bjPrint.clickPrintBtn
+
         time.sleep(5) #等待3秒
         self.bjPrint.switch_window #切换到新窗口
-        #self.bjPrint.clickBtn('pop打印',*(self.bjPrint.bjPrintPopBtn_loc))
+
         """断言"""
-        self.assertTrue(self.bjPrint.assertPrint,msg='点击打印后,打印页面消失,弹出打印机')#断言弹出最后打印界面,打印按钮存在
+        self.assertTrue(self.bjPrint.assertPrint)#断言弹出最后打印界面,打印按钮存在
 
 
     @classmethod

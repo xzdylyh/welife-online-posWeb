@@ -1,8 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import chargeListPage
+from pos.pages.chargeListPage import ChargeListPage
 import unittest,ddt,os
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -19,19 +19,29 @@ class TestChargeListPage(unittest.TestCase):
         cls.driver = webdriver.Chrome(chrome_options=cls.option)
         cls.url = 'http://pos.beta.acewill.net/charge/listcharge'
 
-    @unittest.skipIf(scripts.getRunFlag('CHARGELIST', 'testCase1') == 'N', '验证执行配置')
+
+    @unittest.skipIf(getRunFlag('CHARGELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*chargeData)
     def testCase1(self,data):
         """充值撤销"""
-        #print '功能:{0}'.format(data['desc'])
-        self.charge = chargeListPage.ChargeListPage(self.url,self.driver,data['pageTitle'])
-        self.charge.open #打开目标页
-        self.charge.clickBtn('充值撤销',*(self.charge.charge_undoLink_loc))
-        self.charge.clickBtn('确定',*(self.charge.charge_confirmBtn_loc))
-        """断言"""
-        self.charge.assertUndoSuccess
-        #self.assertTrue(self.charge.assertUndoSuccess)
-        txt = self.charge.find_element(*(self.charge.charge_undoStatus_loc)).text
+        print '功能:{0}'.format(data['desc'])
+
+        """前置操作"""
+        #实例化ChargeListPage类
+        self.charge = ChargeListPage(self.url,self.driver,data['pageTitle'])
+        # 打开目标页
+        self.charge.open
+
+        """页面操作"""
+        #单击 撤值撤销链接
+        self.charge.clickUndoLink
+
+        #单击 确定按钮
+        self.charge.clickConfirmBtn
+
+        """断言操作"""
+        #断言成功
+        txt = self.charge.getChargeStatusTxt
         print '充值撤销状态:{0}'.format(txt)
         self.assertEqual(txt,u'撤销充值',msg='撤销充值记录列表中,不存在状态为<撤销充值>的记录')
 

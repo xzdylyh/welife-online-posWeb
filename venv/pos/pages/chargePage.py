@@ -7,58 +7,154 @@ import time,os
 
 class ChargePage(basepage.BasePage):
     '''储值模块'''
-    #定位器
-    charge_number_loc = (By.ID,'charge_number')  #手机号或卡号
-    confirmBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button') #确定按钮
-    chargeGZ_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]') #储值奖历规则
-    coustomGZ_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a') #自定义储值规则
-    present_loc = (By.ID,'present') #自定义输入金额
-    customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')#确定按钮
-    payType_loc =(By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')#支付类型
-    noteRemark_loc = (By.ID,'note') #备注
-    chargeSubmit_loc = (By.ID,'chargeSubmit') #储值提交确定按钮
-    chargeRMB_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[1]/div') #储值余额
-    chargesBtn_loc = (By.ID,'chargeCheckBtn') #储值最后确认
-    assertChargeSuccess_loc = (By.XPATH,'//*[@id="chargeSuccessModal"]/div/div/div[1]/h3') #储值成功提示
-    consumeBtn_loc = (By.ID,'consumeBtn') #立即消费按钮
-    usSaving_loc = (By.ID,'usSaving') #储值余额
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # 手机号或卡号
+    charge_number_loc = (By.ID,'charge_number')
+    # 确定按钮
+    charge_confirmBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
 
-    #被开发票
-    toReceipt_loc = (By.ID,"toReceipt") #补开发票
-    fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[5]/input') #第一行发票金额
+    # 储值奖历规则
+    charge_GZ_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]')
+    # 自定义储值规则
+    charge_customGZ_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a')
+    # 自定义输入金额
+    charge_present_loc = (By.ID,'present')
+    # 确定按钮
+    charge_customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+    # 支付类型
+    charge_payType_loc =(By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
+    # 备注
+    charge_Remark_loc = (By.ID,'note')
+    # 储值提交确定按钮
+    charge_submit_loc = (By.ID,'chargeSubmit')
 
-    not_fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4]') #未开发票金额
-    fillBtn_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[3]/div') #确定按钮
+    # 储值余额
+    charge_RMB_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[1]/div')
+    # 储值最后确认
+    charge_LastBtn_loc = (By.ID,'chargeCheckBtn')
+    # 储值成功提示
+    assertChargeSuccess_loc = (By.XPATH,'//*[@id="chargeSuccessModal"]/div/div/div[1]/h3')
+    # 立即消费按钮
+    charge_consumeBtn_loc = (By.ID,'consumeBtn')
+    # 储值余额
+    usSaving_loc = (By.ID,'usSaving')
 
+    #-------------------------------------补开发票--------------------------------------
+    # 补开发票
+    fill_toReceipt_loc = (By.ID,"toReceipt")
+    # 第一行发票金额
+    fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[5]/input')
+    # 未开发票金额
+    fill_not_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4]')
+    # 确定按钮
+    fill_Btn_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[3]/div')
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    #封装操作
+    def inputPhoneOrCardNo(self,text):
+        """输入手机号或卡号"""
+        self.inputText(text,'储值卡号',*(self.charge_number_loc))
+
     @property
-    def open(self):
-        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
-        self._open(self.base_url,self.pagetitle)
-        self.addCookies(ck_dict)
-        #time.sleep(3)
-        self._open(self.base_url, self.pagetitle)
+    def clickConfirmBtn(self):
+        """单击 确定按钮，显示储值信息"""
+        self.clickBtn('确定',*(self.charge_confirmBtn_loc))
 
-    @scripts.Replay
-    def selectTab(self,*loc):
-        '''选择tab操作'''
-        self.find_element(*loc).click()
-
-    @scripts.Replay
-    def inputText(self,text,desc,*loc):
-        '''输入文本操作'''
-        print '输入{0}:{1}'.format(desc,text)
-        self.send_keys(text,*loc)
-
-    @scripts.Replay
-    def clickBtn(self,desc,*loc):
-        '''点击操作'''
-        print '单击:{0}'.format(desc)
-        self.find_element(*loc).click()
+    @property
+    def clickChargeGZ(self):
+        """单击储值奖励规则"""
+        self.clickBtn('奖励规则',*(self.charge_GZ_loc))
 
 
+    @property
+    def clickCustomGZ(self):
+        """单击 自定义规则链接"""
+        self.clickBtn('自定义规则',*(self.charge_customGZ_loc))
+
+    def inputCustomPresent(self,text):
+        """输入自定义金额"""
+        self.inputText(text,'自定义金额',*(self.charge_present_loc))
+
+    @property
+    def clickCustomConfirmBtn(self):
+        """单击自定义规则确定按钮"""
+        self.clickBtn('自定义规则确定',*(self.charge_customBtn_loc))
+
+    @property
+    def clickPayType(self):
+        """单击支付类型，现金"""
+        self.clickBtn('现金支付类型',*(self.charge_payType_loc))
+
+
+    def inputRemark(self,text):
+        """输入 备注"""
+        self.inputText(text,'备注',*(self.charge_Remark_loc))
+
+    @property
+    def clickSubmitBtn(self):
+        """单击 确定按钮提交"""
+        self.clickBtn('确定',*(self.charge_submit_loc))
+
+
+
+    @property
+    def clickLastConfirmBtn(self):
+        """单击 最后确认储值按钮"""
+        self.clickBtn('确定',*(self.charge_LastBtn_loc))
+
+
+    @property
+    def clickConsumeBtn(self):
+        """单击 立即消费按钮"""
+        self.clickBtn('立即消费',*(self.charge_consumeBtn_loc))
+
+
+    @property
+    def clickFillReceipt(self):
+        """单击 补开发票按钮"""
+        self.clickBtn('补开发票',*(self.fill_toReceipt_loc))
+
+
+    @property
+    def clickFillConfirmBtn(self):
+        """单击 发票确认按钮"""
+        self.clickBtn('确定',*(self.fill_Btn_loc))
+
+
+    def inputFillPresent(self,text):
+        """输入 补开发票金额"""
+        self.inputText(text,'补开发票金额',*(self.fill_RMB_loc))
+
+
+    @property
+    def assertfindRMB(self):
+        """断言，储值余额是否存在"""
+        bool_Var = self.isOrNoExist(*(self.charge_RMB_loc))
+        return bool_Var
+
+
+    @property
+    def getAfterRMB(self):
+        """获取储值前余额"""
+        rmb = self.find_element(
+            *(self.charge_RMB_loc)).text[:-1]
+        return rmb
+
+    @property
+    def getLastRMB(self):
+        """获取储值后余额"""
+        rmb = self.find_element(
+            *(self.usSaving_loc)).text
+        return rmb
+
+
+    def getNotFillPresent(self,txtName):
+        """获取 未开发票金额"""
+
+        # 未开票金额
+        notFill = self.getTagText(
+            txtName,*(self.fill_not_RMB_loc)).encode('utf-8')
+        self.getImage
+        return notFill
 
 
     @property
@@ -68,6 +164,7 @@ class ChargePage(basepage.BasePage):
         self.getImage
         return bool_var
 
+
     @property
     def assertChargeSuccess(self):
         '''断言支付成功'''
@@ -75,11 +172,7 @@ class ChargePage(basepage.BasePage):
         self.getImage
         return bool_var
 
-    def assertReceiptSuccess(self):
-        self.charge.clickBtn('补开发票',*(self.charge.toReceipt_loc))
-        time.sleep(1)
-        notRMB = (self.charge.getTagText(data['txtName'],*(self.charge.not_fill_RMB_loc))).encode('utf-8') #未开票金额
-        print '补开发票金额剩余:{0}'.format(notRMB)
+
 
 
 
