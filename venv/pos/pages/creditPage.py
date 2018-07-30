@@ -1,58 +1,86 @@
 #coding:utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts,gl
 import time,os
 
 class CreditPage(basepage.BasePage):
     '''积分换礼页面'''
-    #会员或手机号选择页面
-    creditTab_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[1]/ul/li[2]/a') #积分换礼Tab
-    charge_number_loc =(By.ID,'charge_number') #会员卡号或手机号
-    creditBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button') #确定按钮
 
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    #－－－－－－－－－－－会员或手机号选择页面－－－－－－－－－－－
 
-    #换礼页面
-    inputExchangeNumber_loc = (By.ID,'inputExchangeNumber') #扣减积分
-    inputExchangeDetail_loc = (By.ID,'inputExchangeDetail') #礼品详情
-    sendMessageBtn_loc = (By.XPATH,'//*[@id="creditInfo"]/form/div/div[2]/div/div/a[1]') #确定按钮
-    cancelBtn_loc = (By.XPATH,'//*[@id="creditInfo"]/form/div/div[2]/div/div/a[2]') #返回按钮
+    # 积分换礼Tab
+    creditTab_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[1]/ul/li[2]/a')
+    # 会员卡号或手机号
+    charge_number_loc =(By.ID,'charge_number')
+    # 确定按钮
+    creditBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+
+    #－－－－－－－－－－－换礼页面－－－－－－－－－－－－－－－－－
+    # 扣减积分
+    inputExchangeNumber_loc = (By.ID,'inputExchangeNumber')
+    # 礼品详情
+    inputExchangeDetail_loc = (By.ID,'inputExchangeDetail')
+    # 确定按钮
+    sendMessageBtn_loc = (By.XPATH,'//*[@id="creditInfo"]/form/div/div[2]/div/div/a[1]')
+    # 返回按钮
+    cancelBtn_loc = (By.XPATH,'//*[@id="creditInfo"]/form/div/div[2]/div/div/a[2]')
 
     #-----
-    credit_checkbox_loc =(By.XPATH,"//input[@name='rules[]']") #积分兑换规则div
-    creditNum_loc = (By.NAME,'credit') #积分数量
-    detail_loc = (By.NAME,'detail') #积分详情
-    #成功提示
-    #success_loc = (By.XPATH,'/html/body/div[2]/div[1]/div/div[5]/div') #兑换成功提示消息
-    success_loc = (By.XPATH, '/html/body/div[5]')  # 兑换成功提示消息
+    # 积分兑换规则div
+    credit_checkbox_loc =(By.XPATH,"//input[@name='rules[]']")
+    # 积分数量
+    creditNum_loc = (By.NAME,'credit')
+    # 积分详情
+    detail_loc = (By.NAME,'detail')
+    # 兑换成功提示消息
+    success_loc = (By.XPATH, '/html/body/div[5]')
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    '''操作'''
+    #输入手杨号或卡号
+    def inputPhoneorCard(self,text):
+        """输入卡号 或手机号"""
+        self.inputText(text,'输入卡号或手机号',*(self.charge_number_loc))
+
     @property
-    def open(self):
-        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
-        self._open(self.base_url,self.pagetitle)
-        self.addCookies(ck_dict)
-        #time.sleep(3)
-        self._open(self.base_url, self.pagetitle)
+    def clickPhoneConfirmBtn(self):
+        """单击 确定按钮"""
+        self.clickBtn('确定',*(self.creditBtn_loc))
 
-    def selectTab(self,*loc):
-        '''选择tab操作'''
-        self.find_element(*loc).click()
+    def inputExchangeNumber(self,text):
+        """输入 扣减积分数"""
+        self.inputText(text,'扣减积分',*(self.inputExchangeNumber_loc))
 
-    @scripts.Replay
-    def inputText(self,text,desc,*loc):
-        '''输入文本操作'''
-        print '输入{0}:{1}'.format(desc,text)
-        self.send_keys(text,*loc)
+    def inputExchangeDetail(self,text):
+        """输入礼品 详情"""
+        self.inputText(text,'礼品详情',*(self.inputExchangeDetail_loc))
 
-    @scripts.Replay
-    def clickBtn(self,desc,*loc):
-        '''点击操作'''
-        print '点击:{0}'.format(desc)
-        self.find_element(*loc).click()
+    @property
+    def clickConfirmBtn(self):
+        """单击积分换礼 确定按钮，提交"""
+        self.clickBtn('确定',*(self.sendMessageBtn_loc))
 
-    @scripts.Replay
+    @property
+    def clickExitButton(self):
+        """单击 返回按钮"""
+        self.clickBtn('返回',*(self.cancelBtn_loc))
+
+
+
+    def inputCreditNumber(self,text):
+        """输入积分数量"""
+        self.inputText(text,'积分数量',*(self.creditNum_loc))
+
+    def inputCreditDetail(self,text):
+        """输入积分详情"""
+        self.inputText(text,'积分详情',*(self.detail_loc))
+
+    @property
+    def clickIterCheckBox(self):
+        """循环 勾选积分规则 复选框"""
+        self.iterClick('积分规则复选框',*(self.credit_checkbox_loc))
+
+
     def iterClick(self,desc,*loc):
         '''批量勾选积分规则'''
         elements = self.find_elements(*loc)

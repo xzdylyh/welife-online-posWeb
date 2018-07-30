@@ -1,9 +1,10 @@
 #coding=utf-8
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from pos.pages import creditPage
+from pos.pages.creditPage import CreditPage
+from pos.lib.scripts import getYamlfield,getRunFlag
 import unittest,ddt,os
-from pos.lib import gl,HTMLTESTRunnerCN,scripts
+from pos.lib import gl,HTMLTESTRunnerCN
 
 creditData = [{"charge_number":"1003935039186461","ExchangeNumber":1,"ExchangeDetail":u"自动化测试大礼包1个","desc":u"正常积分兑换流程"}]
 
@@ -19,26 +20,37 @@ class TestCreditPage(unittest.TestCase):
 
     def creditFunc(self,data):
         '''输入卡号或手号并点击确定'''
-        self.credit = creditPage.CreditPage(self.url,self.driver,u"积分换礼 - 微生活POS系统")
-        self.credit.open  #增加cookies信息,并打开积分换礼页
+        self.credit = CreditPage(self.url,self.driver,u"积分换礼 - 微生活POS系统")
+        # 增加cookies信息,并打开积分换礼页
+        self.credit.open
 
-        self.credit.inputText(data['charge_number'],"输入手机号或卡号",*(self.credit.charge_number_loc))
-        #self.credit.clickBtn("确定按钮",*(self.credit.creditBtn_loc))
-        self.credit.jsClick('确定按钮',*(self.credit.creditBtn_loc))
+        #输入手机号或卡号
+        self.credit.inputPhoneorCard(data['charge_number'])
+        #单击 确定按钮
+        self.credit.clickPhoneConfirmBtn
 
 
-    @unittest.skipIf(scripts.getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
     def testCase1(self,data):
         '''积分换礼'''
         print '{0}'.format(data['desc'])
-        self.creditFunc(data) #输入手机号,或卡号,进入积分换礼页面
-        self.credit.iterClick("积分规则",*(self.credit.credit_checkbox_loc))
-        self.credit.inputText(data['ExchangeNumber'],'积分数量',*(self.credit.creditNum_loc))
-        self.credit.inputText(data['ExchangeDetail'],'积分详情',*(self.credit.detail_loc))
-        self.credit.clickBtn("确定按钮",*(self.credit.sendMessageBtn_loc))
-        #print self.driver.find_element_by_xpath('/html/body/div[5]').is_displayed()
-        self.credit.assertPaySuccess #成功兑换断言
+
+        # 输入手机号,或卡号,进入积分换礼页面
+        self.creditFunc(data)
+        #积分规则
+        self.credit.clickIterCheckBox
+        #积分数量
+        self.credit.inputCreditNumber(data['ExchangeNumber'])
+        #积分详情
+        self.credit.inputCreditDetail(data['ExchangeDetail'])
+        #确定按钮 提交
+        self.credit.clickConfirmBtn
+
+        # 成功兑换断言
+        self.credit.assertPaySuccess
+
+
 
     @classmethod
     def tearDownClass(cls):

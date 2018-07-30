@@ -1,45 +1,37 @@
 #coding:utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts,gl
 import time,os
 
 class NumberCardListPage(basepage.BasePage):
     """交易流水模块-次卡消费撤销"""
-    """定位器"""
-    list_undoLink_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[7]') #撤销消费链接
-    list_confirmBtn_loc = (By.ID,'cancelCost') #确认按钮
-    list_assert_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[5]/span/span') #新增一条交易类型为撤销消费
-
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # 撤销消费链接
+    list_undoLink_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[7]')
+    # 确认按钮
+    list_confirmBtn_loc = (By.ID,'cancelCost')
+    # 新增一条交易类型为撤销消费
+    list_assert_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[5]/span/span')
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     """操作"""
     @property
-    def open(self):
-        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
-        self._open(self.base_url,self.pagetitle)
-        self.addCookies(ck_dict)
-        #time.sleep(3)
-        self._open(self.base_url, self.pagetitle)
-
-    @scripts.Replay
-    def selectTab(self,desc,*loc):
-        '''选择tab操作'''
-        print 'Select{0}:{1}'.format(desc,loc)
-        self.find_element(*loc).click()
-
-    @scripts.Replay
-    def inputText(self,text,desc,*loc):
-        '''输入文本操作'''
-        print 'Input{0}:{1}'.format(desc,text)
-        self.send_keys(text,*loc)
+    def clickUndoLink(self):
+        """单击撤销链接"""
+        self.clickBtn('消费撤销',*(self.list_undoLink_loc))
 
 
-    @scripts.Replay
-    def clickBtn(self,desc,*loc):
-        '''单击操作'''
-        print 'Click{0}:{1}'.format(desc,loc)
-        self.find_element(*loc).click()
+    @property
+    def clickConfirmButton(self):
+        """单击确定按钮"""
+        self.clickBtn('确定',*(self.list_confirmBtn_loc))
+
+
+    @property
+    def getUndoStatus(self):
+        """获取撤销后，状态"""
+        txt = self.getTagText('text',*(self.list_assert_loc))
+        return txt
 
     @property
     def assertSuccess(self):

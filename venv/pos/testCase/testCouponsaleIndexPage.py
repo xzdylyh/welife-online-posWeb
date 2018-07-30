@@ -1,8 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import couponsaleIndexPage
+from pos.pages.couponsaleIndexPage import CouponsaleIndexPage
 import unittest,ddt,os
-from pos.lib import scripts
+from pos.lib.scripts import getYamlfield,getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
 
 shopData = [{"phoneOrCard":"13712345678","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
@@ -17,25 +17,31 @@ class TestCouponsaleIndexPage(unittest.TestCase):
 
 
 
-    @unittest.skipIf(scripts.getRunFlag('COUPONSALEINDEX',('testCase1'))=='N','验证执行配置')
+    @unittest.skipIf(getRunFlag('COUPONSALEINDEX',('testCase1'))=='N','验证执行配置')
     @ddt.data(*shopData)
     def testCase1(self,data):
         """商品售卖-券包+次卡+直接购买"""
         print '功能:{0}'.format(data['desc'])
 
-        self.shop = couponsaleIndexPage.CouponsaleIndexPage(self.url,self.driver,data['title'])
-        self.shop.open #打开目标url
+        #实例化CouponsaleIndexPage类
+        self.shop = CouponsaleIndexPage(self.url,self.driver,data['title'])
+        # 打开目标url
+        self.shop.open
 
         """输入会员卡号,或手机号页"""
-        self.shop.inputText(data['phoneOrCard'],'手机号或卡号',*(self.shop.shop_phone_loc))
-        self.shop.clickBtn('确定',*(self.shop.shop_phoneBtn_loc))
+        #输入手机号或卡号
+        self.shop.inputPhoneOrCard(data['phoneOrCard'])
+        #点击 确定按钮
+        self.shop.clickConfirmBtn
 
         """商品售卖页"""
-        self.shop.iterClick(*(self.shop.shop_select_loc))
-        self.shop.clickBtn('确认',*(self.shop.shop_confirmBtn_loc))
+        #批量 勾选商品复选框
+        self.shop.clickiterSelect
+        #单击 确定按钮，提交售卖
+        self.shop.clickShopConfirmBtn
 
         """后置断言操作"""
-        self.assertTrue(self.shop.assertShopSuccess,msg='断言售卖成功后,返回到输入卡号或手机号页面')
+        self.assertTrue(self.shop.assertShopSuccess)#断言售卖成功后,返回到输入卡号或手机号页面
 
 
 

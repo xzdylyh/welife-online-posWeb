@@ -1,9 +1,9 @@
 # coding=utf-8
 from selenium import webdriver
-from pos.pages import creditListPage
+from pos.pages.creditListPage import CreditListPage
 import unittest, ddt, os
 from pos.lib.excel import Excel
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag,getYamlfield
 from pos.lib import gl, HTMLTESTRunnerCN
 import time, json
 
@@ -19,20 +19,28 @@ class TestCreditListPage(unittest.TestCase):
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/credit/list'
 
-    @unittest.skipIf(scripts.getRunFlag('CREDITLIST', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('CREDITLIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
     def testCase1(self, data):
         """交易流水-撤销积分"""
         print '功能:{0}'.format(data['desc'])
-        self.creditList = creditListPage.CreditListPage(self.url,self.driver,data['CreditListTitle'])
-        self.creditList.open #打开目标地址
-        """撤销积分"""
-        #self.creditList.clickBtn('撤销积分',*(self.creditList.undo_LinkBtn_loc))
-        self.creditList.jsClick('撤销积分',*(self.creditList.undo_LinkBtn_loc))
-        self.creditList.clickBtn('确定',*(self.creditList.undo_Btn_loc))
+
+        #实例化CreditListPage类
+        self.creditList = CreditListPage(self.url,self.driver,data['CreditListTitle'])
+        # 打开目标地址
+        self.creditList.open
+
+        """撤销积分页操作"""
+        #单击 撤销积分
+        self.creditList.clickUndoLink
+        #单击确定 按钮
+        self.creditList.clickUndoBtn
+
         """断言"""
-        txt=self.creditList.assertCancelSuccess
-        self.assertEqual(txt,'撤销积分换礼',msg='撤销积分后,再列表显示一条,状态为撤销积分换礼')
+        self.assertEqual(
+            self.creditList.assertUndoSuccess,
+            '撤销积分换礼'
+        )#撤销积分后,在列表显示一条,状态为撤销积分换礼记录
 
 
     @classmethod

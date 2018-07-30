@@ -1,9 +1,9 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import numbercardPage
+from pos.pages.numbercardPage import NumberCardPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib import scripts
+from pos.lib.scripts import getRunFlag,getYamlfield
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
@@ -18,25 +18,34 @@ class TestNumberCardPage(unittest.TestCase):
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/numbercard'
 
-    @unittest.skipIf(scripts.getRunFlag('NUMBERCARD', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(getRunFlag('NUMBERCARD', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*numberCardData)
     def testCase1(self,data):
         """次卡消费"""
         print '功能:{0}'.format(data['desc'])
 
-        self.number = numbercardPage.NumberCardPage(self.url,self.driver,data['title'])
-        self.number.open #打开目标地址
+        #实例化NumberCardPage类
+        self.number = NumberCardPage(self.url,self.driver,data['title'])
+        # 打开目标地址
+        self.number.open
 
         """输入手机号或卡号进入次卡消费界面"""
-        self.number.inputText(data['phoneOrCard'],'手机号',*(self.number.number_phone_Loc))
-        self.number.clickBtn('确定',*(self.number.number_conrimBtn_loc))
+        #输入手机号或卡号
+        self.number.inputPhoneOrCard(data['phoneOrCard'])
+        #单击 确定按钮
+        self.number.clickNumberCardButton
 
         """次卡消费界面,操作"""
-        self.number.inputText(data['useNum'],'次数',*(self.number.number_usenum_loc))
-        self.number.clickBtn('确定',*(self.number.number_submit_loc))
+        #输入 次卡使用次数
+        self.number.inputNumberUse(data['useNum'])
+        #单击确定按钮，提交
+        self.number.clickSubmitButton
 
         """检查断言"""
-        self.assertTrue(self.number.assertSuccess,msg='检查消费后,返回到,输入手机号界面')
+        self.assertTrue(
+            self.number.assertSuccess,
+            msg='检查消费后,返回到,输入手机号界面'
+        )#检查消费后,返回到,输入手机号界面
 
 
     @classmethod

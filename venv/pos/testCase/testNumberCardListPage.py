@@ -1,8 +1,8 @@
 #coding=utf-8
 from selenium import webdriver
-from pos.pages import numbercardListPage
+from pos.pages.numbercardListPage import NumberCardListPage
 import unittest,ddt,os
-from pos.lib import scripts
+from pos.lib.scripts import getYamlfield,getRunFlag
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -17,21 +17,32 @@ class TestNumberCardListPage(unittest.TestCase):
         cls.driver = webdriver.Chrome()
         cls.url = 'http://pos.beta.acewill.net/numbercard/list'
 
-    @unittest.skipIf(scripts.getRunFlag('NUMBERCARDLIST', 'testCase1') == 'N', '验证执行配置')
+
+
+
+    @unittest.skipIf(getRunFlag('NUMBERCARDLIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*listCardData)
     def testCase1(self,data):
         """次卡消费撤销"""
         print '功能:{0}'.format(data['desc'])
-        self.list = numbercardListPage.NumberCardListPage(self.url,self.driver,data['title'])
-        self.list.open #打开目标地址
+
+        #实例化NumberCardListPage类
+        self.list = NumberCardListPage(self.url,self.driver,data['title'])
+        # 打开目标地址
+        self.list.open
 
         """撤销操作"""
-        self.list.clickBtn('撤销消费',*(self.list.list_undoLink_loc))
-        self.list.clickBtn('确认',*(self.list.list_confirmBtn_loc))
+        #单击撤销消费
+        self.list.clickUndoLink
+        #单击确定按钮
+        self.list.clickConfirmButton
 
         """检查断言"""
-        self.assertTrue(self.list.assertSuccess)
-        self.assertEqual(self.list.find_element(*(self.list.list_assert_loc)).text,'撤销消费')
+        self.assertTrue(self.list.assertSuccess)#断言，撤销后，状态是否存在
+        self.assertEqual(
+            self.list.getUndoStatus,
+            '撤销消费'
+        )#断言状态是否为 撤销消费
 
 
     @classmethod

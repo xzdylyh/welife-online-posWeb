@@ -1,46 +1,47 @@
 #coding:utf-8
 from pos.base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts,gl
 import time,os
 
 class NumberCardPage(basepage.BasePage):
     """次卡消费模块"""
-    """定位器"""
-    number_phone_Loc = (By.ID,'charge_number') #手机号或卡号
-    number_conrimBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button') #确定
-    number_usenum_loc = (By.XPATH,'//*[@id="numberCardInfo"]/div/div[1]/div/div[1]/div[2]/span[2]/input') #次卡使用数
-    number_remark_loc = (By.XPATH,'//*[@id="note"]') #备注
-    number_submit_loc = (By.ID,'numberSubmit') #提交
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # 手机号或卡号
+    number_phone_Loc = (By.ID,'charge_number')
+    # 确定
+    number_conrimBtn_loc = (By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+    # 次卡使用数
+    number_usenum_loc = (By.XPATH,'//*[@id="numberCardInfo"]/div/div[1]/div/div[1]/div[2]/span[2]/input')
+    # 备注
+    number_remark_loc = (By.XPATH,'//*[@id="note"]')
+    # 提交
+    number_submit_loc = (By.ID,'numberSubmit')
+    #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    """操作"""
+    def inputPhoneOrCard(self,text):
+        """输入手机号 或卡号"""
+        self.inputText(text,'手机号或卡号',*(self.number_phone_Loc))
+
     @property
-    def open(self):
-        yamldict = scripts.getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
-        self._open(self.base_url,self.pagetitle)
-        self.addCookies(ck_dict)
-        #time.sleep(3)
-        self._open(self.base_url, self.pagetitle)
-
-    @scripts.Replay
-    def selectTab(self,desc,*loc):
-        '''选择tab操作'''
-        print 'Select{0}:{1}'.format(desc,loc)
-        self.find_element(*loc).click()
-
-    @scripts.Replay
-    def inputText(self,text,desc,*loc):
-        '''输入文本操作'''
-        print 'Input{0}:{1}'.format(desc,text)
-        self.send_keys(text,*loc)
+    def clickNumberCardButton(self):
+        """单击 确定按钮"""
+        self.clickBtn('确定',*(self.number_conrimBtn_loc))
 
 
-    @scripts.Replay
-    def clickBtn(self,desc,*loc):
-        '''单击操作'''
-        print 'Click{0}:{1}'.format(desc,loc)
-        self.find_element(*loc).click()
+    def inputNumberUse(self,text):
+        """输入次卡使用数"""
+        self.inputText(text,'次卡使用数',*(self.number_usenum_loc))
+
+    def inputRemark(self,text):
+        """输入备注"""
+        self.inputText(text,'备注',*(self.number_remark_loc))
+
+
+    @property
+    def clickSubmitButton(self):
+        """单击 确定按钮，提交"""
+        self.clickBtn('确定',*(self.number_submit_loc))
+
 
     @property
     def assertSuccess(self):
