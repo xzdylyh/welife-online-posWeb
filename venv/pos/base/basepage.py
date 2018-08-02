@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,\
     TimeoutException,ElementNotVisibleException,UnexpectedAlertPresentException
 
-from pos.lib.scripts import getYamlfield,Replay
+from pos.lib.scripts import getYamlfield,Replay,hightlightConfig
 from pos.lib import gl
 
 
@@ -92,7 +92,7 @@ class BasePage(object):
             self.getImage
 
 
-
+    @hightlightConfig('HightLight')
     def hightlight(self,element):
         """
         元素高亮显示

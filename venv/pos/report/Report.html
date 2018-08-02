@@ -117,9 +117,9 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2018-07-31 10:40:00</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:38.157000</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 1，通过 1，通过率= 100.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-02 11:28:26</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:38.526000</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 2，通过 2，通过率= 100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
 </div>
@@ -129,8 +129,8 @@ function html_escape(s) {
 <a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
 <a class="btn btn-warning" href='javascript:showCase(4)'>错误{ 0 }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
-<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 1 }</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 1 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 2 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 2 }</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -153,17 +153,17 @@ function html_escape(s) {
 </tr>
 
 <tr class='passClass warning'>
-    <td>TestConsumeCouponListPage: 交易流水模块</td>
-    <td class="text-center">1</td>
-    <td class="text-center">1</td>
+    <td>TestChargePage: 储值模块</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
     <td class="text-center">0</td>
     <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',2)" class="detail" id='c1'>详细</a></td>
     <td class="text-center">Assert or Error Image</td>
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase' width='300px'><div class='testcase'>testCase1_1: 交易流水-撤销商品售卖</div></td>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1: 正常储值功能</div></td>
     <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
     <!--默认收起错误信息 -Findyou
     <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
@@ -173,19 +173,76 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre>
     
-pt1_1: 功能:券包+次卡+直接购买
-Click:商品售卖('xpath', '//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[12]/span[1]/a')
-Click:确定('id', 'undo')
-断言:交易流水,新增一条,交易类型为撤销商品售卖的记录
-screenshot: 20180731_10.40.34 .png
+pt1_1: 功能:储值正常流程
+Input储值卡号:1003935039186461
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+当前余额:23353.00
+Click:奖励规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]')
+Click:自定义规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a')
+Input自定义金额:2
+Click:自定义规则确定('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+Click:现金支付类型('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
+Input备注:自动化测试充值
+Click:确定('id', 'chargeSubmit')
+Click:确定('id', 'chargeCheckBtn')
+screenshot: 20180802_11.28.43 .png
+Click:立即消费('id', 'consumeBtn')
+储值后当前余额:23355.00
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180731_10.40.34.png">
-            <img   src="./images/20180731_10.40.34.png" height="200" width="400"/>
+        <a  href="./images/20180802_11.28.43.png">
+            <img   src="./images/20180802_11.28.43.png" height="200" width="400"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase2_1: 储值并补开发票</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
+    <pre>
+    
+pt1_2: 功能:储值并补开发票
+Input储值卡号:1003935039186461
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+当前余额:23355.00
+Click:奖励规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]')
+Click:自定义规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a')
+Input自定义金额:2
+Click:自定义规则确定('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+Click:现金支付类型('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
+Input备注:自动化测试充值
+Click:确定('id', 'chargeSubmit')
+Click:确定('id', 'chargeCheckBtn')
+screenshot: 20180802_11.28.54 .png
+Click:立即消费('id', 'consumeBtn')
+储值后当前余额:23357.00
+Click:补开发票('id', 'toReceipt')
+screenshot: 20180802_11.28.59 .png
+Input补开发票金额:2.00
+Click:确定('xpath', '//*[@id="receipt"]/div[2]/div[3]/div')
+Click:补开发票('id', 'toReceipt')
+screenshot: 20180802_11.29.01 .png
+补开发票金额剩余:0.00
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20180802_11.28.54.png">
+            <img   src="./images/20180802_11.28.54.png" height="200" width="400"/>
         </a>
     </td>
 </tr>
@@ -194,8 +251,8 @@ screenshot: 20180731_10.40.34 .png
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>1</td>
-    <td>1</td>
+    <td>2</td>
+    <td>2</td>
     <td>0</td>
     <td>0</td>
     <td>通过率：100.00%</td>

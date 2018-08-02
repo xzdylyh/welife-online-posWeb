@@ -70,17 +70,23 @@ def Replay(func):
     return wrapper
 
 
-"""获取配置数据，装饰器"""
-def Config(func):
+"""元素高亮显示配置，装饰器"""
+def hightlightConfig(key):
     """
-    配置信息，装饰器
-    :param func: 函数
-    :return: config.yaml字典内容
+    配置元素，是否高亮显示
+    :param key: config.yaml 中关键字 HightLight:1 高亮 其它忽略
+    :return:
     """
-    def wrapper(*args,**kwargs):
-        configData = getYamlfield(os.path.join(gl.configPath,'config.yaml'))
-        return func(configData,**kwargs)
-    return wrapper
+    def _wrapper(func):
+        def wrapper(*args,**kwargs):
+            config = getYamlfield(gl.configFile)
+            ret = None
+            if config['HightLight'] ==1:
+                ret = func(*args,**kwargs)
+            return ret
+        return wrapper
+    return _wrapper
+
 
 
 def rmDirsAndFiles(dirpath):
