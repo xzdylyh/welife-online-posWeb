@@ -238,7 +238,7 @@ class BasePage(object):
         :param loc: 定位器(By.ID,'kw')
         :return: True 或 False
         """
-        TimeOut = 20
+        TimeOut = 60
         try:
             self.driver.implicitly_wait(TimeOut)
             e = self.driver.find_element(*loc)

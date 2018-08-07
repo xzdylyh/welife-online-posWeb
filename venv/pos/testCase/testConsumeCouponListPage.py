@@ -35,7 +35,6 @@ class TestConsumeCouponListPage(unittest.TestCase):
         self.undo.clickUndoConfirmBtn
 
         """后置断言操作"""
-        self.undo.wait(3000)
         self.assertTrue(self.undo.assertSuccess)
         self.assertEqual(self.undo.getContentText,'撤销商品售卖')
 
