@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.bjPrintPage import BjPrintPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 import time
 
@@ -13,7 +12,7 @@ class TestBjPrintPage(unittest.TestCase):
     """班结小票打印"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/consume/list'
 
 

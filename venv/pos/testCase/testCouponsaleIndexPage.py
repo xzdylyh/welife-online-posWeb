@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.couponsaleIndexPage import CouponsaleIndexPage
 import unittest,ddt,os
-from pos.lib.scripts import getYamlfield,getRunFlag
+from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 shopData = [{"phoneOrCard":"13712345678","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
@@ -12,7 +11,7 @@ class TestCouponsaleIndexPage(unittest.TestCase):
     """商品售卖模块"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/couponsale/index'
 
 

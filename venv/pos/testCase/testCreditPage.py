@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from pos.pages.creditPage import CreditPage
-from pos.lib.scripts import getYamlfield,getRunFlag
+from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver
 import unittest,ddt,os
 from pos.lib import gl,HTMLTESTRunnerCN
 
@@ -14,7 +13,7 @@ class TestCreditPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """初始化webdriver"""
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/credit'
 
 

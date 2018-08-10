@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.numbercardListPage import NumberCardListPage
 import unittest,ddt,os
-from pos.lib.scripts import getYamlfield,getRunFlag
+from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -14,7 +13,7 @@ class TestNumberCardListPage(unittest.TestCase):
     """交易流水模块"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/numbercard/list'
 
 

@@ -1,9 +1,8 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.numbercardPage import NumberCardPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
@@ -15,7 +14,7 @@ class TestNumberCardPage(unittest.TestCase):
     """次卡消费模块"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/numbercard'
 
     @unittest.skipIf(getRunFlag('NUMBERCARD', 'testCase1') == 'N', '验证执行配置')

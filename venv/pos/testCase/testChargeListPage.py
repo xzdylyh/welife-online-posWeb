@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.chargeListPage import ChargeListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -13,10 +12,7 @@ class TestChargeListPage(unittest.TestCase):
     """交易流水模块-充值"""
     @classmethod
     def setUpClass(cls):
-        cls.option = webdriver.ChromeOptions()
-        cls.option.add_argument('disable-infobars') #不显示"Chrome正在受自动测试软件控制"
-        #cls.option.add_argument('headless') #后台运行,不显示界面
-        cls.driver = webdriver.Chrome(chrome_options=cls.option)
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/charge/listcharge'
 
 

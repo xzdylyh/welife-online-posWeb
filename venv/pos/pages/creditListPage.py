@@ -9,6 +9,7 @@ class CreditListPage(basepage.BasePage):
     #交易流水-撤销积分
     # 撤销积分链接
     undo_LinkBtn_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]/span/a')
+    unodo_LinkBtnText_loc = (By.LINK_TEXT,'撤销积分')
     # 确定按钮
     undo_Btn_loc = (By.ID,'cancelGift')
     # 撤销积分后,交易列表增加一条状态,撤销积分换礼
@@ -19,6 +20,12 @@ class CreditListPage(basepage.BasePage):
     def clickUndoLink(self):
         """单击撤销积分"""
         self.clickBtn('撤销积分',*(self.undo_LinkBtn_loc))
+
+    @property
+    def clickUndoLinkText(self):
+        """单击撤销积分文本"""
+        self.clickBtn('撤销积分',*(self.unodo_LinkBtnText_loc))
+
 
     @property
     def clickUndoBtn(self):

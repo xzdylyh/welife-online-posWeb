@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.consumeCouponListPage import  ConsumeCouponListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 shopCancelData = [{"desc":u"券包+次卡+直接购买","title":u"商品售卖流水 - 微生活POS系统"}]
@@ -12,7 +11,7 @@ class TestConsumeCouponListPage(unittest.TestCase):
     """交易流水模块"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/consume/couponlist'
 
 
@@ -30,7 +29,7 @@ class TestConsumeCouponListPage(unittest.TestCase):
 
         """商品售卖,撤销"""
         #单击 撤销商口售卖
-        self.undo.clickUndoLink
+        self.undo.clickUndoLinkText
         #单击 确定按钮
         self.undo.clickUndoConfirmBtn
 

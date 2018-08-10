@@ -4,7 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from pos.pages.cardIndexPage import CardIndexPage
 
-from pos.lib.scripts import Replay,getRunFlag,getYamlfield,rmDirsAndFiles
+from pos.lib.scripts import Replay,getRunFlag,\
+    getYamlfield,rmDirsAndFiles,select_Browser_WebDriver
 from pos.lib.excel import Excel
 from pos.lib import gl,HTMLTESTRunnerCN
 
@@ -16,7 +17,7 @@ class TestCardIndexPage(unittest.TestCase):
     """储值售卖模块"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/card/index'
         cls.excel = Excel(os.path.join(gl.dataPath, 'posChargeCard.xls').decode('utf-8'))
 

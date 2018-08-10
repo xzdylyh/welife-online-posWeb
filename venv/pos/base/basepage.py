@@ -2,6 +2,7 @@
 import os,time
 from PIL import Image
 
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,\
@@ -30,6 +31,9 @@ class BasePage(object):
     '''
     功能描述：所有公共方法，都写在以下
     '''
+
+
+
     #打开浏览器
     def _open(self,url,pagetitle):
         """

@@ -43,11 +43,13 @@ class ChargePage(basepage.BasePage):
     # 补开发票
     fill_toReceipt_loc = (By.ID,"toReceipt")
     # 第一行发票金额
-    fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[5]/input')
+    fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[2]/div[2]/div[1]/div[5]/input')
     # 未开发票金额
-    fill_not_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4]')
+    #//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4] @变更记录，新增加补开发票年份下拉列表
+    fill_not_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[2]/div[2]/div[1]/div[4]')
     # 确定按钮
-    fill_Btn_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[3]/div')
+    #//*[@id="receipt"]/div[2]/div[3]/div'
+    fill_Btn_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[4]/div')
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     def inputPhoneOrCardNo(self,text):

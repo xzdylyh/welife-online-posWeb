@@ -1,8 +1,7 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.chargePage import ChargePage
 import unittest,ddt,os,time
-from pos.lib.scripts import getRunFlag
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
@@ -15,12 +14,8 @@ class TestChargePage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.option = webdriver.ChromeOptions()
-        # 不显示"Chrome正在受自动测试软件控制"
-        cls.option.add_argument('disable-infobars')
-        # 后台运行,不显示界面
-        #cls.option.add_argument('headless')
-        cls.driver = webdriver.Chrome(chrome_options=cls.option)
+
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/charge/index'
 
 

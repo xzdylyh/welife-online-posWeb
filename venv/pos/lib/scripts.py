@@ -2,7 +2,24 @@
 import time,os,zipfile
 import yaml,json
 from pos.lib import gl
+from selenium import webdriver
 
+def select_Browser_WebDriver():
+    """
+    根据config.yaml配置文件，来选择启动的浏览器
+    :return:
+    """
+    #读取config.yam配置文件中，浏览器配置
+    broName = getYamlfield(gl.configFile)['CONFIG']['Browser']
+
+    #根据borName决定，启动，哪个浏览器
+    if str(broName).strip().lower() == 'chrome':
+        driver = webdriver.Chrome()
+    elif str(broName).strip().lower() == 'firefox':
+        driver = webdriver.Firefox()
+    else:
+        driver = webdriver.Ie()
+    return driver
 
 
 """写YAML文件内容"""

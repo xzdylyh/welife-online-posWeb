@@ -1,9 +1,8 @@
 #coding=utf-8
-from selenium import webdriver
 from pos.pages.consumePage import ConsumePage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
@@ -14,12 +13,13 @@ cardData = [{"PhoneNo":"13712345676","desc":u"实体卡开卡",'username':'yhlen
 cardBindData = [{"PhoneNo": "13712345678","desc":u"绑卡正常流程"}]
 cardofData = [{"desc":u"次卡开卡"}]
 
+
 @ddt.ddt
 class TestConsumePage(unittest.TestCase):
     '''消费模块'''
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/consume'
         cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
         cls.toexcel = Excel(os.path.join(gl.dataPath, 'posNotNameCardData.xls').decode('utf-8'))

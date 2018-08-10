@@ -1,10 +1,9 @@
 #coding=utf-8
 import time,json
-from selenium import webdriver
 from pos.pages.consumeListPage import ConsumeListPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -16,7 +15,7 @@ class TestConsumeListPage(unittest.TestCase):
     """交易流水-消费"""
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/consume/list'
 
 

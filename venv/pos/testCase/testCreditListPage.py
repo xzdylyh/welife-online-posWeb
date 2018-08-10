@@ -1,9 +1,8 @@
 # coding=utf-8
-from selenium import webdriver
 from pos.pages.creditListPage import CreditListPage
 import unittest, ddt, os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
 from pos.lib import gl, HTMLTESTRunnerCN
 import time, json
 
@@ -16,7 +15,7 @@ class TestCreditListPage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+        cls.driver = select_Browser_WebDriver()
         cls.url = 'http://pos.beta.acewill.net/credit/list'
 
     @unittest.skipIf(getRunFlag('CREDITLIST', 'testCase1') == 'N', '验证执行配置')
@@ -32,7 +31,7 @@ class TestCreditListPage(unittest.TestCase):
 
         """撤销积分页操作"""
         #单击 撤销积分
-        self.creditList.clickUndoLink
+        self.creditList.clickUndoLinkText
         #单击确定 按钮
         self.creditList.clickUndoBtn
 

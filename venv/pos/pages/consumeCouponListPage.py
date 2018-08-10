@@ -8,6 +8,7 @@ class ConsumeCouponListPage(basepage.BasePage):
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     # 撤销链接
     coupon_undoLink_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[12]/span[1]/a')
+    coupon_undoLinkText_loc = (By.LINK_TEXT,'撤销')
     # 确认
     coupon_confirmBtn_loc = (By.ID,'undo')
     # 撤销后新增一条,撤销商品售卖的记录
@@ -18,7 +19,12 @@ class ConsumeCouponListPage(basepage.BasePage):
     @property
     def clickUndoLink(self):
         """单击 撤销商品售卖 链接"""
-        self.clickBtn('商品售卖',*(self.coupon_undoLink_loc))
+        self.clickBtn('商品售卖撤销',*(self.coupon_undoLink_loc))
+
+    @property
+    def clickUndoLinkText(self):
+        """单击 撤销商品售卖 链接"""
+        self.clickBtn('商品售卖撤销',*(self.coupon_undoLinkText_loc))
 
     @property
     def clickUndoConfirmBtn(self):
