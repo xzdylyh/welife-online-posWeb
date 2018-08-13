@@ -10,6 +10,7 @@ class BjPrintPage(basepage.BasePage):
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>定位器<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     # 首页,班结小票打印连接
     bjPrintLink_loc = (By.XPATH,'//*[@id="header-navbar-collapse"]/ul/li[3]/a')
+    bjPrintLinkText_loc = (By.LINK_TEXT,'打印班结小票')
     # 打印小票,开始时间
     bjPrintStartDate_loc = (By.ID,'inputDateStart')
     # 打印班结小票,结束时间
@@ -24,6 +25,11 @@ class BjPrintPage(basepage.BasePage):
     def clickPrintLink(self):
         '''单击班结小票打印链接'''
         self.clickBtn('班结小票打印',*(self.bjPrintLink_loc))
+
+    @property
+    def clickPrintLinkText(self):
+        """单击打印班结小票打印链接"""
+        self.clickBtn('班结小票打印',*(self.bjPrintLinkText_loc))
 
     @property
     def inputStartTime(self,text):

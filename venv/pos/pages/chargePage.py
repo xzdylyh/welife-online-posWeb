@@ -44,6 +44,7 @@ class ChargePage(basepage.BasePage):
     fill_toReceipt_loc = (By.ID,"toReceipt")
     # 第一行发票金额
     fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[2]/div[2]/div[1]/div[5]/input')
+
     # 未开发票金额
     #//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4] @变更记录，新增加补开发票年份下拉列表
     fill_not_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[2]/div[2]/div[1]/div[4]')
