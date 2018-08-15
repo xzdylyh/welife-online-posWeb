@@ -117,8 +117,8 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2018-08-13 15:01:03</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:22.669000</p>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-15 17:04:50</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:44.126000</p>
 <p class='attribute'><strong>测试结果 : </strong> 共 1，通过 1，通过率= 100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
@@ -153,7 +153,7 @@ function html_escape(s) {
 </tr>
 
 <tr class='passClass warning'>
-    <td>TestBjPrintPage: 班结小票打印</td>
+    <td>TestConsumeCouponListPage: 交易流水模块</td>
     <td class="text-center">1</td>
     <td class="text-center">1</td>
     <td class="text-center">0</td>
@@ -163,7 +163,7 @@ function html_escape(s) {
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase' width='300px'><div class='testcase'>testCase1_1: 班结小结打印</div></td>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1: 交易流水-撤销商品售卖</div></td>
     <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
     <!--默认收起错误信息 -Findyou
     <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
@@ -173,18 +173,19 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre>
     
-pt1_1: 功能:班结小票打印正常流程
-Click:班结小票打印('xpath', '//*[@id="header-navbar-collapse"]/ul/li[3]/a')
-Click:打印('xpath', '/html/body/div[2]/div/div/div[2]/form/div[2]/div/a[1]')
-screenshot: 20180813_15.01.22 .png
+pt1_1: 功能:券包+次卡+直接购买
+Click:商品售卖撤销('link text', '\xe6\x92\xa4\xe9\x94\x80')
+Click:确定('id', 'undo')
+断言:交易流水,新增一条,交易类型为撤销商品售卖的记录
+screenshot: 20180815_17.05.30 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20180813_15.01.22.png">
-            <img   src="./images/20180813_15.01.22.png" height="200" width="400"/>
+        <a  href="./images/20180815_17.05.30.png">
+            <img   src="./images/20180815_17.05.30.png" height="200" width="400"/>
         </a>
     </td>
 </tr>

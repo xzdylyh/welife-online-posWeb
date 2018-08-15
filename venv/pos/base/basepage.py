@@ -46,6 +46,7 @@ class BasePage(object):
         self.driver.get(url)
 
         self.driver.implicitly_wait(10)
+        self.getImage
         assert self.driver.title,pagetitle
         self.driver.implicitly_wait(0)
 

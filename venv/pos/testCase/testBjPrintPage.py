@@ -33,7 +33,7 @@ class TestBjPrintPage(unittest.TestCase):
         self.bjPrint.open
 
         #点击 班结小票链接
-        self.bjPrint.clickPrintLink
+        self.bjPrint.clickPrintLinkText
 
         #点击 打印按钮
         self.bjPrint.clickPrintBtn
