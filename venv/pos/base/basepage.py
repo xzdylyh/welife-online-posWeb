@@ -283,10 +283,10 @@ class BasePage(object):
 
             element =self.driver.find_element(*loc)
             self.hightlight(element) #高亮显示
-            element.send_keys(text)
+            element.send_keys(str(text).strip())
 
             self.driver.implicitly_wait(0)
-        except NoSuchElementException as ex:
+        except (NoSuchElementException,ElementNotVisibleException) as ex:
             pass
 
 

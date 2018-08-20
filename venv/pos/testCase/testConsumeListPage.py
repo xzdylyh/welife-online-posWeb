@@ -31,7 +31,7 @@ class TestConsumeListPage(unittest.TestCase):
         self.consumeList.open
 
         #单击撤销消费 链接
-        self.consumeList.clickUndoLink
+        self.consumeList.clickUndoLinkText
         #单击 确定按钮
         self.consumeList.clickConfirmBtn
 

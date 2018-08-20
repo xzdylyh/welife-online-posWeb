@@ -10,6 +10,7 @@ class ConsumeListPage(basepage.BasePage):
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     # 撤销消费链接
     undo_deal_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[21]/span/a')
+    undo_dealText_loc =(By.LINK_TEXT,'撤销消费')
     # 确定按钮
     undo_dealBtn_loc = (By.ID,'undo')
     # 撤销成功
@@ -23,6 +24,11 @@ class ConsumeListPage(basepage.BasePage):
     """操作"""
 
     #封装操作
+    @property
+    def clickUndoLinkText(self):
+        """单击 撤销消费 链接文本"""
+        self.clickBtn('撤销消费',*(self.undo_dealText_loc))
+
     @property
     def clickUndoLink(self):
         """单击 撤消消费 链接"""

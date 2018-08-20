@@ -6,9 +6,9 @@ from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
-consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":"000000"}]
+consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":'000000'}]
 chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
-custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
+custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":'000000'}]
 cardData = [{"PhoneNo":"13712345676","desc":u"实体卡开卡",'username':'yhleng','birthday':'1985-03-21','password':'000000'}]
 cardBindData = [{"PhoneNo": "13712345678","desc":u"绑卡正常流程"}]
 cardofData = [{"desc":u"次卡开卡"}]
