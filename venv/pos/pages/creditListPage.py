@@ -8,7 +8,7 @@ class CreditListPage(basepage.BasePage):
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     #交易流水-撤销积分
     # 撤销积分链接
-    undo_LinkBtn_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]/span/a')
+    undo_LinkBtn_loc = (By.XPATH,'//*[@id="giftRunWater"]/table/tbody/tr[1]/td[9]/span')
     unodo_LinkBtnText_loc = (By.LINK_TEXT,'撤销积分')
     # 确定按钮
     undo_Btn_loc = (By.ID,'cancelGift')

@@ -30,7 +30,7 @@ class TestChargeListPage(unittest.TestCase):
 
         """页面操作"""
         #单击 撤值撤销链接
-        self.charge.clickUndoLink
+        self.charge.clickUndoLinkText
 
         #单击 确定按钮
         self.charge.clickConfirmBtn

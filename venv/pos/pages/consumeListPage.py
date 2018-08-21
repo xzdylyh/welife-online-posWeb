@@ -9,7 +9,7 @@ class ConsumeListPage(basepage.BasePage):
     """交易流水模块"""
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<定位器>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     # 撤销消费链接
-    undo_deal_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[21]/span/a')
+    undo_deal_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[21]/span')
     undo_dealText_loc =(By.LINK_TEXT,'撤销消费')
     # 确定按钮
     undo_dealBtn_loc = (By.ID,'undo')
@@ -27,6 +27,8 @@ class ConsumeListPage(basepage.BasePage):
     @property
     def clickUndoLinkText(self):
         """单击 撤销消费 链接文本"""
+        # 单击撤销消费之前，点一下父元素，来解决决定位到，点击无效
+        self.clickBtn('span',*(self.undo_deal_loc))
         self.clickBtn('撤销消费',*(self.undo_dealText_loc))
 
     @property
