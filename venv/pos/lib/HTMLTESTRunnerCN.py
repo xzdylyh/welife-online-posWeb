@@ -717,10 +717,10 @@ class HTMLTestRunner(Template_mixin):
             output = saxutils.escape(uo+ue),
         )
         # 插入图片
-        unum = str(uo).find('screenshot:')
+        unum = str(uo).rfind('screenshot:')
         if ((uo or ue) and unum !=-1):
             hidde_status = ''
-            unum=str(uo).find('screenshot:')
+            unum=str(uo).rfind('screenshot:')
             image_url = './images/'+str(uo)[unum+11:unum+34].replace(' ','')
 
         else:
