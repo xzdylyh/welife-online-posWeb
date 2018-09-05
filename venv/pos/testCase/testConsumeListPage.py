@@ -3,7 +3,7 @@ import time,json
 from pos.pages.consumeListPage import ConsumeListPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -21,6 +21,7 @@ class TestConsumeListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*consumeData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """交易流水-撤销消费"""
         print '功能:{0}'.format(data['desc'])

@@ -2,7 +2,7 @@
 from pos.pages.creditListPage import CreditListPage
 import unittest, ddt, os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl, HTMLTESTRunnerCN
 import time, json
 
@@ -20,6 +20,7 @@ class TestCreditListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CREDITLIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
+    @replayCaseFail(num=3)
     def testCase1(self, data):
         """交易流水-撤销积分"""
         print '功能:{0}'.format(data['desc'])

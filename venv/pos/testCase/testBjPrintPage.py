@@ -1,7 +1,7 @@
 #coding=utf-8
 from pos.pages.bjPrintPage import BjPrintPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 import time
 
@@ -19,6 +19,7 @@ class TestBjPrintPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('PRINT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*printData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """班结小结打印"""
         print '功能:{0}'.format(data['desc'])

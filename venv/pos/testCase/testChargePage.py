@@ -1,7 +1,7 @@
 #coding=utf-8
 from pos.pages.chargePage import ChargePage
 import unittest,ddt,os,time
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
 chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
@@ -87,6 +87,7 @@ class TestChargePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGE', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*chargeData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """正常储值功能"""
         #调用储值功能函数
@@ -95,6 +96,7 @@ class TestChargePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
     @ddt.data(*FillData)
+    @replayCaseFail(num=3) #case执行失败后，重新执行num次
     def testCase2(self,data):
         """储值并补开发票"""
 
@@ -126,6 +128,7 @@ class TestChargePage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
+
 
 
 if __name__=="__main__":

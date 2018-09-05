@@ -1,7 +1,7 @@
 #coding=utf-8
 from pos.pages.chargeListPage import ChargeListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -18,6 +18,7 @@ class TestChargeListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*chargeData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """充值撤销"""
         print '功能:{0}'.format(data['desc'])

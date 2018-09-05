@@ -1,7 +1,7 @@
 #coding=utf-8
 from selenium.webdriver.common.by import By
 from pos.pages.creditPage import CreditPage
-from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
 import unittest,ddt,os
 from pos.lib import gl,HTMLTESTRunnerCN
 
@@ -31,6 +31,7 @@ class TestCreditPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         '''积分换礼'''
         print '{0}'.format(data['desc'])

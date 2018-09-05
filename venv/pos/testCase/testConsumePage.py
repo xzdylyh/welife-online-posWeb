@@ -2,7 +2,7 @@
 from pos.pages.consumePage import ConsumePage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
@@ -90,6 +90,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME',('testCase1'))=='N','验证执行配置')
     @ddt.data(*cardData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         '''实体卡开卡'''
         print '功能：{0}'.format(data['desc'])
@@ -122,6 +123,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME',('testCase6'))=='N','验证执行配置')
     @ddt.data(*cardofData)
+    @replayCaseFail(num=3)
     def testCase6(self,data):
         """不记名卡开卡"""
         print '功能：{0}'.format(data['desc'])
@@ -141,6 +143,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME','testCase5')=='N','验证执行配置')
     @ddt.data(*cardBindData)
+    @replayCaseFail(num=3)
     def testCase5(self,data):
         """实体卡绑卡"""
         print '功能：{0}'.format(data['desc'])
@@ -173,6 +176,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME','testCase2')=='N','验证执行配置')
     @ddt.data(*consumeData)
+    @replayCaseFail(num=3)
     def testCase2(self,data):
         '''积分消费'''
         print u'功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit'])
@@ -206,6 +210,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME', 'testCase3') == 'N', '验证执行配置')
     @ddt.data(*chargeDealData)
+    @replayCaseFail(num=3)
     def testCase3(self,data):
         '''储值销费'''
         print u'功能:{0},消费金额{1},储值抵扣{2}元.'.format(
@@ -236,6 +241,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME', 'testCase4') == 'N', '验证执行配置')
     @ddt.data(*custCouponData)
+    @replayCaseFail(num=3)
     def testCase4(self,data):
         '''券消费'''
         print u'功能:{0},消费{1}积分.'.format(

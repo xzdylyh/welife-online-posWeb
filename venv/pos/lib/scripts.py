@@ -139,7 +139,24 @@ def zipDir(dirpath,outFullName):
     zip.close()
 
 
-
+def replayCaseFail(num=3):
+    def _warpper(func):
+        def warpper(*args,**kwargs):
+            raise_info = None
+            rnum = 0
+            for i in range(num):
+                rnum +=1
+                try:
+                    ret = func(*args,**kwargs)
+                    if rnum > 1:
+                        print('重试{}次成功'.format(rnum))
+                    return ret
+                except Exception as ex:
+                    raise_info = ex
+            print('重试{}次,全部失败'.format(rnum))
+            raise raise_info
+        return warpper
+    return _warpper
 
 
 if __name__=="__main__":

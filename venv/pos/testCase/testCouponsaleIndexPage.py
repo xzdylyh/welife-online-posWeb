@@ -1,7 +1,7 @@
 #coding=utf-8
 from pos.pages.couponsaleIndexPage import CouponsaleIndexPage
 import unittest,ddt,os
-from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
 shopData = [{"phoneOrCard":"13712345678","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
@@ -18,6 +18,7 @@ class TestCouponsaleIndexPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('COUPONSALEINDEX',('testCase1'))=='N','验证执行配置')
     @ddt.data(*shopData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """商品售卖-券包+次卡+直接购买"""
         print '功能:{0}'.format(data['desc'])

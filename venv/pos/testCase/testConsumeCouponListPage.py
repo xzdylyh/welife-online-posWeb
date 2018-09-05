@@ -1,7 +1,7 @@
 #coding=utf-8
 from pos.pages.consumeCouponListPage import  ConsumeCouponListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
 shopCancelData = [{"desc":u"券包+次卡+直接购买","title":u"商品售卖流水 - 微生活POS系统"}]
@@ -18,6 +18,7 @@ class TestConsumeCouponListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUMECOUPONLIST',('testCase1'))=='N','验证执行配置')
     @ddt.data(*shopCancelData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """交易流水-撤销商品售卖"""
         print '功能:{0}'.format(data['desc'])

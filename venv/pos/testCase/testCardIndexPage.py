@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from pos.pages.cardIndexPage import CardIndexPage
 
 from pos.lib.scripts import Replay,getRunFlag,\
-    getYamlfield,rmDirsAndFiles,select_Browser_WebDriver
+    getYamlfield,rmDirsAndFiles,select_Browser_WebDriver,replayCaseFail
 from pos.lib.excel import Excel
 from pos.lib import gl,HTMLTESTRunnerCN
 
@@ -24,6 +24,7 @@ class TestCardIndexPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CARDINDEX', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*cardShopData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """储值卡售卖-实体储值卡售卖"""
         print '功能:{0}'.format(data['desc'])

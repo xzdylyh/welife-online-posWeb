@@ -2,7 +2,7 @@
 from pos.pages.numbercardPage import NumberCardPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver
+from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
@@ -19,6 +19,7 @@ class TestNumberCardPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('NUMBERCARD', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*numberCardData)
+    @replayCaseFail(num=3)
     def testCase1(self,data):
         """次卡消费"""
         print '功能:{0}'.format(data['desc'])
