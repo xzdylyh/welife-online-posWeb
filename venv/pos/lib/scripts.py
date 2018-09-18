@@ -140,6 +140,11 @@ def zipDir(dirpath,outFullName):
 
 
 def replayCaseFail(num=3):
+    """
+    测试case失败后，重新执行功能
+    :param num: 失败最多可以执行次数，默认为3次
+    :return: fun本身或者抛出异常
+    """
     def _warpper(func):
         def warpper(*args,**kwargs):
             raise_info = None

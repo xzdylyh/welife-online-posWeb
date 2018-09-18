@@ -4,7 +4,7 @@ import unittest,ddt,os
 from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
 from pos.lib import gl,HTMLTESTRunnerCN
 
-shopData = [{"phoneOrCard":"13712345678","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
+shopData = [{"phoneOrCard":"1811182494054899","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
 
 @ddt.ddt
 class TestCouponsaleIndexPage(unittest.TestCase):
