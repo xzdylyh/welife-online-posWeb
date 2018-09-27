@@ -20,6 +20,11 @@ class CouponsaleIndexPage(basepage.BasePage):
     shop_Num_loc = (By.NAME,'num')
     # 确定按钮
     shop_confirmBtn_loc = (By.ID,'sell-submit')
+
+    # 输入交易密码
+    paypwd_loc = (By.ID, "password")
+    # 再次单击交易密码
+    paypwd_confirm_loc = (By.XPATH, '//*[@id="dialog_paypwd_modal"]/div/div/div[2]/form/div[3]/div/button[1]')
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     def inputPhoneOrCard(self,text):
@@ -45,6 +50,15 @@ class CouponsaleIndexPage(basepage.BasePage):
         """点击 确定按钮，提交售卖"""
         self.clickBtn('确定',*(self.shop_confirmBtn_loc))
 
+
+    def inputPaypwd(self,text):
+        """输入交易密码"""
+        self.isExistAndInput(text,*(self.paypwd_loc))
+
+    @property
+    def clickConfirmPaypwd(self):
+        """再次输入交易密码"""
+        self.isExistAndClick(*(self.paypwd_confirm_loc))
 
     @property
     def assertShopSuccess(self):

@@ -1,9 +1,12 @@
 #coding=utf-8
-import time,json
 from pos.pages.consumeListPage import ConsumeListPage
 import unittest,ddt,os
-from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -16,7 +19,7 @@ class TestConsumeListPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/consume/list'
+        cls.url = getBaseUrl('POS_URL') +'/consume/list'
 
 
     @unittest.skipIf(getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')

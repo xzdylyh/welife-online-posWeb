@@ -1,12 +1,22 @@
 # coding=utf-8
 from pos.pages.creditListPage import CreditListPage
 import unittest, ddt, os
-from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
-from pos.lib import gl, HTMLTESTRunnerCN
-import time, json
 
-creditData = [{"CreditListTitle":u"积分换礼流水 - 微生活POS系统","desc": u"积分换礼-撤销积分"}]
+from pos.lib.scripts import (
+    getRunFlag,
+    getBaseUrl,
+    select_Browser_WebDriver,
+    replayCaseFail
+)
+from pos.lib import gl, HTMLTESTRunnerCN
+
+
+creditData = [
+    {
+        "CreditListTitle":u"积分换礼流水 - 微生活POS系统",
+        "desc": u"积分换礼-撤销积分"
+    }
+]
 
 
 @ddt.ddt
@@ -16,7 +26,7 @@ class TestCreditListPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/credit/list'
+        cls.url = getBaseUrl('POS_URL') +'/credit/list'
 
     @unittest.skipIf(getRunFlag('CREDITLIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
@@ -46,6 +56,7 @@ class TestCreditListPage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
+        # pass
 
 
 if __name__ == "__main__":

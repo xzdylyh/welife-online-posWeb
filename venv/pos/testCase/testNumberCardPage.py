@@ -2,12 +2,25 @@
 from pos.pages.numbercardPage import NumberCardPage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getRunFlag,
+    getYamlfield,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
 
-numberCardData = [{"useNum":1,"phoneOrCard":"13712345678","desc":u"次卡消费,正常流程","title":u"次卡消费 - 微生活POS系统"}]
+numberCardData = [
+    {
+        "useNum":1,
+        "phoneOrCard":"1586313101756463",
+        "desc":u"次卡消费,正常流程",
+        "title":u"次卡消费 - 微生活POS系统"
+    }
+]
 
 @ddt.ddt
 class TestNumberCardPage(unittest.TestCase):
@@ -15,7 +28,7 @@ class TestNumberCardPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/numbercard'
+        cls.url = getBaseUrl('POS_URL') +'/numbercard'
 
     @unittest.skipIf(getRunFlag('NUMBERCARD', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*numberCardData)

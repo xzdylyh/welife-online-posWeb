@@ -1,11 +1,24 @@
 #coding=utf-8
 from selenium.webdriver.common.by import By
 from pos.pages.creditPage import CreditPage
-from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getYamlfield,
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 import unittest,ddt,os
 from pos.lib import gl,HTMLTESTRunnerCN
 
-creditData = [{"charge_number":"1003935039186461","ExchangeNumber":1,"ExchangeDetail":u"自动化测试大礼包1个","desc":u"正常积分兑换流程"}]
+creditData = [
+    {
+        "charge_number":"1802326514043775",
+        "ExchangeNumber":1,
+        "ExchangeDetail":u"自动化测试大礼包1个",
+        "desc":u"正常积分兑换流程"
+    }
+]
 
 @ddt.ddt
 class TestCreditPage(unittest.TestCase):
@@ -14,7 +27,7 @@ class TestCreditPage(unittest.TestCase):
     def setUpClass(cls):
         """初始化webdriver"""
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/credit'
+        cls.url = getBaseUrl('POS_URL') +'/credit'
 
 
     def creditFunc(self,data):
@@ -55,6 +68,7 @@ class TestCreditPage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
+        # pass
 
 
 

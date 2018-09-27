@@ -1,7 +1,10 @@
 #coding=utf-8
 from pos.pages.chargeListPage import ChargeListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import getRunFlag,\
+    select_Browser_WebDriver,\
+    replayCaseFail,\
+    getBaseUrl
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
@@ -13,7 +16,7 @@ class TestChargeListPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/charge/listcharge'
+        cls.url = getBaseUrl('POS_URL')+'/charge/listcharge'
 
 
     @unittest.skipIf(getRunFlag('CHARGELIST', 'testCase1') == 'N', '验证执行配置')

@@ -1,10 +1,20 @@
 #coding=utf-8
 from pos.pages.consumeCouponListPage import  ConsumeCouponListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 
-shopCancelData = [{"desc":u"券包+次卡+直接购买","title":u"商品售卖流水 - 微生活POS系统"}]
+shopCancelData = [
+    {
+        "desc":u"券包+次卡+直接购买",
+        "title":u"商品售卖流水 - 微生活POS系统"
+    }
+]
 
 @ddt.ddt
 class TestConsumeCouponListPage(unittest.TestCase):
@@ -12,7 +22,7 @@ class TestConsumeCouponListPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/consume/couponlist'
+        cls.url = getBaseUrl('POS_URL') +'/consume/couponlist'
 
 
 

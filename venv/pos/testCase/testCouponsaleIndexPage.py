@@ -1,10 +1,24 @@
 #coding=utf-8
 from pos.pages.couponsaleIndexPage import CouponsaleIndexPage
 import unittest,ddt,os
-from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getYamlfield,
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 
-shopData = [{"phoneOrCard":"1811182494054899","iterInput":[1,1],"desc":u"券包+次卡+直接购买","title":u"商品售卖 - 微生活POS系统"}]
+shopData = [
+    {
+        "phoneOrCard":"1802326514043775",
+        "iterInput":[1,1],
+        "desc":u"券包+次卡+直接购买",
+        "title":u"商品售卖 - 微生活POS系统",
+        "password": "000000"
+    }
+]
 
 @ddt.ddt
 class TestCouponsaleIndexPage(unittest.TestCase):
@@ -12,7 +26,7 @@ class TestCouponsaleIndexPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/couponsale/index'
+        cls.url = getBaseUrl('POS_URL') +'/couponsale/index'
 
 
 
@@ -40,6 +54,11 @@ class TestCouponsaleIndexPage(unittest.TestCase):
         #单击 确定按钮，提交售卖
         self.shop.clickShopConfirmBtn
 
+        #输入交易密码
+        self.shop.inputPaypwd(data['password'])
+        #交易密码对话框确定
+        self.shop.clickConfirmPaypwd
+
         """后置断言操作"""
         self.assertTrue(self.shop.assertShopSuccess)#断言售卖成功后,返回到输入卡号或手机号页面
 
@@ -48,6 +67,7 @@ class TestCouponsaleIndexPage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
+        # pass
 
 
 

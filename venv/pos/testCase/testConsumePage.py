@@ -2,16 +2,62 @@
 from pos.pages.consumePage import ConsumePage
 import unittest,ddt,os
 from pos.lib.excel import Excel
-from pos.lib.scripts import getRunFlag,getYamlfield,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getRunFlag,
+    getYamlfield,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 import time,json
 
-consumeData = [{"phoneOrCard":"1003935039186461","desc":u"积分消费","tcTotalFee":1,"tcStoredPay":1,"credit":1,"dualCode":'000000'}]
-chargeDealData=[{"tcTotalFee":1,"desc":u"储值卡消费","phoneOrCard":"1003935039186461","dualCode":"000000"}]
-custCouponData = [{"tcTotalFee":1,"desc":u"券消费","phoneOrCard":"1003935039186461","dualCode":'000000'}]
-cardData = [{"PhoneNo":"13712345676","desc":u"实体卡开卡",'username':'yhleng','birthday':'1985-03-21','password':'000000'}]
-cardBindData = [{"PhoneNo": "13712345678","desc":u"绑卡正常流程"}]
-cardofData = [{"desc":u"次卡开卡"}]
+consumeData = [
+    {
+        "phoneOrCard":"1802326514043775",
+        "desc":u"积分消费",
+        "tcTotalFee":1,
+        "tcStoredPay":1,
+        "credit":1,
+        "dualCode":'000000'
+    }
+]
+chargeDealData=[
+    {
+        "tcTotalFee":1,
+        "desc":u"储值卡消费",
+        "phoneOrCard":"1802326514043775",
+        "dualCode":"000000"
+    }
+]
+custCouponData = [
+    {
+        "tcTotalFee":1,
+        "desc":u"券消费",
+        "phoneOrCard":"1802326514043775",
+        "dualCode":'000000'
+    }
+]
+cardData = [
+    {
+        "PhoneNo":"13712345676",
+        "desc":u"实体卡开卡",
+        'username':'yhleng',
+        'birthday':'1985-03-21',
+        'password':'000000'
+    }
+]
+cardBindData = [
+    {
+        "PhoneNo": "13712345678",
+        "desc":u"绑卡正常流程"
+    }
+]
+cardofData = [
+    {
+        "desc":u"次卡开卡"
+    }
+]
 
 
 @ddt.ddt
@@ -20,13 +66,13 @@ class TestConsumePage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/consume'
+        cls.url = str(getBaseUrl('POS_URL')) +r'/consume'
         cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
         cls.toexcel = Excel(os.path.join(gl.dataPath, 'posNotNameCardData.xls').decode('utf-8'))
 
     def consume_func(self,data):
         '''消费->输入卡号或手机号->确定'''
-        self.consume = ConsumePage(self.url, self.driver, '消费 - 微生活POS系统')
+        self.consume = ConsumePage(self.url, self.driver, r'消费 - 微生活POS系统')
 
         # 打开浏览器，并转到消费页
         self.consume.open
@@ -95,7 +141,7 @@ class TestConsumePage(unittest.TestCase):
         '''实体卡开卡'''
         print '功能：{0}'.format(data['desc'])
 
-        # 获取卡号
+        #获取卡号
         cardNo = {'phoneOrCard':str(self.excel.getCardNo())}
         print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
 

@@ -1,9 +1,15 @@
 #coding=utf-8
 from pos.pages.bjPrintPage import BjPrintPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import getRunFlag,\
+    select_Browser_WebDriver,\
+    replayCaseFail,\
+    getBaseUrl
 from pos.lib import gl,HTMLTESTRunnerCN
 import time
+
+
+
 
 printData = [{"startDate": gl.curDate, "endDate": gl.curDate,"desc":u"班结小票打印正常流程"}]
 
@@ -13,7 +19,7 @@ class TestBjPrintPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/consume/list'
+        cls.url = getBaseUrl('POS_URL')+'/consume/list'
 
 
 
@@ -53,7 +59,6 @@ class TestBjPrintPage(unittest.TestCase):
 
 if __name__=="__main__":
     suite = unittest.TestSuite()
-
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径

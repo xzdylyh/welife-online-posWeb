@@ -1,11 +1,16 @@
 #coding=utf-8
 from pos.pages.chargePage import ChargePage
 import unittest,ddt,os,time
-from pos.lib.scripts import getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 
-chargeData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
-FillData = [{"charge_number":"1003935039186461","present":2,"note":u"自动化测试充值","desc":u"储值并补开发票","txtName":"text"}]
+chargeData = [{"charge_number":"1802326514043775","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
+FillData = [{"charge_number":"1802326514043775","present":2,"note":u"自动化测试充值","desc":u"储值并补开发票","txtName":"text"}]
 
 
 @ddt.ddt
@@ -16,7 +21,7 @@ class TestChargePage(unittest.TestCase):
     def setUpClass(cls):
 
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/charge/index'
+        cls.url = getBaseUrl('POS_URL') +'/charge/index'
 
 
     def inChargePage(self,data):
@@ -128,7 +133,7 @@ class TestChargePage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-
+        # pass
 
 
 if __name__=="__main__":

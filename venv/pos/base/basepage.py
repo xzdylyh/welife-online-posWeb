@@ -4,6 +4,7 @@ from PIL import Image
 
 
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions as EX
 from selenium.common.exceptions import NoSuchElementException,\
     TimeoutException,ElementNotVisibleException,UnexpectedAlertPresentException
@@ -377,6 +378,28 @@ class BasePage(object):
         self._open(self.base_url, self.pagetitle)
         self.addCookies(ck_dict)
         self._open(self.base_url, self.pagetitle)
+
+
+    def selectComboxList(self,**kwargs):
+        """根据索引选择下拉列表"""
+        if 'loc' in kwargs:
+            selectEle = self.find_element(*kwargs['loc'])
+        else:
+            self.getImage
+            print('请传入loc定位器,以便定位')
+
+        if 'desc' in kwargs:
+            print('Select:{}'.format(kwargs['desc']))
+
+        if 'index' in kwargs:
+            Select(selectEle).select_by_index(kwargs['index'])
+        elif 'value' in kwargs:
+            Select(selectEle).select_by_value(kwargs['value'])
+        elif 'text' in kwargs:
+            Select(selectEle).select_by_visible_text(kwargs['text'])
+        else:
+            print('请传入,正确的选择方式,index or value or text')
+
 
 
 if __name__=="__main__":

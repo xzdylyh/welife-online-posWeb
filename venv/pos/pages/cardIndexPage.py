@@ -10,7 +10,7 @@ class CardIndexPage(basepage.BasePage):
     '''储值卡售卖模块'''
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>定位器<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     # 选择卡
-    card_Select_loc = (By.NAME,'name')
+    card_Select_loc = (By.NAME,'card')
     # 储值卡类型
     card_Type_loc = (By.XPATH,'//*[@id="cardChoose"]/label[2]')
     # 储值卡号
@@ -23,10 +23,14 @@ class CardIndexPage(basepage.BasePage):
     card_AssertSuccess_loc = (By.XPATH,'//*[@id="cardNum"]/div/ul/li/span')
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>结束<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    @property
-    def selectCardTab(self):
-        """选择卡Tab"""
-        self.clickBtn('储值卡',*(self.card_Select_loc))
+
+    def selectCardSelect(self,card_type):
+        """选择卡储值卡"""
+        self.selectComboxList(
+            desc='储值卡',
+            loc= self.card_Select_loc,
+            index= int(card_type)
+        )
 
 
     def inputCardNo(self,text):

@@ -42,11 +42,23 @@ def getYamlfield(yamlpath):
     :return: 指定节点内容
     """
     with open(yamlpath,'rb') as fp:
-        cont = fp.read()
+        cont = fp.read().decode('utf-8')
         fp.close()
 
     ret = yaml.load(cont)
     return ret
+
+
+
+def getBaseUrl(key):
+    """
+    根据指定的key获取config中配置的url
+    :param key: config中key值
+    :return: url
+    """
+    config = getYamlfield(gl.configFile)
+    return config['BASE_URL'][key]
+
 
 
 """获取执行标记"""
@@ -166,5 +178,6 @@ def replayCaseFail(num=3):
 
 if __name__=="__main__":
     #print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')
-    demo(cook='')
+    url = getBaseUrl('POS_URL')
+    print(url)
 

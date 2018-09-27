@@ -1,12 +1,25 @@
 #coding=utf-8
 from pos.pages.numbercardListPage import NumberCardListPage
 import unittest,ddt,os
-from pos.lib.scripts import getYamlfield,getRunFlag,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import (
+    getYamlfield,
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
+    getBaseUrl
+)
 from pos.lib import gl,HTMLTESTRunnerCN
 
 
 
-listCardData = [{"useNum":1,"phoneOrCard":"13712345678","desc":u"次卡消费,正常流程","title":u"次卡消费 - 微生活POS系统"}]
+listCardData = [
+    {
+        "useNum":1,
+        "phoneOrCard":"13712345678",
+        "desc":u"次卡消费,正常流程",
+        "title":u"次卡消费 - 微生活POS系统"
+    }
+]
 
 @ddt.ddt
 class TestNumberCardListPage(unittest.TestCase):
@@ -14,7 +27,7 @@ class TestNumberCardListPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/numbercard/list'
+        cls.url = getBaseUrl('POS_URL') +'/numbercard/list'
 
 
 

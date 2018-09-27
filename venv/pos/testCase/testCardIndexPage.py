@@ -1,16 +1,18 @@
 #coding=utf-8
-import unittest,ddt,os,time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+import unittest,ddt,os
 from pos.pages.cardIndexPage import CardIndexPage
 
-from pos.lib.scripts import Replay,getRunFlag,\
-    getYamlfield,rmDirsAndFiles,select_Browser_WebDriver,replayCaseFail
+from pos.lib.scripts import getBaseUrl,\
+    getRunFlag\
+    ,rmDirsAndFiles,\
+    select_Browser_WebDriver,\
+    replayCaseFail
 from pos.lib.excel import Excel
 from pos.lib import gl,HTMLTESTRunnerCN
 
-cardShopData = [{"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖"}]
-
+cardShopData = [
+    {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":0}
+]
 
 @ddt.ddt
 class TestCardIndexPage(unittest.TestCase):
@@ -18,11 +20,18 @@ class TestCardIndexPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
-        cls.url = 'http://pos.beta.acewill.net/card/index'
-        cls.excel = Excel(os.path.join(gl.dataPath, 'posChargeCard.xls').decode('utf-8'))
+        cls.url = getBaseUrl('POS_URL')+'/card/index'
+        cls.excel = Excel(
+            os.path.join(
+                gl.dataPath, 'posChargeCard.xls'
+            ).decode('utf-8')
+        )
 
 
-    @unittest.skipIf(getRunFlag('CARDINDEX', 'testCase1') == 'N', '验证执行配置')
+    @unittest.skipIf(
+        getRunFlag('CARDINDEX', 'testCase1') == 'N',
+        '验证执行配置'
+    )
     @ddt.data(*cardShopData)
     @replayCaseFail(num=3)
     def testCase1(self,data):
@@ -31,14 +40,22 @@ class TestCardIndexPage(unittest.TestCase):
 
         """前置初始操作"""
         #实例化CardIndexPage类
-        self.card = CardIndexPage(self.url,self.driver,data['pagetitle'])
+        self.card = CardIndexPage(
+            self.url,self.driver,
+            data['pagetitle']
+        )
         # 打开浏览器并转到指定url
         self.card.open
 
         #从excel获取一条标记为N的卡号
-        cardNo = float(self.excel.getCardNo(cell_col=0,cell_valueType=1)).__int__().__str__()
+        cardNo = float(
+            self.excel.getCardNo(cell_col=0,cell_valueType=1)
+        ).__int__().__str__()
 
         """储值售卖页面"""
+        #选择储值卡
+        self.card.selectCardSelect(data['CardType'])
+
         #单击储值卡类型  实体卡储值
         self.card.clickCardType
 
@@ -59,12 +76,17 @@ class TestCardIndexPage(unittest.TestCase):
         #输入 储值卡号
         self.card.inputCardNo(cardNo)
 
-        self.assertEqual(self.card.assertChareSuccess,data['assert'])#断言已售的卡不能再售,来判断售卡成功
+        self.assertEqual(
+            self.card.assertChareSuccess,
+            data['assert']
+        )#断言已售的卡不能再售,来判断售卡成功
 
 
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
+        #pass
+
 
 
 
