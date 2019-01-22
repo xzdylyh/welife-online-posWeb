@@ -1,14 +1,14 @@
 #coding=utf-8
 import unittest,ddt,os
-from pos.pages.cardIndexPage import CardIndexPage
+from pages.cardIndexPage import CardIndexPage
 
-from pos.lib.scripts import getBaseUrl,\
+from lib.scripts import getBaseUrl,\
     getRunFlag\
     ,rmDirsAndFiles,\
     select_Browser_WebDriver,\
     replayCaseFail
-from pos.lib.excel import Excel
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib.excel import Excel
+from lib import gl,HTMLTESTRunnerCN
 
 cardShopData = [
     {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":0}

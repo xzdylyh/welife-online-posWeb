@@ -1,8 +1,8 @@
 #coding=utf-8
-from pos.base import basepage
+from base import basepage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from pos.lib.scripts import Replay
+from lib.scripts import Replay
 import time,os
 
 

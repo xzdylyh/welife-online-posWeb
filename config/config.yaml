@@ -32,7 +32,7 @@ EMAIL:
     Password: YHleng870120
     Msg_Title: 线上软Pos-UI自动化测试结果
     Receivers: ['lengyaohui@163.com']  #收件人
-    #Receivers: ['lengyaohui@163.com','wangyan.bj@acewill.cn','cch@acewill.cn','gzx@acewill.cn','huxl@acewill.cn','jtt@acewill.cn','maming@acewill.cn'] #收件人
+    #Receivers: ['lengyaohui@163.com','yechangchun.bj@acewill.cn','wangchaoying.bj@acewill.cn','lilong.bj@acewill.cn','wangyan.bj@acewill.cn','cch@acewill.cn','gzx@acewill.cn','huxl@acewill.cn','jtt@acewill.cn','maming@acewill.cn'] #收件人
     From: 自动化测试系统
     To: 微生活测试组
 
