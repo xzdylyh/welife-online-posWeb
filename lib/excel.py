@@ -3,7 +3,7 @@ import xlrd as excel
 import json
 import gc #垃圾回收
 import os
-from pos.lib import gl
+from lib import gl
 from xlutils.copy import copy
 import xlwt
 

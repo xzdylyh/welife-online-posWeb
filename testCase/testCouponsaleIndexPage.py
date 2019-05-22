@@ -1,18 +1,18 @@
 #coding=utf-8
-from pos.pages.couponsaleIndexPage import CouponsaleIndexPage
+from pages.couponsaleIndexPage import CouponsaleIndexPage
 import unittest,ddt,os
-from pos.lib.scripts import (
+from lib.scripts import (
     getYamlfield,
     getRunFlag,
     select_Browser_WebDriver,
     replayCaseFail,
     getBaseUrl
 )
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 
 shopData = [
     {
-        "phoneOrCard":"1802326514043775",
+        "phoneOrCard":"1611058920289865",
         "iterInput":[1,1],
         "desc":u"券包+次卡+直接购买",
         "title":u"商品售卖 - 微生活POS系统",

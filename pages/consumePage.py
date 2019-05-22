@@ -1,6 +1,6 @@
 #coding:utf-8
 import time,os
-from pos.base import basepage
+from base import basepage
 from selenium.webdriver.common.by import By
 
 

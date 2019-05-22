@@ -1,24 +1,24 @@
 #coding=utf-8
-from pos.base import basepage
+from base.basepage import BasePage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts,gl
-import time,os
 
-class BjPrintPage(basepage.BasePage):
+
+class BjPrintPage(BasePage):
     """班结小票打印,页"""
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>定位器<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     # 首页,班结小票打印连接
-    bjPrintLink_loc = (By.XPATH,'//*[@id="header-navbar-collapse"]/ul/li[3]/a')
+    bjPrintLink_loc = (By.PARTIAL_LINK_TEXT,'打印班结小票')
     bjPrintLinkText_loc = (By.LINK_TEXT,'打印班结小票')
     # 打印小票,开始时间
     bjPrintStartDate_loc = (By.ID,'inputDateStart')
     # 打印班结小票,结束时间
     bjPrintEndDate_loc = (By.ID,'inputDateEnd')
     # 打印按钮
-    bjPrintBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div[2]/form/div[2]/div/a[1]')
+    bjPrintBtn_loc = (By.LINK_TEXT, "打印")
     #弹出的打印按钮
-    bjPrintPopBtn_loc =(By.XPATH,'//*[@id="print-header"]/div/button[1]')
+    bjPrintPopBtn_loc =(By.XPATH,'//h1[contains(text(),"打印")]')#弹出的打印按钮
+
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>结束<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
     @property

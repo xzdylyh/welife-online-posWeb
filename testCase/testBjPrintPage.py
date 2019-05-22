@@ -1,17 +1,25 @@
 #coding=utf-8
-from pos.pages.bjPrintPage import BjPrintPage
+from pages.bjPrintPage import BjPrintPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,\
-    select_Browser_WebDriver,\
-    replayCaseFail,\
+from lib.scripts import (
+    getRunFlag,
+    select_Browser_WebDriver,
+    replayCaseFail,
     getBaseUrl
-from pos.lib import gl,HTMLTESTRunnerCN
+)
+from lib import gl,HTMLTESTRunnerCN
 import time
 
 
 
-
-printData = [{"startDate": gl.curDate, "endDate": gl.curDate,"desc":u"班结小票打印正常流程"}]
+#打印班结小票数据，每个字典一个case
+printData = [
+    {
+        "startDate": gl.curDate,
+        "endDate": gl.curDate,
+        "desc":u"班结小票打印正常流程"
+    }
+]
 
 @ddt.ddt
 class TestBjPrintPage(unittest.TestCase):
@@ -54,7 +62,8 @@ class TestBjPrintPage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.driver.quit()
+        # cls.driver.quit()
+        pass
 
 
 if __name__=="__main__":

@@ -1,7 +1,7 @@
 #_*_coding:utf-8_*_
 import time,os,zipfile
 import yaml,json
-from pos.lib import gl
+from lib import gl
 from selenium import webdriver
 
 def select_Browser_WebDriver():
