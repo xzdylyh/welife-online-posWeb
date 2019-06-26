@@ -117,20 +117,20 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2019-05-18 16:44:38</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:25.473000</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 1，通过 1，通过率= 100.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2019-06-26 17:23:12</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:05:32.712000</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 13，通过 12，错误 1，通过率= 92.31%</p>
 
 <p class='description'>详细测试用例结果</p>
 </div>
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
-<a class="btn btn-warning" href='javascript:showCase(4)'>错误{ 0 }</a>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 92.31% }</a>
+<a class="btn btn-warning" href='javascript:showCase(4)'>错误{ 1 }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
-<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 1 }</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 1 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 12 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 13 }</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -153,7 +153,7 @@ function html_escape(s) {
 </tr>
 
 <tr class='passClass warning'>
-    <td>TestConsumePage: 消费模块</td>
+    <td>testCase.testConsumePage.TestConsumePage: 消费模块</td>
     <td class="text-center">1</td>
     <td class="text-center">1</td>
     <td class="text-center">0</td>
@@ -174,8 +174,8 @@ function html_escape(s) {
     <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
     
 pt1_1: 功能:积分消费,消费1元,抵扣1积分.
-screenshot: 20190518_16.44.45 .png
-screenshot: 20190518_16.44.46 .png
+screenshot: 20190626_17.23.19 .png
+screenshot: 20190626_17.23.20 .png
 Input输入卡号或手机号:1802326514043775
 Click:确定('xpath', "//div[@id='ipt_box1']/div[1]/div[1]/button")
 Input消费总金额:1
@@ -185,15 +185,559 @@ Click:确定('id', 'showSubmit')
 Click:确定('xpath', '/html/body/div[2]/div/div/div[2]/div/div[2]/div/button[1]')
 Input:000000
 Click:('xpath', '/html/body/div[2]/div[2]/div/div/div[2]/form/div[3]/div/button[1]')
-screenshot: 20190518_16.45.00 .png
+screenshot: 20190626_17.23.36 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20190518_16.45.00.png">
-            <img   src="./images/20190518_16.45.00.png" height="200px" width="400px"/>
+        <a  href="./images/20190626_17.23.36.png">
+            <img   src="./images/20190626_17.23.36.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testChargePage.TestChargePage: 储值模块</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id='c2'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt2_1: 功能:储值正常流程
+screenshot: 20190626_17.23.46 .png
+screenshot: 20190626_17.23.47 .png
+Input储值卡号:1802326514043775
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+当前余额:3396.46
+Click:奖励规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]')
+Click:自定义规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a')
+Input自定义金额:2
+Click:自定义规则确定('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+Click:现金支付类型('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
+Input备注:自动化测试充值
+Click:确定('id', 'chargeSubmit')
+Click:确定('id', 'chargeCheckBtn')
+screenshot: 20190626_17.24.00 .png
+Click:立即消费('id', 'consumeBtn')
+储值后当前余额:3398.46
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.24.00.png">
+            <img   src="./images/20190626_17.24.00.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase2_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt2_2: 功能:储值并补开发票
+screenshot: 20190626_17.24.04 .png
+screenshot: 20190626_17.24.04 .png
+Input储值卡号:1802326514043775
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+当前余额:3398.46
+Click:奖励规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/p[2]')
+Click:自定义规则('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/a')
+Input自定义金额:2
+Click:自定义规则确定('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+Click:现金支付类型('xpath', '/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
+Input备注:自动化测试充值
+Click:确定('id', 'chargeSubmit')
+Click:确定('id', 'chargeCheckBtn')
+screenshot: 20190626_17.24.18 .png
+Click:立即消费('id', 'consumeBtn')
+储值后当前余额:3400.46
+Click:补开发票('id', 'toReceipt')
+screenshot: 20190626_17.24.23 .png
+Input补开发票金额:2.00
+Click:确定('xpath', '//*[@id="receipt"]/div[2]/div[4]/div')
+Click:补开发票('id', 'toReceipt')
+screenshot: 20190626_17.24.28 .png
+补开发票金额剩余:0.00
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.24.28.png">
+            <img   src="./images/20190626_17.24.28.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testCreditPage.TestCreditPage: 积分兑换模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt3_1: 正常积分兑换流程
+screenshot: 20190626_17.24.39 .png
+screenshot: 20190626_17.24.39 .png
+Input输入卡号或手机号:1802326514043775
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+勾选:积分规则复选框1
+勾选:积分规则复选框1
+Input积分数量:1
+Input积分详情:自动化测试大礼包1个
+Click:确定('xpath', '//*[@id="creditInfo"]/form/div/div[2]/div/div/a[1]')
+screenshot: 20190626_17.24.48 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.24.48.png">
+            <img   src="./images/20190626_17.24.48.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='errorClass warning'>
+    <td>testCase.testBjPrintPage.TestBjPrintPage: 班结小票打印</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='errorCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+ft4_1: 功能:班结小票打印正常流程
+screenshot: 20190626_17.24.59 .png
+screenshot: 20190626_17.25.01 .png
+Click:班结小票打印('link text', '\xe6\x89\x93\xe5\x8d\xb0\xe7\x8f\xad\xe7\xbb\x93\xe5\xb0\x8f\xe7\xa5\xa8')
+Click:打印('link text', '\xe6\x89\x93\xe5\x8d\xb0')
+screenshot: 20190626_17.26.10 .png
+screenshot: 20190626_17.26.10 .png
+功能:班结小票打印正常流程
+功能:班结小票打印正常流程
+重试3次,全部失败
+Traceback (most recent call last):
+  File "D:\test_project\venv\online_posWeb_venv\lib\site-packages\ddt.py", line 144, in wrapper
+    return func(self, *args, **kwargs)
+  File "d:\test_project\project\online_posWeb\lib\scripts.py", line 174, in warpper
+    raise raise_info
+WebDriverException: Message: unknown error: unhandled inspector error: {"code":-32000,"message":"Browser window not found"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.17134 x86_64)
+
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.26.10.png">
+            <img   src="./images/20190626_17.26.10.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testConsumeListPage.TestConsumeListPage: 交易流水-消费</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt5_1: 功能:撤销消费正常流程
+screenshot: 20190626_17.26.18 .png
+screenshot: 20190626_17.26.19 .png
+Click:撤销消费('link text', '\xe6\x92\xa4\xe9\x94\x80\xe6\xb6\x88\xe8\xb4\xb9')
+Click:确定('id', 'undo')
+screenshot: 20190626_17.26.22 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.26.22.png">
+            <img   src="./images/20190626_17.26.22.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testCreditListPage.TestCreditListPage: 交易流水模块-积分换礼</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',1)" class="detail" id='c6'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt6_1: 功能:积分换礼-撤销积分
+screenshot: 20190626_17.26.36 .png
+screenshot: 20190626_17.26.37 .png
+Click:撤销积分('link text', '\xe6\x92\xa4\xe9\x94\x80\xe7\xa7\xaf\xe5\x88\x86')
+Click:确定('id', 'cancelGift')
+screenshot: 20190626_17.26.42 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.26.42.png">
+            <img   src="./images/20190626_17.26.42.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testChargeListPage.TestChargeListPage: 交易流水模块-充值</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt7_1: 功能:充值撤销正常流程
+screenshot: 20190626_17.26.53 .png
+screenshot: 20190626_17.26.54 .png
+Click:撤销充值('link text', '\xe6\x92\xa4\xe9\x94\x80\xe5\x85\x85\xe5\x80\xbc')
+Click:确定('id', 'confirmBtn')
+screenshot: 20190626_17.26.59 .png
+充值撤销状态:撤销充值
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.26.59.png">
+            <img   src="./images/20190626_17.26.59.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testCardIndexPage.TestCardIndexPage: 储值售卖模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt8_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt8_1: 功能:实体储值卡售卖
+screenshot: 20190626_17.27.10 .png
+screenshot: 20190626_17.27.11 .png
+Select:储值卡
+Click:实体卡储值('xpath', '//*[@id="cardChoose"]/label[2]')
+Input储值卡号:3868142447
+Click:确定('xpath', '//*[@id="cardBtn"]')
+Click:再次确定('xpath', '//*[@id="myModal"]/div/div/div/div/button[1]')
+Click:实体卡储值('xpath', '//*[@id="cardChoose"]/label[2]')
+Input储值卡号:3868142447
+screenshot: 20190626_17.27.23 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.27.23.png">
+            <img   src="./images/20190626_17.27.23.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testCouponsaleIndexPage.TestCouponsaleIndexPage: 商品售卖模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',1)" class="detail" id='c9'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt9_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt9_1: 功能:券包+次卡+直接购买
+screenshot: 20190626_17.27.34 .png
+screenshot: 20190626_17.27.35 .png
+Input手机号或卡号:1611058920289865
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+Click:确定('id', 'sell-submit')
+Input:000000
+Click:('xpath', '//*[@id="dialog_paypwd_modal"]/div/div/div[2]/form/div[3]/div/button[1]')
+返回到输入卡号界面?True
+screenshot: 20190626_17.27.46 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.27.46.png">
+            <img   src="./images/20190626_17.27.46.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testNumberCardPage.TestNumberCardPage: 次卡消费模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt10_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt10_1: 功能:次卡消费,正常流程
+screenshot: 20190626_17.27.56 .png
+screenshot: 20190626_17.27.57 .png
+Input手机号或卡号:1586313101756463
+Click:确定('xpath', '/html/body/div[1]/div/div/div/div[2]/div[1]/div/div/button')
+Input次卡使用数:1
+Click:确定('id', 'numberSubmit')
+断言:返回到次卡消费初始页
+screenshot: 20190626_17.28.04 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.28.04.png">
+            <img   src="./images/20190626_17.28.04.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testNumberCardListPage.TestNumberCardListPage: 交易流水模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt11_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt11_1: 功能:次卡消费,正常流程
+screenshot: 20190626_17.28.16 .png
+screenshot: 20190626_17.28.17 .png
+Click:消费撤销('xpath', '//*[@id="giftRunWater"]/table/tbody/tr[1]/td[7]')
+Click:确定('id', 'cancelCost')
+断言:交易流水,新增一条,交易类型为撤销消费的记录
+screenshot: 20190626_17.28.21 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.28.21.png">
+            <img   src="./images/20190626_17.28.21.png" height="200px" width="400px"/>
+        </a>
+    </td>
+</tr>
+
+
+
+<tr class='passClass warning'>
+    <td>testCase.testConsumeCouponListPage.TestConsumeCouponListPage: 交易流水模块</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+    <td class="text-center">Assert or Error Image</td>
+</tr>
+
+<tr id='pt12_1' class='hiddenRow'>
+    <td class='passCase' width='300px'><div class='testcase'>testCase1_1</div></td>
+    <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse in">
+    <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
+    
+pt12_1: 功能:商品售卖撤销(券包+次卡+直接购买)
+screenshot: 20190626_17.28.33 .png
+screenshot: 20190626_17.28.35 .png
+Click:商品售卖撤销('link text', '\xe6\x92\xa4\xe9\x94\x80')
+Click:确定('id', 'undo')
+断言:交易流水,新增一条,交易类型为撤销商品售卖的记录
+screenshot: 20190626_17.28.41 .png
+
+
+    </pre>
+    </div>
+    </td>
+    <td align="right">
+        <a  href="./images/20190626_17.28.41.png">
+            <img   src="./images/20190626_17.28.41.png" height="200px" width="400px"/>
         </a>
     </td>
 </tr>
@@ -202,11 +746,11 @@ screenshot: 20190518_16.45.00 .png
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>1</td>
-    <td>1</td>
+    <td>13</td>
+    <td>12</td>
     <td>0</td>
-    <td>0</td>
-    <td>通过率：100.00%</td>
+    <td>1</td>
+    <td>通过率：92.31%</td>
     <td> <a href="" target="_blank"></a></td>
 </tr>
 </table>

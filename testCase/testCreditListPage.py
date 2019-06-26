@@ -1,14 +1,14 @@
 # coding=utf-8
-from pos.pages.creditListPage import CreditListPage
+from pages.creditListPage import CreditListPage
 import unittest, ddt, os
 
-from pos.lib.scripts import (
+from lib.scripts import (
     getRunFlag,
     getBaseUrl,
     select_Browser_WebDriver,
     replayCaseFail
 )
-from pos.lib import gl, HTMLTESTRunnerCN
+from lib import gl, HTMLTESTRunnerCN
 
 
 creditData = [

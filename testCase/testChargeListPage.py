@@ -1,11 +1,11 @@
 #coding=utf-8
-from pos.pages.chargeListPage import ChargeListPage
+from pages.chargeListPage import ChargeListPage
 import unittest,ddt,os
-from pos.lib.scripts import getRunFlag,\
+from lib.scripts import getRunFlag,\
     select_Browser_WebDriver,\
     replayCaseFail,\
     getBaseUrl
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 
 
 chargeData = [{"desc": u"充值撤销正常流程", "pageTitle": u"充值流水 - 微生活POS系统"}]

@@ -1,5 +1,5 @@
 #coding=utf-8
-from pos.base import basepage
+from base import basepage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time,os

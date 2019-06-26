@@ -1,7 +1,7 @@
 #coding=utf-8
-from pos.base import basepage
+from base import basepage
 from selenium.webdriver.common.by import By
-from pos.lib import scripts,gl
+from lib import scripts,gl
 import time,os
 
 
@@ -20,7 +20,7 @@ class ChargePage(basepage.BasePage):
     # 自定义输入金额
     charge_present_loc = (By.ID,'present')
     # 确定按钮
-    charge_customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[5]/div[1]/div/div/button')
+    charge_customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
 
     # 支付类型
     charge_payType_loc =(By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')

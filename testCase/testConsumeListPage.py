@@ -1,13 +1,13 @@
 #coding=utf-8
-from pos.pages.consumeListPage import ConsumeListPage
+from pages.consumeListPage import ConsumeListPage
 import unittest,ddt,os
-from pos.lib.scripts import (
+from lib.scripts import (
     getRunFlag,
     select_Browser_WebDriver,
     replayCaseFail,
     getBaseUrl
 )
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 
 
 consumeData = [{"consumeListTitle": "消费流水 - 微生活POS系统","desc":u"撤销消费正常流程"}]

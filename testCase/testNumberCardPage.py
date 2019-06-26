@@ -1,15 +1,15 @@
 #coding=utf-8
-from pos.pages.numbercardPage import NumberCardPage
+from pages.numbercardPage import NumberCardPage
 import unittest,ddt,os
-from pos.lib.excel import Excel
-from pos.lib.scripts import (
+from lib.excel import Excel
+from lib.scripts import (
     getRunFlag,
     getYamlfield,
     select_Browser_WebDriver,
     replayCaseFail,
     getBaseUrl
 )
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 import time,json
 
 

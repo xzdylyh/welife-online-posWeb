@@ -8,7 +8,7 @@ from email.header import Header
 from email import encoders
 import time
 import yaml,os,base64
-from pos.lib import gl,scripts
+from lib import gl,scripts
 
 
 class EmailClass(object):

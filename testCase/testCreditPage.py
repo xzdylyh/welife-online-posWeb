@@ -1,7 +1,7 @@
 #coding=utf-8
 from selenium.webdriver.common.by import By
-from pos.pages.creditPage import CreditPage
-from pos.lib.scripts import (
+from pages.creditPage import CreditPage
+from lib.scripts import (
     getYamlfield,
     getRunFlag,
     select_Browser_WebDriver,
@@ -9,7 +9,7 @@ from pos.lib.scripts import (
     getBaseUrl
 )
 import unittest,ddt,os
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 
 creditData = [
     {

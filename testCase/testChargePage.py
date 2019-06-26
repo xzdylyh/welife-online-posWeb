@@ -1,16 +1,31 @@
 #coding=utf-8
-from pos.pages.chargePage import ChargePage
+from pages.chargePage import ChargePage
 import unittest,ddt,os,time
-from pos.lib.scripts import (
+from lib.scripts import (
     getRunFlag,
     select_Browser_WebDriver,
     replayCaseFail,
     getBaseUrl
 )
-from pos.lib import gl,HTMLTESTRunnerCN
+from lib import gl,HTMLTESTRunnerCN
 
-chargeData = [{"charge_number":"1802326514043775","present":2,"note":u"自动化测试充值","desc":u"储值正常流程"}]
-FillData = [{"charge_number":"1802326514043775","present":2,"note":u"自动化测试充值","desc":u"储值并补开发票","txtName":"text"}]
+chargeData = [
+    {
+        "charge_number":"1802326514043775",
+        "present":2,
+        "note":u"自动化测试充值",
+        "desc":u"储值正常流程"
+        }
+    ]
+FillData = [
+    {
+        "charge_number":"1802326514043775",
+        "present":2,
+        "note":u"自动化测试充值",
+        "desc":u"储值并补开发票",
+        "txtName":"text"
+        }
+    ]
 
 
 @ddt.ddt
@@ -154,4 +169,3 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()
