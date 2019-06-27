@@ -109,4 +109,3 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()

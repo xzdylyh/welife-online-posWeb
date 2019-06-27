@@ -69,8 +69,12 @@ class EmailClass(object):
     '''
     def sendEmail(self,message):
         try:
-            smtpObj = smtplib.SMTP()
-            smtpObj.connect(self.sender_server,25)
+            try: #防止25端口被封,比如阿里云
+                smtpObj = smtplib.SMTP()
+                smtpObj.connect(self.sender_server,25)
+            except Exception as ex:
+                smtpObj = smtplib.SMTP_SSL(self.sender_server,465)
+                smtpObj.connect(self.sender_server)
             smtpObj.login(self.sender,self.config['EMAIL']['Password'])
             smtpObj.sendmail(self.sender,self.receivers , message.as_string())
             smtpObj.quit()
