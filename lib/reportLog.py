@@ -2,7 +2,7 @@
 
 import xml.dom.minidom as xmlDoc
 import os
-import gl
+from lib import gl
 import sys
 import time
 
@@ -34,8 +34,8 @@ class cREPORTXML(object):
             returnResult.append(report)
             returnResult.append(overStatus)
 
-        except Exception,ex:
-            return ex.message
+        except Exception as ex:
+            return ex
         return returnResult
         '''
             def writeOverStatus(self,overStatus = 'PASSED'):
@@ -52,7 +52,7 @@ class cREPORTXML(object):
         #self.writeXml(self.__struct[0],gl.reporterPath+'reportxml_%s.xml'%(gl.curTimeStr))
 
 
- #-------------创建xml格式-有多个相同的节点，并且该节点下有4个名称相同的子节点----------------
+    #-------------创建xml格式-有多个相同的节点，并且该节点下有4个名称相同的子节点----------------
         #createLogEntry(self,docObj,executeTime,stepResult,description,stepDiscription,action,index,element,value,expectResult):
     def createLogEntry(self,docObj,dict):
         entry = docObj.createElement("LOG_ENTRY")
@@ -109,7 +109,7 @@ class cREPORTXML(object):
 
 
 if __name__=='__main__':
-     #createLogEntry(self,docObj,executeTime,stepResult,description,stepDiscription,action,index,element,value,expectResult):
+    #createLogEntry(self,docObj,executeTime,stepResult,description,stepDiscription,action,index,element,value,expectResult):
     curTime = time.strftime('%Y.%m.%d %H:%M:%S',time.localtime())
     print(curTime)
     dict = {

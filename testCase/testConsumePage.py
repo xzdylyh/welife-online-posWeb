@@ -7,10 +7,13 @@ from lib.scripts import (
     getYamlfield,
     select_Browser_WebDriver,
     replayCaseFail,
-    getBaseUrl
+    getBaseUrl,
+    rnd_num
 )
 from lib import gl,HTMLTESTRunnerCN
 import time,json
+
+phone = '1371865{}'.format(rnd_num(1000, 4000))
 
 consumeData = [
     {
@@ -40,7 +43,7 @@ custCouponData = [
 ]
 cardData = [
     {
-        "PhoneNo":"13712345676",
+        "PhoneNo":phone,
         "desc":u"实体卡开卡",
         'username':'yhleng',
         'birthday':'1985-03-21',

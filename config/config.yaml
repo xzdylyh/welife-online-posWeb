@@ -11,12 +11,11 @@ HightLight: 1
 
 CONFIG:
     Cookies: #cook信息
-        LoginCookies: {"pos_entry_number":"1802326514043775",
-               "pos_entry_actualcard":"1802326514043775",
+        LoginCookies: {
                "pos_bid":"1075315154",
-               "pos_mid":"1171088135",
+               "pos_mid":"1120036355",
                "pos_sid":"1905736354",
-               "pos_sign":"95e388125c92c90a75a05717b3fb0413"
+               "pos_sign":"dd3aab52c9a93e75e59565819fcbdaa7"
                }
 
         BossLoginCookies: {"name":"UserSession","value":"5b5ae93a272d7"} #boss,浏览器关闭session过期
@@ -40,6 +39,8 @@ EMAIL:
 RUNING: #case执行配置
     REPLAY: #元素回放配置
         Time: 900 #回放时间为毫秒
+    CASE:
+        Retry: 2
 
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块

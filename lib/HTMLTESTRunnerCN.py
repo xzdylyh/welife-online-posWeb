@@ -51,18 +51,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # URL: http://tungwaiyip.info/software/HTMLTestRunner.html
 
-__author__ = "Wai Yip Tung,  Findyou"
-__version__ = "0.8.2.1"
+__author__ = "天枢"
+__version__ = "0.8.2.2"
 
 
 """
 Change History
-Version 0.8.2.1 -Findyou
-* 支持中文，汉化
-* 调整样式，美化（需要连入网络，使用的百度的Bootstrap.js）
-* 增加 通过分类显示、测试人员、通过率的展示
-* 优化“详细”与“收起”状态的变换
-* 增加返回顶部的锚点
+Version 0.8.2.2 -天枢
+*增加了报告展示截图功能
+
 Version 0.8.2
 * Show output inline instead of popup window (Viorel Lupu).
 Version in 0.8.1
@@ -79,15 +76,13 @@ Version in 0.7.1
 # TODO: color stderr
 # TODO: simplify javascript using ,ore than 1 class in the class attribute?
 
-import datetime
-import StringIO
 import sys
 import time
+import datetime
+from io import StringIO
 import unittest
 from xml.sax import saxutils
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
 
 # ------------------------------------------------------------------------
 # The redirectors below are used to capture output during testing. Output
@@ -164,9 +159,16 @@ class Template_mixin(object):
     2: '错误',
     }
 
-    DEFAULT_TITLE = '接口测试报告'
+    # 对应STATUS 0，1，2
+    BTN_STYLE_CLASS = {
+        0: 'btn-success',
+        1: 'btn-danger',
+        2: 'btn-warning',
+    }
+
+    DEFAULT_TITLE = '自动化测试报告'
     DEFAULT_DESCRIPTION = ''
-    DEFAULT_TESTER='天枢'
+    DEFAULT_TESTER = '天枢'
 
     # ------------------------------------------------------------------------
     # HTML Template
@@ -217,17 +219,17 @@ function showCase(level) {
     }
     //加入【详细】切换文字变化 --Findyou
     detail_class=document.getElementsByClassName('detail');
-	//console.log(detail_class.length)
-	if (level == 3) {
-		for (var i = 0; i < detail_class.length; i++){
-			detail_class[i].innerHTML="收起"
-		}
-	}
-	else{
-			for (var i = 0; i < detail_class.length; i++){
-			detail_class[i].innerHTML="详细"
-		}
-	}
+    //console.log(detail_class.length)
+    if (level == 3) {
+        for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="收起"
+        }
+    }
+    else{
+            for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="详细"
+        }
+    }
 }
 function showClassDetail(cid, count) {
     var id_list = Array(count);
@@ -260,9 +262,9 @@ function showClassDetail(cid, count) {
     }
 }
 function html_escape(s) {
-    s = s.replace(/&/g,'&amp;');
-    s = s.replace(/</g,'&lt;');
-    s = s.replace(/>/g,'&gt;');
+    s = s.replace(/&/g,'&');
+    s = s.replace(/</g,'<');
+    s = s.replace(/>/g,'>');
     return s;
 }
 </script>
@@ -372,7 +374,7 @@ table       { font-size: 100%; }
     <td class="text-center">%(fail)s</td>
     <td class="text-center">%(error)s</td>
     <td class="text-center"><a href="javascript:showClassDetail('%(cid)s',%(count)s)" class="detail" id='%(cid)s'>详细</a></td>
-    <td class="text-center">Assert or Error Image</td>
+    <td class="text-center">断言或错误截图</td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
 
@@ -381,11 +383,9 @@ table       { font-size: 100%; }
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' width='300px'><div class='testcase'>%(desc)s</div></td>
     <td colspan='5' align='left' width='600px'> <!--print 输出框位置-->
-    <!--默认收起错误信息 -Findyou
-    <button id='btn_%(tid)s' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_%(tid)s'>%(status)s</button>
-    <div id='div_%(tid)s' class="collapse">  -->
+
     <!-- 默认展开错误信息 -Findyou -->
-    <button id='btn_%(tid)s' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_%(tid)s'>%(status)s</button>
+    <button id='btn_%(tid)s' type="button"  class="btn %(btnclass)s btn-xs" data-toggle="collapse" data-target='#div_%(tid)s'>%(status)s</button>
     <div id='div_%(tid)s' class="collapse in">
     <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
     %(script)s
@@ -423,7 +423,7 @@ table       { font-size: 100%; }
     # ENDING
     #
     # 增加返回顶部按钮  --Findyou
-    ENDING_TMPL = """<div id='ending'>&nbsp;</div>
+    ENDING_TMPL = """<div id='ending'> </div>
     <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
     <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
     </span></a></div>
@@ -446,6 +446,7 @@ class _TestResult(TestResult):
         self.failure_count = 0
         self.error_count = 0
         self.verbosity = verbosity
+        self.outputBuffer = None
 
         # result is a list of result in 4 tuple
         # (
@@ -456,13 +457,13 @@ class _TestResult(TestResult):
         # )
         self.result = []
         #增加一个测试通过率 --Findyou
-        self.passrate=float(0)
+        self.passrate = float(0)
 
 
     def startTest(self, test):
         TestResult.startTest(self, test)
         # just one buffer for both stdout and stderr
-        self.outputBuffer = StringIO.StringIO()
+        self.outputBuffer = StringIO()
         stdout_redirector.fp = self.outputBuffer
         stderr_redirector.fp = self.outputBuffer
         self.stdout0 = sys.stdout
@@ -533,7 +534,7 @@ class _TestResult(TestResult):
 class HTMLTestRunner(Template_mixin):
     """
     """
-    def __init__(self, stream=sys.stdout, verbosity=1,title=None,description=None,tester=None):
+    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None, tester=None):
         self.stream = stream
         self.verbosity = verbosity
         if title is None:
@@ -558,7 +559,7 @@ class HTMLTestRunner(Template_mixin):
         test(result)
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result)
-        print >>sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime)
+        print(sys.stderr, '\nTime Elapsed: %s' % (self.stopTime - self.startTime))
         return result
 
 
@@ -567,12 +568,12 @@ class HTMLTestRunner(Template_mixin):
         # Here at least we want to group them together by class.
         rmap = {}
         classes = []
-        for n,t,o,e in result_list:
+        for n, t, o, e in result_list:
             cls = t.__class__
-            if not rmap.has_key(cls):
+            if not cls in rmap:
                 rmap[cls] = []
                 classes.append(cls)
-            rmap[cls].append((n,t,o,e))
+            rmap[cls].append((n, t, o, e))
         r = [(cls, rmap[cls]) for cls in classes]
         return r
 
@@ -586,9 +587,9 @@ class HTMLTestRunner(Template_mixin):
         duration = str(self.stopTime - self.startTime)
         status = []
         status.append('共 %s' % (result.success_count + result.failure_count + result.error_count))
-        if result.success_count: status.append('通过 %s'    % result.success_count)
-        if result.failure_count: status.append('失败 %s' % result.failure_count)
-        if result.error_count:   status.append('错误 %s'   % result.error_count  )
+        if result.success_count: status.append('通过 %s'%result.success_count)
+        if result.failure_count: status.append('失败 %s'%result.failure_count)
+        if result.error_count: status.append('错误 %s'%result.error_count)
         if status:
             status = '，'.join(status)
             self.passrate = str("%.2f%%" % (float(result.success_count) / float(result.success_count + result.failure_count + result.error_count) * 100))
@@ -596,9 +597,9 @@ class HTMLTestRunner(Template_mixin):
             status = 'none'
         return [
             (u'测试人员', self.tester),
-            (u'开始时间',startTime),
-            (u'合计耗时',duration),
-            (u'测试结果',status + "，通过率= "+self.passrate),
+            (u'开始时间', startTime),
+            (u'合计耗时', duration),
+            (u'测试结果', status + "，通过率= "+self.passrate),
         ]
 
 
@@ -671,7 +672,7 @@ class HTMLTestRunner(Template_mixin):
             )
             rows.append(row)
 
-            for tid, (n,t,o,e) in enumerate(cls_results):
+            for tid, (n, t, o, e) in enumerate(cls_results):
                 self._generate_report_test(rows, cid, tid, n, t, o, e)
 
         report = self.REPORT_TMPL % dict(
@@ -689,8 +690,9 @@ class HTMLTestRunner(Template_mixin):
         # e.g. 'pt1.1', 'ft1.1', etc
         has_output = bool(o or e)
         # ID修改点为下划线,支持Bootstrap折叠展开特效 - Findyou
-        tid = (n == 0 and 'p' or 'f') + 't%s_%s' % (cid+1,tid+1)
+        tid = (n == 0 and 'p' or 'f') + 't%s_%s' % (cid+1, tid+1)
         name = t.id().split('.')[-1]
+        # doc = repr(o).split(r'\n')[0] or ""
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
@@ -701,14 +703,14 @@ class HTMLTestRunner(Template_mixin):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # uo = unicode(o.encode('string_escape'))
             # uo = o.decode('latin-1')
-            uo = o.decode('utf-8')
+            uo = o
         else:
             uo = o
         if isinstance(e, str):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # ue = unicode(e.encode('string_escape'))
             # ue = e.decode('latin-1')
-            ue = e.decode('utf-8')
+            ue = e
         else:
             ue = e
 
@@ -716,12 +718,21 @@ class HTMLTestRunner(Template_mixin):
             id = tid,
             output = saxutils.escape(uo+ue),
         )
+
         # 插入图片
-        unum = str(uo).rfind('screenshot:')
+        start_key = 'screenshot:'
+        end_key = '.png'
+        unum = str(uo).rfind(start_key)
         if ((uo or ue) and unum !=-1):
             hidde_status = ''
-            unum=str(uo).rfind('screenshot:')
-            image_url = './images/'+str(uo)[unum+11:unum+34].replace(' ','')
+            
+            left = int(str(uo).rfind(start_key))
+            right = int(str(uo).rfind(end_key))
+            # 11为screenshot:长度; 4为.png长度
+            img_name = str(
+                str(uo)[left+len(start_key):left+right-left+len(end_key)]
+            ).replace(' ', '')
+            image_url = './images/{}'.format(img_name)
 
         else:
             hidde_status = '''hidden="hidden"'''
@@ -735,6 +746,7 @@ class HTMLTestRunner(Template_mixin):
             script = script,
             hidde=hidde_status,
             image=image_url,
+            btnclass= self.BTN_STYLE_CLASS[n],
             status = self.STATUS[n],
         )
         rows.append(row)

@@ -11,18 +11,24 @@ from lib import gl,HTMLTESTRunnerCN
 
 chargeData = [
     {
-        "charge_number":"1802326514043775",
+        "charge_number":"1113152545493063",
         "present":2,
-        "note":u"自动化测试充值",
-        "desc":u"储值正常流程"
-        }
-    ]
+        "note":u"自动化测试充值实体卡",
+        "desc":u"储值正常流程-实体卡充值"
+    },
+    {
+        "charge_number":"1116954",
+        "present":2,
+        "note":u"自动化测试充值电子卡",
+        "desc":u"储值正常流程-电子卡储值"
+    }
+]
 FillData = [
     {
-        "charge_number":"1802326514043775",
+        "charge_number":"1113152401338507",
         "present":2,
         "note":u"自动化测试充值",
-        "desc":u"储值并补开发票",
+        "desc":u"储值并补开发票-实体卡",
         "txtName":"text"
         }
     ]
@@ -37,7 +43,7 @@ class TestChargePage(unittest.TestCase):
 
         cls.driver = select_Browser_WebDriver()
         cls.url = getBaseUrl('POS_URL') +'/charge/index'
-
+        
 
     def inChargePage(self,data):
         """输入卡号进入储值页面"""
@@ -59,12 +65,12 @@ class TestChargePage(unittest.TestCase):
         #储值前的 储值余额
         self.usChargeSaving = self.charge.getAfterRMB
 
-        print '当前余额:{0}'.format(self.usChargeSaving)
+        print('当前余额:{0}'.format(self.usChargeSaving))
 
 
     def chargeFunc(self,data):
         """储值功能操作"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         """输入卡号或手机号，确定，进入储值页面"""
         self.inChargePage(data)
@@ -98,7 +104,7 @@ class TestChargePage(unittest.TestCase):
         #获取 储值后余额
         self.usDualSaving = self.charge.getLastRMB
 
-        print '储值后当前余额:{0}'.format(self.usDualSaving)
+        print('储值后当前余额:{0}'.format(self.usDualSaving))
         self.assertTrue(
             float(data['present']) + float(self.usChargeSaving) ==float(self.usDualSaving)
         )
@@ -116,7 +122,7 @@ class TestChargePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
     @ddt.data(*FillData)
-    @replayCaseFail(num=3) #case执行失败后，重新执行num次
+    @replayCaseFail(num=1) #case执行失败后，重新执行num次
     def testCase2(self,data):
         """储值并补开发票"""
 
@@ -127,7 +133,7 @@ class TestChargePage(unittest.TestCase):
         #单击 补开发票按钮
         self.charge.clickFillReceipt
         #获取 未开票金额
-        notFillPresent = self.charge.getNotFillPresent(data['txtName'])
+        notFillPresent = float(self.charge.getNotFillPresent(data['txtName']))
         #输入 开票金额
         self.charge.inputFillPresent(notFillPresent)
         #单击 确定 开发票
@@ -138,11 +144,11 @@ class TestChargePage(unittest.TestCase):
         #单击 补开发票按钮
         self.charge.clickFillReceipt
         #获取 未开票金额
-        notFillPresent = self.charge.getNotFillPresent(data['txtName'])
+        notFillPresent = float(self.charge.getNotFillPresent(data['txtName']))
 
-        print '补开发票金额剩余:{0}'.format(notFillPresent)
+        print('补开发票金额剩余:{0}'.format(notFillPresent))
         #断言补开发票后，第一行补开发票为零
-        self.assertEqual(notFillPresent,'0.00',msg='开票余额,不为零.')
+        self.assertEqual(str(notFillPresent),'0.0',msg='开票余额,不为零.')
 
 
     @classmethod
@@ -158,9 +164,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestChargePage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',

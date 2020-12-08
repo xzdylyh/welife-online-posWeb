@@ -24,7 +24,7 @@ class TestChargeListPage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase1(self,data):
         """充值撤销"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         """前置操作"""
         #实例化ChargeListPage类
@@ -42,7 +42,7 @@ class TestChargeListPage(unittest.TestCase):
         """断言操作"""
         #断言成功
         txt = self.charge.getChargeStatusTxt
-        print '充值撤销状态:{0}'.format(txt)
+        print('充值撤销状态:{0}'.format(txt))
         self.assertEqual(txt,u'撤销充值',msg='撤销充值记录列表中,不存在状态为<撤销充值>的记录')
 
 
@@ -59,9 +59,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',

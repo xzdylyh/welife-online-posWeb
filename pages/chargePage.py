@@ -20,7 +20,7 @@ class ChargePage(basepage.BasePage):
     # 自定义输入金额
     charge_present_loc = (By.ID,'present')
     # 确定按钮
-    charge_customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/button')
+    charge_customBtn_loc = (By.XPATH,'/html/body/div[2]/div/div[3]/div/div[2]/div/div[2]/div/div[3]/div[1]/div/div/button')
 
     # 支付类型
     charge_payType_loc =(By.XPATH,'/html/body/div[2]/div/div/div/div[2]/div/div[4]/div/div[1]/div/label[1]')
@@ -45,6 +45,7 @@ class ChargePage(basepage.BasePage):
     fill_toReceipt_loc = (By.ID,"toReceipt")
     # 第一行发票金额
     fill_RMB_loc = (By.XPATH,'//*[@id="receipt"]/div[2]/div[2]/div[2]/div[1]/div[5]/input')
+ 
 
     # 未开发票金额
     #//*[@id="receipt"]/div[2]/div[1]/div[2]/div[1]/div[4] @变更记录，新增加补开发票年份下拉列表
@@ -126,7 +127,7 @@ class ChargePage(basepage.BasePage):
 
     def inputFillPresent(self,text):
         """输入 补开发票金额"""
-        self.inputText(text,'补开发票金额',*(self.fill_RMB_loc))
+        self.inputText(str(text),'补开发票金额',*(self.fill_RMB_loc))
 
 
     @property

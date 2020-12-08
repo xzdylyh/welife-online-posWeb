@@ -134,7 +134,7 @@ class BasePage(object):
         timestrmap = time.strftime('%Y%m%d_%H.%M.%S')
         imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
         picture.save(imgPath)
-        print  'screenshot:', timestrmap, '.png'
+        print('screenshot:', timestrmap, '.png')
 
 
     @property
@@ -147,7 +147,7 @@ class BasePage(object):
         imgPath = os.path.join(gl.imgPath, '%s.png' % str(timestrmap))
 
         self.driver.save_screenshot(imgPath)
-        print  'screenshot:', timestrmap, '.png'
+        print('screenshot:', timestrmap, '.png')
 
 
 
@@ -264,7 +264,7 @@ class BasePage(object):
 
     def isExistAndClick(self,*loc):
         '''如果元素存在则单击,不存在则忽略'''
-        print 'Click:{0}'.format(loc)
+        print('Click:{0}'.format(loc))
 
         TimeOut = 3 #超时 时间
         try:
@@ -279,7 +279,7 @@ class BasePage(object):
 
     def isExistAndInput(self,text,*loc):
         '''如果元素存在则输入,不存在则忽略'''
-        print 'Input:{0}'.format(text)
+        print('Input:{0}'.format(text))
 
         TimeOut = 3
         try:
@@ -347,7 +347,7 @@ class BasePage(object):
     @Replay
     def jsClick(self,desc,*loc):
         """通过js注入的方式去，单击元素"""
-        print 'Click{}:{}'.format(desc,loc)
+        print('Click{}:{}'.format(desc,loc))
         element = self.find_element(*loc)
         self.driver.execute_script("arguments[0].click();",element)
 
@@ -355,21 +355,21 @@ class BasePage(object):
     @Replay
     def inputText(self, text,desc, *loc):
         """输入文本操作"""
-        print 'Input{}:{}'.format(desc,text)
+        print('Input{}:{}'.format(desc,text))
         self.send_keys(text, *loc)
 
 
     @Replay
     def clickBtn(self, desc,*loc):
         """点击操作"""
-        print 'Click:{}{}'.format(desc,loc)
+        print('Click:{}{}'.format(desc,loc))
         self.find_element(*loc).click()
 
 
     @Replay
     def selectTab(self,*loc):
         '''选择tab操作'''
-        print 'Select:{}'.format(loc)
+        print('Select:{}'.format(loc))
         self.find_element(*loc).click()
 
 

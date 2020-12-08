@@ -1,8 +1,18 @@
-#_*_coding:utf-8_*_
-import time,os,zipfile
-import yaml,json
-from lib import gl
+import time, os, random, zipfile
+import yaml, json
 from selenium import webdriver
+from lib import gl
+from lib.config import CONF
+
+
+def rnd_num(sat_num=1000,end_num=4000):
+    """
+    生成随机数。
+    :param num:
+    :return:
+    """
+    ret = random.randint(sat_num,end_num)
+    return ret
 
 def select_Browser_WebDriver():
     """
@@ -10,7 +20,8 @@ def select_Browser_WebDriver():
     :return:
     """
     #读取config.yam配置文件中，浏览器配置
-    broName = getYamlfield(gl.configFile)['CONFIG']['Browser']
+    # broName = getYamlfield(gl.configFile)['CONFIG']['Browser']
+    broName = CONF.read()['CONFIG']['Browser']
 
     #根据borName决定，启动，哪个浏览器
     if str(broName).strip().lower() == 'chrome':
