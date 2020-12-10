@@ -11,7 +11,7 @@ from lib.excel import Excel
 from lib import gl,HTMLTESTRunnerCN
 
 cardShopData = [
-    {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":0}
+    {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":2}
 ]
 
 @ddt.ddt
@@ -24,7 +24,7 @@ class TestCardIndexPage(unittest.TestCase):
         cls.excel = Excel(
             os.path.join(
                 gl.dataPath, 'posChargeCard.xls'
-            ).decode('utf-8')
+            )
         )
 
 
@@ -33,10 +33,10 @@ class TestCardIndexPage(unittest.TestCase):
         '验证执行配置'
     )
     @ddt.data(*cardShopData)
-    @replayCaseFail(num=3)
+    @replayCaseFail(num=1)
     def testCase1(self,data):
         """储值卡售卖-实体储值卡售卖"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         """前置初始操作"""
         #实例化CardIndexPage类
@@ -70,7 +70,8 @@ class TestCardIndexPage(unittest.TestCase):
 
         """后置断言操作"""
         self.card.wait(2000)
-
+        #选择储值卡
+        self.card.selectCardSelect(data['CardType'])
         #点击储值卡类型为  实体卡储值
         self.card.clickCardType
         #输入 储值卡号
@@ -98,9 +99,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',

@@ -9,10 +9,10 @@ from selenium.common.exceptions import (
 )
 
 from lib.scripts import (
-    getYamlfield,
     Replay,
     hightlightConfig
 )
+from lib.config import CONF
 from lib import gl
 
 
@@ -376,8 +376,7 @@ class BasePage(object):
     @property
     def open(self):
         """打开浏览器，写入cookies登录信息"""
-        yamldict = getYamlfield(gl.configFile)
-        ck_dict = yamldict['CONFIG']['Cookies']['LoginCookies']
+        ck_dict = CONF.read()['CONFIG']['Cookies']['LoginCookies']
         self._open(self.base_url, self.pagetitle)
         self.addCookies(ck_dict)
         self._open(self.base_url, self.pagetitle)
@@ -402,6 +401,35 @@ class BasePage(object):
             Select(selectEle).select_by_visible_text(kwargs['text'])
         else:
             print('请传入,正确的选择方式,index or value or text')
+
+    def scroll_top(self):
+        '''
+        拉到顶部
+        '''
+        if self.driver.name == 'chrome':
+            js = "var q=document.body.scrollTop=10000"
+        else:
+            js = "var q=documentElement.scrollTop=10000"
+        return sele.driver.execute_script(js)
+
+
+    def scroll_foot(self):
+        '''
+        拉到底部
+        '''
+        if self.driver.name == 'chrome':
+            js = "var q=document.body.scrollTop=0"
+        else:
+            js = "var q=documentElement.scrollTop=0"
+        return sele.driver.execute_script(js)
+
+
+    def scroll_element(self, *loc):
+        '''
+        id定位，移动滚动条
+        '''
+        target = self.find_element(*loc)
+        return self.driver.execute_script("arguments[0].scrollIntoView();", target)
 
 
 

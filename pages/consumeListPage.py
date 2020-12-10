@@ -13,6 +13,7 @@ class ConsumeListPage(basepage.BasePage):
     undo_dealText_loc =(By.LINK_TEXT,'撤销消费')
     # 确定按钮
     undo_dealBtn_loc = (By.ID,'undo')
+    undo = (By.XPATH, '//*[@id="undo"]')
     # 撤销成功
     undo_assert_loc = (By.XPATH,'//*[@id="showSuccess"]/div/i')
     # 交易流水中显示撤销成功条目
@@ -38,7 +39,7 @@ class ConsumeListPage(basepage.BasePage):
     @property
     def clickConfirmBtn(self):
         """单击 确定按钮"""
-        self.clickBtn('确定',*(self.undo_dealBtn_loc))
+        self.clickBtn('确定',*(self.undo))
 
     @property
     def getContentText(self):

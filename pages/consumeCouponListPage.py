@@ -12,7 +12,7 @@ class ConsumeCouponListPage(basepage.BasePage):
     # 确认
     coupon_confirmBtn_loc = (By.ID,'undo')
     # 撤销后新增一条,撤销商品售卖的记录
-    coupon_assert_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[10]/span')
+    coupon_assert_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[11]/span')
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     """操作"""
@@ -42,7 +42,7 @@ class ConsumeCouponListPage(basepage.BasePage):
     @property
     def assertSuccess(self):
         """断言,撤销消费成功"""
-        print '断言:交易流水,新增一条,交易类型为撤销商品售卖的记录'
+        print('断言:交易流水,新增一条,交易类型为撤销商品售卖的记录')
         bool_var = self.isOrNoExist(*(self.coupon_assert_loc))
         self.getImage
         return bool_var

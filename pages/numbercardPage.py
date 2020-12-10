@@ -46,7 +46,7 @@ class NumberCardPage(basepage.BasePage):
     @property
     def assertSuccess(self):
         """断言,消费成功"""
-        print '断言:返回到次卡消费初始页'
+        print('断言:返回到次卡消费初始页')
         bool_var = self.isOrNoExist(*(self.number_phone_Loc))
         self.getImage
         return bool_var

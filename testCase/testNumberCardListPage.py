@@ -37,7 +37,7 @@ class TestNumberCardListPage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase1(self,data):
         """次卡消费撤销"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化NumberCardListPage类
         self.list = NumberCardListPage(self.url,self.driver,data['title'])
@@ -70,9 +70,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
@@ -81,4 +81,3 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()

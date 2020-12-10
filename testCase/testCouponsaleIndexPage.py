@@ -12,9 +12,9 @@ from lib import gl,HTMLTESTRunnerCN
 
 shopData = [
     {
-        "phoneOrCard":"1611058920289865",
+        "phoneOrCard":"1113152327682420",
         "iterInput":[1,1],
-        "desc":u"券包+次卡+直接购买",
+        "desc":u"商品售卖：购买券包和次卡",
         "title":u"商品售卖 - 微生活POS系统",
         "password": "000000"
     }
@@ -35,7 +35,7 @@ class TestCouponsaleIndexPage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase1(self,data):
         """商品售卖-券包+次卡+直接购买"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化CouponsaleIndexPage类
         self.shop = CouponsaleIndexPage(self.url,self.driver,data['title'])
@@ -79,9 +79,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestCouponsaleIndexPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
@@ -90,4 +90,3 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()

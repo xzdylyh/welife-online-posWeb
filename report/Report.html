@@ -117,9 +117,9 @@ function html_escape(s) {
 <div class='heading'>
 <h4 style="font-family: Microsoft YaHei">UI自动化测试报告</h4>
 <p class='attribute'><strong>测试人员 : </strong> yhleng</p>
-<p class='attribute'><strong>开始时间 : </strong> 2020-12-08 18:03:27</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:18.151389</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 1，通过 1，通过率= 100.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-12-10 16:54:33</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:31.346586</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 1 个用例，通过 1, 通过率=100.00%</p>
 
 <p class='description'>详细测试用例结果</p>
 </div>
@@ -153,7 +153,7 @@ function html_escape(s) {
 </tr>
 
 <tr class='passClass warning'>
-    <td>TestChargeListPage: 交易流水模块-充值</td>
+    <td>TestCardIndexPage: 储值售卖模块</td>
     <td class="text-center">1</td>
     <td class="text-center">1</td>
     <td class="text-center">0</td>
@@ -171,21 +171,26 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre style="overflow-y:scroll; overflow-x:hidden;height:200px; width:600px; margin:auto; border:1px solid #e1e1e1;">
     
-pt1_1: 功能:充值撤销正常流程
-screenshot: 20201208_18.03.34 .png
-screenshot: 20201208_18.03.38 .png
-Click:撤销充值('link text', '撤销充值')
-Click:确定('id', 'confirmBtn')
-screenshot: 20201208_18.03.42 .png
-充值撤销状态:撤销充值
+pt1_1: 功能:实体储值卡售卖
+screenshot: 20201210_16.54.40 .png
+screenshot: 20201210_16.54.41 .png
+Select:储值卡
+Click:实体卡储值('xpath', '//*[@id="cardChoose"]/label[2]')
+Input储值卡号:3132842800
+Click:确定('xpath', '//*[@id="cardBtn"]')
+Click:再次确定('xpath', '//*[@id="myModal"]/div/div/div/div/button[1]')
+Select:储值卡
+Click:实体卡储值('xpath', '//*[@id="cardChoose"]/label[2]')
+Input储值卡号:3132842800
+screenshot: 20201210_16.55.01 .png
 
 
     </pre>
     </div>
     </td>
     <td align="right">
-        <a  href="./images/20201208_18.03.42.png">
-            <img   src="./images/20201208_18.03.42.png" height="200px" width="400px"/>
+        <a  href="./images/20201210_16.55.01.png">
+            <img   src="./images/20201210_16.55.01.png" height="200px" width="400px"/>
         </a>
     </td>
 </tr>

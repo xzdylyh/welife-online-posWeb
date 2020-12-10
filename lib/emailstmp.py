@@ -27,7 +27,7 @@ class EmailClass(object):
     '''
     @property
     def setMailContent(self):
-        print self.receivers
+        print(self.receivers)
         msg = MIMEMultipart()
         msg['From'] = Header(self.From,'utf-8')
         msg['To'] = self.To
@@ -78,9 +78,9 @@ class EmailClass(object):
             smtpObj.login(self.sender,self.config['EMAIL']['Password'])
             smtpObj.sendmail(self.sender,self.receivers , message.as_string())
             smtpObj.quit()
-            print "邮件发送成功"
+            print("邮件发送成功")
         except smtplib.SMTPException as ex:
-            print "Error: 无法发送邮件.%s"%ex
+            print("Error: 无法发送邮件.%s"%ex)
 
     #发送调用
     @property

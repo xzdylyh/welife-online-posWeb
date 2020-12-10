@@ -13,11 +13,11 @@ from lib.scripts import (
 from lib import gl,HTMLTESTRunnerCN
 import time,json
 
-phone = '1371865{}'.format(rnd_num(1000, 4000))
+phone = '1377777{}'.format(rnd_num(1000, 4000))
 
 consumeData = [
     {
-        "phoneOrCard":"1802326514043775",
+        "phoneOrCard":"1113152619150147",
         "desc":u"积分消费",
         "tcTotalFee":1,
         "tcStoredPay":1,
@@ -70,9 +70,8 @@ class TestConsumePage(unittest.TestCase):
     def setUpClass(cls):
         cls.driver = select_Browser_WebDriver()
         cls.url = str(getBaseUrl('POS_URL')) +r'/consume'
-        cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls').decode('utf-8'))
-        cls.toexcel = Excel(os.path.join(gl.dataPath, 'posNotNameCardData.xls').decode('utf-8'))
-
+        cls.excel = Excel(os.path.join(gl.dataPath, 'posCardData.xls'))
+        cls.toexcel = Excel(os.path.join(gl.dataPath, 'posNotNameCardData.xls'))
     def consume_func(self,data):
         '''消费->输入卡号或手机号->确定'''
         self.consume = ConsumePage(self.url, self.driver, r'消费 - 微生活POS系统')
@@ -139,14 +138,14 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME',('testCase1'))=='N','验证执行配置')
     @ddt.data(*cardData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase1(self,data):
         '''实体卡开卡'''
-        print '功能：{0}'.format(data['desc'])
+        print('功能：{0}'.format(data['desc']))
 
         #获取卡号
         cardNo = {'phoneOrCard':str(self.excel.getCardNo())}
-        print u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard'])
+        print(u"实体卡，卡号为：{0}".format(cardNo['phoneOrCard']))
 
         #进入消费页面
         self.consume_func(cardNo)
@@ -172,10 +171,10 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME',('testCase6'))=='N','验证执行配置')
     @ddt.data(*cardofData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase6(self,data):
         """不记名卡开卡"""
-        print '功能：{0}'.format(data['desc'])
+        print('功能：{0}'.format(data['desc']))
 
         # 获取磁道号
         cardNo = {'phoneOrCard':str(self.toexcel.getCardNo(cell_col=0))}
@@ -195,7 +194,7 @@ class TestConsumePage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase5(self,data):
         """实体卡绑卡"""
-        print '功能：{0}'.format(data['desc'])
+        print('功能：{0}'.format(data['desc']))
 
         # 获取卡号-字典类型
         cardNo = {'phoneOrCard': str(self.excel.getCardNo())}
@@ -212,7 +211,7 @@ class TestConsumePage(unittest.TestCase):
         #获取验证码
         code = self.getCode(data)  #获取验证码
         #输出验证码
-        print '验证码:{0}'.format(code)
+        print('验证码:{0}'.format(code))
         #输入验证码
         self.consume.inputVerCode(code)
         #单击 验证码框 确定
@@ -228,7 +227,7 @@ class TestConsumePage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase2(self,data):
         '''积分消费'''
-        print u'功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit'])
+        print(u'功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit']))
 
         # 进入消费页
         self.consume_func(data)
@@ -262,11 +261,11 @@ class TestConsumePage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase3(self,data):
         '''储值销费'''
-        print u'功能:{0},消费金额{1},储值抵扣{2}元.'.format(
+        print(u'功能:{0},消费金额{1},储值抵扣{2}元.'.format(
             data['desc'],
             data['tcTotalFee'],
             data['tcTotalFee']
-        )
+        ))
         # 进入消费页
         self.consume_func(data)
         # 输入金额
@@ -293,10 +292,10 @@ class TestConsumePage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase4(self,data):
         '''券消费'''
-        print u'功能:{0},消费{1}积分.'.format(
+        print(u'功能:{0},消费{1}积分.'.format(
             data['desc'],
             data['tcTotalFee']
-        )
+        ))
         # 进入消费页
         self.consume_func(data)
         # 输入金额
@@ -331,9 +330,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
@@ -342,4 +341,4 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()
+   

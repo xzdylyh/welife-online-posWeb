@@ -87,7 +87,7 @@ class CreditPage(basepage.BasePage):
         for box in elements:
             i = 1
             if not box.is_selected():
-                print '勾选:{0}{1}'.format(desc,i)
+                print('勾选:{0}{1}'.format(desc,i))
                 box.click()
                 i+=1
 

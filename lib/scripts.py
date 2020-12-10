@@ -20,7 +20,6 @@ def select_Browser_WebDriver():
     :return:
     """
     #读取config.yam配置文件中，浏览器配置
-    # broName = getYamlfield(gl.configFile)['CONFIG']['Browser']
     broName = CONF.read()['CONFIG']['Browser']
 
     #根据borName决定，启动，哪个浏览器
@@ -67,8 +66,7 @@ def getBaseUrl(key):
     :param key: config中key值
     :return: url
     """
-    config = getYamlfield(gl.configFile)
-    return config['BASE_URL'][key]
+    return CONF.read()['BASE_URL'][key]
 
 
 
@@ -79,8 +77,7 @@ def getRunFlag(scenarioKey,casename):
     :param scenarioKey:
     :return: Y 或 N
     """
-    yamldict = getYamlfield(os.path.join(gl.configPath,'config.yaml'))
-    return yamldict['RUNING'][scenarioKey]['Flag'][casename]['Flag']
+    return CONF.read()['RUNING'][scenarioKey]['Flag'][casename]['Flag']
 
 def CookInfo(func):
     """
@@ -89,8 +86,7 @@ def CookInfo(func):
     :return: 函数
     """
     def warpper(*args,**kwargs):
-        yamldict = getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        cook1= yamldict['CONFIG']['Cookies']['LoginCookies']
+        cook1= CONF['CONFIG']['Cookies']['LoginCookies']
         return func(cook=cook1,*args,**kwargs)
     return warpper
 
@@ -103,8 +99,7 @@ def Replay(func):
     """
     def wrapper(*args,**kwargs):
         func(*args,**kwargs)
-        yamldict = getYamlfield(os.path.join(gl.configPath, 'config.yaml'))
-        sleepTime = float(yamldict['RUNING']['REPLAY']['Time']) / 1000
+        sleepTime = float(CONF.read()['RUNING']['REPLAY']['Time']) / 1000
         time.sleep(sleepTime)
         return func
     return wrapper
@@ -119,9 +114,8 @@ def hightlightConfig(key):
     """
     def _wrapper(func):
         def wrapper(*args,**kwargs):
-            config = getYamlfield(gl.configFile)
             ret = None
-            if config['HightLight'] ==1:
+            if CONF.read()['HightLight'] ==1:
                 ret = func(*args,**kwargs)
             return ret
         return wrapper
@@ -187,8 +181,29 @@ def replayCaseFail(num=3):
     return _warpper
 
 
-if __name__=="__main__":
-    #print json.dumps(getRunFlag('testCouponSendAndCancel')).decode('unicode-escape')
-    url = getBaseUrl('POS_URL')
-    print(url)
+def send_dding_msg(token, msg):
+    '''
+    推送消息到钉群
+    '''
+    import requests
+    payload = {
+        "msgtype": "text",
+        "text": {
+            "content": msg,
+            # "mentioned_mobile_list":["13718651998"],
+        }
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    d_url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={}'.format(token)
 
+    res = requests.request('POST', d_url, headers=headers, json=payload)
+
+    return res
+
+
+
+if __name__=="__main__":
+    token = '2c412f54-b815-45c5-b928-8fec114d1ea9'
+    send_dding_msg(token, '测试消息')

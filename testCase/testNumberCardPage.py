@@ -16,7 +16,7 @@ import time,json
 numberCardData = [
     {
         "useNum":1,
-        "phoneOrCard":"1586313101756463",
+        "phoneOrCard":"1113152314171536",
         "desc":u"次卡消费,正常流程",
         "title":u"次卡消费 - 微生活POS系统"
     }
@@ -35,7 +35,7 @@ class TestNumberCardPage(unittest.TestCase):
     @replayCaseFail(num=3)
     def testCase1(self,data):
         """次卡消费"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化NumberCardPage类
         self.number = NumberCardPage(self.url,self.driver,data['title'])
@@ -73,9 +73,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestNumberCardPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',

@@ -64,7 +64,7 @@ class CouponsaleIndexPage(basepage.BasePage):
     def assertShopSuccess(self):
         '''断言售卖成功'''
         bool_var = self.isExist(*(self.shop_phone_loc))
-        print '返回到输入卡号界面?{0}'.format(bool_var)
+        print('返回到输入卡号界面?{0}'.format(bool_var))
         self.getImage
         return bool_var
 

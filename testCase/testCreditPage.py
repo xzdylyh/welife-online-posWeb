@@ -13,7 +13,7 @@ from lib import gl,HTMLTESTRunnerCN
 
 creditData = [
     {
-        "charge_number":"1802326514043775",
+        "charge_number":"1113152196317476",
         "ExchangeNumber":1,
         "ExchangeDetail":u"自动化测试大礼包1个",
         "desc":u"正常积分兑换流程"
@@ -44,10 +44,10 @@ class TestCreditPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CREDIT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*creditData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase1(self,data):
         '''积分换礼'''
-        print '{0}'.format(data['desc'])
+        print('{0}'.format(data['desc']))
 
         # 输入手机号,或卡号,进入积分换礼页面
         self.creditFunc(data)
@@ -78,9 +78,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestCreditPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
@@ -89,4 +89,4 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()
+

@@ -113,7 +113,7 @@ class TestChargePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGE', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*chargeData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase1(self,data):
         """正常储值功能"""
         #调用储值功能函数
@@ -122,7 +122,7 @@ class TestChargePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CHARGE', 'testCase2') == 'N', '验证执行配置')
     @ddt.data(*FillData)
-    @replayCaseFail(num=1) #case执行失败后，重新执行num次
+    @replayCaseFail() #case执行失败后，重新执行num次
     def testCase2(self,data):
         """储值并补开发票"""
 
@@ -175,3 +175,4 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
+   

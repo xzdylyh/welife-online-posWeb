@@ -36,7 +36,7 @@ class NumberCardListPage(basepage.BasePage):
     @property
     def assertSuccess(self):
         """断言,撤销消费成功"""
-        print '断言:交易流水,新增一条,交易类型为撤销消费的记录'
+        print('断言:交易流水,新增一条,交易类型为撤销消费的记录')
         bool_var =self.isOrNoExist(*(self.list_assert_loc))
         self.getImage
         return bool_var

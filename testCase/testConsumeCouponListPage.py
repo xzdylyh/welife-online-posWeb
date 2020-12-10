@@ -11,7 +11,7 @@ from lib import gl,HTMLTESTRunnerCN
 
 shopCancelData = [
     {
-        "desc":u"商品售卖撤销(券包+次卡+直接购买)",
+        "desc":u"商品售卖撤销(券包和次卡)",
         "title":u"商品售卖流水 - 微生活POS系统"
     }
 ]
@@ -28,10 +28,10 @@ class TestConsumeCouponListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUMECOUPONLIST',('testCase1'))=='N','验证执行配置')
     @ddt.data(*shopCancelData)
-    @replayCaseFail(num=3)
+    @replayCaseFail(num=1)
     def testCase1(self,data):
         """交易流水-撤销商品售卖"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化ConsumeCouponListPage类
         self.undo = ConsumeCouponListPage(self.url,self.driver,data['title'])
@@ -64,9 +64,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
@@ -75,4 +75,3 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
-        fp.close()

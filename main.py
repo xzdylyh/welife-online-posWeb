@@ -1,6 +1,7 @@
 #_*_coding:utf-8_*_
 import unittest
 import os
+import time
 from lib import (HTMLTESTRunnerCN,gl,scripts)
 from lib.emailstmp import EmailClass
 from testCase.testConsumePage import TestConsumePage
@@ -22,23 +23,30 @@ if __name__=="__main__":
     scripts.rmDirsAndFiles(gl.imgPath)
     suite = unittest.TestSuite()
 
-    tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
-             unittest.TestLoader().loadTestsFromTestCase(TestChargePage),
-             unittest.TestLoader().loadTestsFromTestCase(TestCreditPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestConsumeListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestCreditListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestCouponsaleIndexPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestNumberCardPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage),
-             unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)
-             ]
+
+    tests = [
+        unittest.TestLoader().loadTestsFromTestCase(TestConsumePage),
+        unittest.TestLoader().loadTestsFromTestCase(TestChargePage),
+        unittest.TestLoader().loadTestsFromTestCase(TestCreditPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestConsumeListPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestCreditListPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestChargeListPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestCardIndexPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestCouponsaleIndexPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestNumberCardPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestNumberCardListPage),
+        unittest.TestLoader().loadTestsFromTestCase(TestConsumeCouponListPage)
+    ]
 
     suite.addTests(tests)
-    filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    
+    lastf = str(int(time.time()))
+    filePath = os.path.join(
+        os.path.join(gl.reportPath, lastf), 
+        'Report.html'
+    )  # 确定生成报告的路径
+    print(filePath)
 
     with file(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
@@ -49,5 +57,11 @@ if __name__=="__main__":
         )
         # 运行测试用例
         runner.run(suite)
+
+        from lib.scripts import send_dding_msg
+
+        TMPL_MSG = '''Pro软POS自动化测试执行【已完成】:\n{}\n测试报告:http://60.205.217.8:5004/pos/pro_pos_web/report/{}'''.format(runner.RESULT, lastf)
+        token = '2c412f54-b815-45c5-b928-8fec114d1ea9'
+        send_dding_msg(token, TMPL_MSG)
 
     # EmailClass().send

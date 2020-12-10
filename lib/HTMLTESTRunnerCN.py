@@ -170,6 +170,8 @@ class Template_mixin(object):
     DEFAULT_DESCRIPTION = ''
     DEFAULT_TESTER = '天枢'
 
+    RESULT = None
+
     # ------------------------------------------------------------------------
     # HTML Template
 
@@ -446,7 +448,7 @@ class _TestResult(TestResult):
         self.failure_count = 0
         self.error_count = 0
         self.verbosity = verbosity
-        self.outputBuffer = None
+        self.outputBuffer = StringIO()
 
         # result is a list of result in 4 tuple
         # (
@@ -586,20 +588,21 @@ class HTMLTestRunner(Template_mixin):
         startTime = str(self.startTime)[:19]
         duration = str(self.stopTime - self.startTime)
         status = []
-        status.append('共 %s' % (result.success_count + result.failure_count + result.error_count))
+        status.append('共 %s 个用例' % (result.success_count + result.failure_count + result.error_count))
         if result.success_count: status.append('通过 %s'%result.success_count)
         if result.failure_count: status.append('失败 %s'%result.failure_count)
         if result.error_count: status.append('错误 %s'%result.error_count)
         if status:
             status = '，'.join(status)
             self.passrate = str("%.2f%%" % (float(result.success_count) / float(result.success_count + result.failure_count + result.error_count) * 100))
+            self.RESULT = '{}, 通过率={}'.format(status, self.passrate)
         else:
             status = 'none'
         return [
             (u'测试人员', self.tester),
             (u'开始时间', startTime),
             (u'合计耗时', duration),
-            (u'测试结果', status + "，通过率= "+self.passrate),
+            (u'测试结果', self.RESULT),
         ]
 
 

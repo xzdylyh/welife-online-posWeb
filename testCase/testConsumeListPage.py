@@ -24,10 +24,10 @@ class TestConsumeListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*consumeData)
-    @replayCaseFail(num=3)
+    @replayCaseFail(num=1)
     def testCase1(self,data):
         """交易流水-撤销消费"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化ConsumeListPage类
         self.consumeList = ConsumeListPage(self.url,self.driver,data['consumeListTitle'])
@@ -37,6 +37,7 @@ class TestConsumeListPage(unittest.TestCase):
         #单击撤销消费 链接
         self.consumeList.clickUndoLinkText
         #单击 确定按钮
+        self.consumeList.wait(1000)
         self.consumeList.clickConfirmBtn
 
         """断言"""
@@ -62,9 +63,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestConsumeListPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',
