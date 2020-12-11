@@ -42,7 +42,7 @@ class TestConsumeListPage(unittest.TestCase):
 
         """断言"""
         self.assertTrue(self.consumeList.assertCancelSuccess) #断言,弹出撤销成功div框
-
+        self.consumeList.wait(2000)
         self.assertEqual(self.consumeList.getContentText,u'撤销消费') #撤销消费,列表中增加一条撤销记录
 
 

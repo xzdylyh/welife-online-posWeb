@@ -1,0 +1,9 @@
+
+/report/images/
+/report/Report.html
+chromedriver.exe
+
+# ide
+.vscode
+.idea
+*.pyc

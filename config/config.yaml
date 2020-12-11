@@ -12,11 +12,11 @@ HightLight: 1
 CONFIG:
     Cookies: #cook信息
         LoginCookies: {
-               "pos_bid":"1075315154",
-               "pos_mid":"1120036355",
-               "pos_sid":"1905736354",
-               "pos_sign":"dd3aab52c9a93e75e59565819fcbdaa7"
-               }
+            "pos_bid":"1075315154",
+            "pos_mid":"1125497197",
+            "pos_sid":"1905736354",
+            "pos_sign":"ac2559cddfe8604ccd95ea04822059f9"
+        }
 
         BossLoginCookies: {"name":"UserSession","value":"5b5ae93a272d7"} #boss,浏览器关闭session过期
 
@@ -45,8 +45,8 @@ RUNING: #case执行配置
     DESCPTION: N不执行，Y执行
     CONSUME: #消费模块
         Flag: {"testCase1":{"Flag":"N","desc":"实体卡开卡"},
-               "testCase2":{"Flag":"N","desc":"积分消费"},
-               "testCase3":{"Flag":"Y","desc":"储值消费"},
+               "testCase2":{"Flag":"Y","desc":"积分消费"},
+               "testCase3":{"Flag":"N","desc":"储值消费"},
                "testCase4":{"Flag":"N","desc":"券消费"},
                "testCase5":{"Flag":"N","desc":"实体卡绑卡"},
                "testCase6":{"Flag":"N","desc":"次卡开卡"}}

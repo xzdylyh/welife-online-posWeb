@@ -224,7 +224,7 @@ class TestConsumePage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUME','testCase2')=='N','验证执行配置')
     @ddt.data(*consumeData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase2(self,data):
         '''积分消费'''
         print(u'功能:{0},消费{1}元,抵扣{2}积分.'.format(data['desc'],data['tcTotalFee'],data['credit']))

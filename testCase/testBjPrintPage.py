@@ -33,10 +33,10 @@ class TestBjPrintPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('PRINT', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*printData)
-    @replayCaseFail(num=3)
+    @replayCaseFail()
     def testCase1(self,data):
         """班结小结打印"""
-        print '功能:{0}'.format(data['desc'])
+        print('功能:{0}'.format(data['desc']))
 
         #实例化BjPrintPage类
         self.bjPrint = BjPrintPage(
@@ -62,8 +62,8 @@ class TestBjPrintPage(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # cls.driver.quit()
-        pass
+        cls.driver.quit()
+        
 
 
 if __name__=="__main__":
@@ -71,9 +71,9 @@ if __name__=="__main__":
     tests = [unittest.TestLoader().loadTestsFromTestCase(TestBjPrintPage)]
     suite.addTests(tests)
     filePath = os.path.join(gl.reportPath, 'Report.html')  # 确定生成报告的路径
-    print filePath
+    print(filePath)
 
-    with file(filePath, 'wb') as fp:
+    with open(filePath, 'wb') as fp:
         runner = HTMLTESTRunnerCN.HTMLTestRunner(
             stream=fp,
             title=u'UI自动化测试报告',

@@ -17,7 +17,9 @@ class ConsumeListPage(basepage.BasePage):
     # 撤销成功
     undo_assert_loc = (By.XPATH,'//*[@id="showSuccess"]/div/i')
     # 交易流水中显示撤销成功条目
-    undo_assert_list_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[18]/span')
+    undo_deal_type = '//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[{}]'
+    # undo_assert_list_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[19]/span')
+
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -44,7 +46,15 @@ class ConsumeListPage(basepage.BasePage):
     @property
     def getContentText(self):
         """获取 撤销消费后的操作状态"""
-        txt = self.getTagText('text',*(self.undo_assert_list_loc))
+        txt = ''
+        for i in range(5, 22):
+            txt = self.getTagText('text', *(
+                (By.XPATH, self.undo_deal_type.format(
+                    i
+                ))
+            ))
+            if '撤销消费' in str(txt):
+                break
         return txt
 
     @property
