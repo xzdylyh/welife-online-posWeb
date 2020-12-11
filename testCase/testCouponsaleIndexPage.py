@@ -12,7 +12,7 @@ from lib import gl,HTMLTESTRunnerCN
 
 shopData = [
     {
-        "phoneOrCard":"1113152327682420",
+        "phoneOrCard":"1113152189155703",
         "iterInput":[1,1],
         "desc":u"商品售卖：购买券包和次卡",
         "title":u"商品售卖 - 微生活POS系统",

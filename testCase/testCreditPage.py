@@ -13,7 +13,7 @@ from lib import gl,HTMLTESTRunnerCN
 
 creditData = [
     {
-        "charge_number":"1113152196317476",
+        "charge_number":"1113152652142441",
         "ExchangeNumber":1,
         "ExchangeDetail":u"自动化测试大礼包1个",
         "desc":u"正常积分兑换流程"

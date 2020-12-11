@@ -11,7 +11,7 @@ from lib.excel import Excel
 from lib import gl,HTMLTESTRunnerCN
 
 cardShopData = [
-    {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":2}
+    {"desc": u"实体储值卡售卖", "pagetitle": u"储值卡售卖 - 微生活POS系统","assert":u"该张储值卡已经售卖","CardType":"2002697"}
 ]
 
 @ddt.ddt
@@ -33,7 +33,7 @@ class TestCardIndexPage(unittest.TestCase):
         '验证执行配置'
     )
     @ddt.data(*cardShopData)
-    @replayCaseFail(num=1)
+    @replayCaseFail()
     def testCase1(self,data):
         """储值卡售卖-实体储值卡售卖"""
         print('功能:{0}'.format(data['desc']))
@@ -86,7 +86,7 @@ class TestCardIndexPage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-        #pass
+        # pass
 
 
 

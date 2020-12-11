@@ -11,7 +11,7 @@ from lib import gl,HTMLTESTRunnerCN
 
 chargeData = [
     {
-        "charge_number":"1113152545493063",
+        "charge_number":"1113152226875644",
         "present":2,
         "note":u"自动化测试充值实体卡",
         "desc":u"储值正常流程-实体卡充值"
@@ -25,7 +25,7 @@ chargeData = [
 ]
 FillData = [
     {
-        "charge_number":"1113152401338507",
+        "charge_number":"1113152140929056",
         "present":2,
         "note":u"自动化测试充值",
         "desc":u"储值并补开发票-实体卡",

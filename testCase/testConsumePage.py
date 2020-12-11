@@ -17,7 +17,7 @@ phone = '1377777{}'.format(rnd_num(1000, 4000))
 
 consumeData = [
     {
-        "phoneOrCard":"1113152619150147",
+        "phoneOrCard":"1113152630180670",
         "desc":u"积分消费",
         "tcTotalFee":1,
         "tcStoredPay":1,
@@ -29,7 +29,7 @@ chargeDealData=[
     {
         "tcTotalFee":1,
         "desc":u"储值卡消费",
-        "phoneOrCard":"1802326514043775",
+        "phoneOrCard":"1113152296255459",
         "dualCode":"000000"
     }
 ]
@@ -37,7 +37,7 @@ custCouponData = [
     {
         "tcTotalFee":1,
         "desc":u"券消费",
-        "phoneOrCard":"1802326514043775",
+        "phoneOrCard":"1113152849764453",
         "dualCode":'000000'
     }
 ]
@@ -52,7 +52,7 @@ cardData = [
 ]
 cardBindData = [
     {
-        "PhoneNo": "13712345678",
+        "PhoneNo": "13799999999",
         "desc":u"绑卡正常流程"
     }
 ]

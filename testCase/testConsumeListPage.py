@@ -24,7 +24,7 @@ class TestConsumeListPage(unittest.TestCase):
 
     @unittest.skipIf(getRunFlag('CONSUMELIST', 'testCase1') == 'N', '验证执行配置')
     @ddt.data(*consumeData)
-    @replayCaseFail(num=1)
+    @replayCaseFail()
     def testCase1(self,data):
         """交易流水-撤销消费"""
         print('功能:{0}'.format(data['desc']))
@@ -41,8 +41,9 @@ class TestConsumeListPage(unittest.TestCase):
         self.consumeList.clickConfirmBtn
 
         """断言"""
-        self.assertTrue(self.consumeList.assertCancelSuccess) #断言,弹出撤销成功div框
         self.consumeList.wait(2000)
+        self.assertTrue(self.consumeList.assertCancelSuccess) #断言,弹出撤销成功div框
+        self.consumeList.wait(5000)
         self.assertEqual(self.consumeList.getContentText,u'撤销消费') #撤销消费,列表中增加一条撤销记录
 
 

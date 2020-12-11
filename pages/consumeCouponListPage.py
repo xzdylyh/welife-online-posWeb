@@ -12,7 +12,9 @@ class ConsumeCouponListPage(basepage.BasePage):
     # 确认
     coupon_confirmBtn_loc = (By.ID,'undo')
     # 撤销后新增一条,撤销商品售卖的记录
-    coupon_assert_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[11]/span')
+    # 交易流水中显示撤销成功条目
+    undo_deal_type = '//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[{}]'
+    # coupon_assert_loc = (By.XPATH,'//*[@id="consumeRunWater"]/table/tbody/tr[1]/td[11]/span')
     #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     """操作"""
@@ -34,10 +36,17 @@ class ConsumeCouponListPage(basepage.BasePage):
 
     @property
     def getContentText(self):
-        """获取 商品售卖撤销后，状态"""
-        txt = self.getTagText('text',*(self.coupon_assert_loc))
+        """获取 撤销消费后的操作状态"""
+        txt = ''
+        for i in range(5, 13):
+            txt = self.getTagText('text', *(
+                (By.XPATH, self.undo_deal_type.format(
+                    i
+                ))
+            ))
+            if '撤销商品售卖' in str(txt):
+                break
         return txt
-
 
     @property
     def assertSuccess(self):

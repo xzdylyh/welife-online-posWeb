@@ -16,7 +16,7 @@ import time,json
 numberCardData = [
     {
         "useNum":1,
-        "phoneOrCard":"1113152314171536",
+        "phoneOrCard":"1113152942004253",
         "desc":u"次卡消费,正常流程",
         "title":u"次卡消费 - 微生活POS系统"
     }

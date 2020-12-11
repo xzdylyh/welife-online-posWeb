@@ -29,7 +29,7 @@ class CardIndexPage(basepage.BasePage):
         self.selectComboxList(
             desc='储值卡',
             loc= self.card_Select_loc,
-            index= int(card_type)
+            value= card_type
         )
 
 

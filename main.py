@@ -57,16 +57,17 @@ if __name__=="__main__":
         )
 
         token = '2c412f54-b815-45c5-b928-8fec114d1ea9'
+        from lib.scripts import send_dding_msg
 
         TMPL_MSG = '{}:★开始软POS自动化测试★'.format(
-            time.strftime(r'%Y%m%d_%H%M%S', time.localtime(time.time())
+            time.strftime(r'%Y%m%d_%H%M%S', time.localtime(time.time()))
         )
         send_dding_msg(token, TMPL_MSG)
 
         # 运行测试用例
         runner.run(suite)
 
-        from lib.scripts import send_dding_msg
+
 
         TMPL_MSG = '''Pro软POS自动化测试执行【已完成】:\n{}\n测试报告:http://60.205.217.8:5004/pos/pro_pos_web/report'''.format(runner.RESULT)
         send_dding_msg(token, TMPL_MSG)
